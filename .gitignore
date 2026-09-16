@@ -1,0 +1,47 @@
+# dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# next.js
+.next/
+out/
+next-env.d.ts
+
+# build / test output
+dist/
+coverage/
+playwright-report/
+test-results/
+blob-report/
+.lighthouseci/
+
+# env — never commit real secrets (keep .env.example)
+.env
+.env.*
+!.env.example
+
+# supabase local
+supabase/.temp/
+supabase/.branches/
+
+# vercel
+.vercel/
+
+# serwist / pwa generated
+public/sw.js
+public/sw.js.map
+public/swe-worker-*.js
+
+# tooling / os / editor
+*.tsbuildinfo
+.turbo/
+.DS_Store
+Thumbs.db
+*.log
+npm-debug.log*
+pnpm-debug.log*
+.idea/
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
