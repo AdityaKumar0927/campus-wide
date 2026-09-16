@@ -13,7 +13,7 @@ Multi-tenant, university-verified student community platform. Read in this order
 - **Student emails are never exposed publicly.** Contact goes through the masked relay.
 
 ## Workflow
-- Package manager: **pnpm**. Node ≥ 20 LTS.
+- Package manager: **pnpm 12** (corepack). Runtime: **Node 24 LTS** (`.nvmrc`); Node 25 is EOL and unsupported on Vercel.
 - Small **conventional commits** (`feat:`, `fix:`, `chore:`, `docs:`, `test:`); CI must be green before merging to `main`.
 - Before claiming a UI change works, verify it in Playwright at **390px** and **1440px**.
 - **STOP checkpoints** (accounts, API keys, repo creation, domain verification, deploy linking): pause and give the owner exact numbered instructions. Everything else: proceed autonomously.
