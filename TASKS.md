@@ -9,7 +9,8 @@ Live checklist; tick as work lands. Detail is finest for the next two phases and
 - [x] Write `docs/BRIEF.md`, `docs/research/*`, `CLAUDE.md`, `.gitignore`
 - [x] Write `PLAN.md`, `ROADMAP.md`, `ARCHITECTURE.md`, `TASKS.md`
 - [x] Initial commit on `main` (local only; remote created in Phase 1)
-- [ ] **Owner approval** of the plan + answers: licence (MIT proposed), pilot campus, sending domain
+- [x] Owner decisions recorded 2026-09-16: MIT licence (D-16), Vercel subdomain for now (D-17)
+- [ ] **Owner approval** of the plan; pilot campus not yet named (a demo campus is seeded until then)
 
 ## Phase 1 — Repo, CI, skeleton, design system
 - [x] Repo created: https://github.com/AdityaKumar0927/campus-wide (public), `main` pushed 2026-09-16
@@ -17,7 +18,7 @@ Live checklist; tick as work lands. Detail is finest for the next two phases and
 - [ ] `create-next-app@latest` (TS strict, Tailwind v4, App Router, `src/`), pin versions
 - [ ] shadcn init (Base UI), base components (button, input, dialog, popover, sheet, tabs, toast)
 - [ ] `.env.example`, `.editorconfig`, commitlint + Husky, `CODEOWNERS`, issue/PR templates
-- [ ] `README.md`, `CONTRIBUTING.md`, `SECURITY.md`, `LICENSE`, `/.well-known/security.txt`
+- [ ] `README.md` (expand), `CONTRIBUTING.md`, `SECURITY.md`, `/.well-known/security.txt` (LICENSE ✓ 2026-09-16)
 - [ ] GitHub Actions CI (typecheck, lint, Vitest, build, Playwright 390/1440 + axe, artifacts)
 - [ ] Dependabot (npm + actions, grouped weekly), CodeQL, gitleaks workflows
 - [ ] Supabase keep-alive workflow (cron every 5 days → `/api/health`)

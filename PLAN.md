@@ -28,6 +28,8 @@ Next.js **16.3.5** (App Router, RSC, Server Actions, Turbopack, `proxy.ts`) · R
 | D-13 | **Meal board is gifting/treating + donation only, admin toggle OFF by default, per-campus policy text required before enabling.** | Resale is prohibited by dining contracts everywhere; students have been disciplined for it. |
 | D-14 | **No payments anywhere.** Marketplace contact = double-blind relay with reveal-on-mutual-interest. | Keeps PCI out of scope; protects student emails. |
 | D-15 | **Design to WCAG 2.2 AA**, verified with axe in Playwright + manual keyboard/screen-reader passes. | Superset of ADA Title II (WCAG 2.1 AA) and EN 301 549. |
+| D-16 | **Licence: MIT** (owner decision, 2026-09-16). | Maximises university adoption and contributions; no copyleft obligations for campuses that fork. |
+| D-17 | **Hosting URL: a Vercel subdomain (`<project>.vercel.app`) for now; no custom domain** (owner decision, 2026-09-16). **Consequence:** Resend cannot verify a sending domain without DNS you control, so real-user email (magic links to students) needs a domain before Phase 2 goes beyond local testing. Local development uses the Supabase mail catcher, so Phases 1-3 are unblocked. | Keeps cost at zero for the build; the cheapest unblock is a ~$10/year domain when the pilot needs real sign-ups. |
 
 ## 4. Phases and Definitions of Done
 Each phase ends with green CI, updated docs, and ticks in `TASKS.md`. **STOP** = owner action required; I pause with numbered instructions.
@@ -42,6 +44,7 @@ Deliverables: `PLAN.md`, `ROADMAP.md`, `ARCHITECTURE.md`, `TASKS.md`, `CLAUDE.md
 - GitHub: `gh repo create`; branch protection on `main` (required checks, no force-push); Dependabot (npm + actions, weekly, grouped); CodeQL (public repo); gitleaks; Supabase keep-alive workflow (cron every 5 days → `/api/health`, which runs one cheap query).
 - CI: install → typecheck → lint → Vitest → build → Playwright (chromium at 390 px and 1440 px) with axe; reports and screenshots uploaded as artifacts.
 - App skeleton: root layout, `proxy.ts` (session refresh, strip `x-middleware-subrequest`, nonce + security headers), theme provider (light/dark/system), OKLCH `@theme` tokens, self-hosted variable fonts, mobile bottom nav + desktop sidebar shell, empty-state components, Feedback button stub, `/.well-known/security.txt`, `/api/health`.
+- **Phase 1 exit (optional STOP): link Vercel** so every pull request gets a preview URL from day one and the production URL exists early (`https://<name>.vercel.app`). Requires the owner to link the GitHub repo in Vercel; env vars are not needed until Phase 2.
 - **DoD:** CI green on `main`; Lighthouse ≥ 95 on the skeleton at both viewports; screenshots attached; README quick-start works from a clean clone.
 
 ### Phase 2 — Auth, multi-tenancy, RLS, consent → **STOP first: Supabase project + Resend domain**
@@ -67,7 +70,7 @@ Report (DSA notice-and-action categories), mute, block, moderator queue, actions
 **DoD:** report → action → statement of reasons → appeal E2E; admin can toggle every module; feedback lands in the DB and optionally in GitHub.
 
 ### Phase 6 — AI enhancements (progressive)
-In-browser (Transformers.js + WebGPU, feature-detected, web worker, lazy): duplicate-question suggestions (mxbai-embed-xsmall or all-MiniLM embeddings) and the pre-post toxicity nudge (toxic-bert). Chrome Prompt API (`LanguageModel`, Chrome 148+, desktop only) for optional summaries/rewrites. Opt-in server fallback via Groq for thread summaries, translation, and mod-queue triage (labels only; a human decides). Every server call is PII-stripped and labelled.
+In-browser (Transformers.js + WebGPU, feature-detected, web worker, lazy): duplicate-question suggestions (mxbai-embed-xsmall or all-MiniLM embeddings) and the pre-post toxicity nudge (toxic-bert). Chrome Prompt API (`LanguageModel`, Chrome 148+, desktop only) for optional summaries/rewrites. Opt-in server fallback via Groq for thread summaries, translation, mod-queue triage (labels only; a human decides), and AI-assisted event creation from pasted text. Every server call is PII-stripped and labelled.
 **DoD:** all AI features degrade to no-ops without WebGPU/Prompt API; no core flow waits on a model download; tests cover the no-AI path.
 
 ### Phase 7 — Legal docs, compliance functionality, accessibility, PWA

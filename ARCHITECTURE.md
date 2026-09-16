@@ -116,6 +116,8 @@ Upgrade path: a true email-in/email-out relay via Resend inbound routing if a ca
 | Secrets | `.env.local` (ignored) + Vercel env vars; `.env.example` documents every variable; gitleaks in CI |
 | Supply chain | Committed `pnpm-lock.yaml`, `pnpm install --frozen-lockfile`, Dependabot grouped weekly, CodeQL, `pnpm audit` in CI |
 | Audit | `audit_log` append-only for auth events, role changes, moderation, admin settings, exports, deletions |
+| Encryption | Supabase encrypts Postgres volumes and Storage at rest and uses TLS in transit (platform); application-level: relay tokens and IP addresses stored only as salted hashes, no secrets in plaintext columns |
+| Dependency freshness gate | pnpm minimum-release-age setting (24 h; verify option name in pnpm 12 docs) so brand-new package versions are not installed the moment they are published, blunting supply-chain worms; Dependabot still proposes the update |
 
 ## 11. AI (progressive, private by default)
 - **Browser worker** (`src/lib/ai/worker.ts`): loads Transformers.js lazily, `device: "webgpu"` when `navigator.gpu` exists, else WASM; models cached in Cache Storage. Duplicate detection embeds the draft question and compares with recent question embeddings fetched as a small vector list; toxicity nudge classifies the draft before submit and only *suggests* a rewrite.
