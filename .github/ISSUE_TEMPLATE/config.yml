@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Report a security vulnerability
+    url: https://github.com/AdityaKumar0927/campus-wide/security/advisories/new
+    about: Report vulnerabilities privately through GitHub security advisories, never in a public issue. See SECURITY.md.
