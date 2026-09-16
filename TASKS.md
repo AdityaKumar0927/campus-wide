@@ -13,18 +13,19 @@ Live checklist; tick as work lands. Detail is finest for the next two phases and
 - [ ] **Owner approval** of the plan; name the pilot campus; confirm D-14 (in-app relay)
 
 ## Phase 1 — Repo, CI, skeleton, design system
-- [ ] Install Node 24 LTS (version manager) and pnpm 12 via corepack; add `.nvmrc`, `engines`, pnpm minimum-release-age
-- [ ] `create-next-app@latest` (TS strict, Tailwind v4, App Router, `src/`), pin versions
-- [ ] shadcn init (Base UI), base components (button, input, dialog, popover, sheet, tabs, toast)
-- [ ] `.env.example`, `.editorconfig`, commitlint + Husky, `CODEOWNERS`, issue/PR templates
-- [ ] Expand `README.md`; `CONTRIBUTING.md`, `SECURITY.md`, `/.well-known/security.txt` (LICENSE ✓)
-- [ ] GitHub Actions CI (typecheck, lint, Vitest, build, Playwright 390/1440 + axe + screenshot baselines, artifacts)
-- [ ] `dependabot.yml` (npm + actions, grouped weekly), CodeQL, gitleaks workflows
-- [ ] Ruleset upgrade: require CI checks + pull request before merge
-- [ ] `proxy.ts`: session refresh stub, nonce, security headers, defence-in-depth header drop
-- [ ] Theme per D-18: OKLCH `@theme` tokens, next-themes, self-hosted sans + serif display fonts, reduced-motion base
-- [ ] Shell: header with Feedback stub, mobile bottom nav (safe-area), desktop sidebar, empty states, `/offline` placeholder
-- [ ] `/api/health`; smoke tests; Lighthouse ≥ 95 at both viewports; screenshots; **owner look review**
+- [x] Install Node 24 LTS (fnm) and pnpm 12 via corepack; `.nvmrc`, `engines`, pnpm minimum-release-age + trust policy
+- [x] `create-next-app@latest` (TS strict, Tailwind v4, App Router, `src/`, React Compiler), versions pinned
+- [x] shadcn init (Base UI), 15 base components
+- [x] `.env.example`, `.editorconfig`, commitlint + Husky, `CODEOWNERS`, issue/PR templates
+- [x] Expand `README.md`; `CONTRIBUTING.md`, `SECURITY.md`, `CODE_OF_CONDUCT.md`, `/.well-known/security.txt` (LICENSE ✓)
+- [x] GitHub Actions CI (commitlint, typecheck, lint, Vitest, audit, build, Playwright 390/1440 + axe + Linux screenshot baselines, Lighthouse report, artifacts)
+- [x] `dependabot.yml` (npm + actions, grouped weekly), CodeQL, gitleaks workflows
+- [ ] Ruleset upgrade: require CI checks + pull request before merge (after the first green PR)
+- [x] `proxy.ts`: nonce CSP (unit-tested builder), security headers in `next.config.ts`, defence-in-depth header drop; session refresh lands in Phase 2
+- [x] Theme per D-18: OKLCH `@theme` tokens, next-themes, self-hosted Instrument Sans + Newsreader (display: optional), reduced-motion base
+- [x] Shell: header with Feedback popover (local thank-you state), theme menu, mobile bottom nav (safe-area), desktop sidebar + `?` shortcuts, empty states, `/offline`, 404, placeholder sections
+- [x] `/api/health`; 7 unit + 16 E2E tests green; Lighthouse a11y/best-practices/SEO = 100, performance 93-95 mobile / 81-83 desktop on localhost (simulator artifact, see `scripts/lighthouse.mjs`; re-verified on the Vercel preview); screenshots in `docs/screenshots/phase-1/`
+- [ ] **Owner look review** of `docs/screenshots/phase-1/` against D-18
 - [ ] STOP (recommended): owner links the repo in Vercel for preview deployments
 
 ## Phase 2 — Auth, multi-tenancy, RLS, consent

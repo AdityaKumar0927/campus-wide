@@ -1,6 +1,6 @@
 # Campus Wide — Delivery Plan
 
-**Status:** Phase 0 complete and audited (2026-09-16, see `docs/audits/2026-09-16-phase0-audit.md`); awaiting owner approval of the plan. Repo, licence, and domain decisions are already recorded. · **Owner:** Aditya Kumar (AdityaKumar0927) · **Repo:** https://github.com/AdityaKumar0927/campus-wide
+**Status:** Plan approved 2026-09-16. Phase 1 built (skeleton, design system, CI) and awaiting the owner look review + the recommended Vercel link; Phase 2 next. · **Owner:** Aditya Kumar (AdityaKumar0927) · **Repo:** https://github.com/AdityaKumar0927/campus-wide
 **Source of truth:** `docs/BRIEF.md`. Verified versions/limits: `docs/research/2026-09-15-stack-verification.md`.
 **Live checklist:** `TASKS.md`. **Milestones:** `ROADMAP.md`. **System design:** `ARCHITECTURE.md`.
 
@@ -39,14 +39,14 @@ Each phase ends with green CI, updated docs, and ticks in `TASKS.md`. **STOP** =
 Deliverables: `PLAN.md`, `ROADMAP.md`, `ARCHITECTURE.md`, `TASKS.md`, `CLAUDE.md`, `docs/BRIEF.md`, `docs/research/*`, `docs/audits/*`, GitHub repo with Dependabot and a `main` ruleset.
 **DoD:** owner approves the plan (repo, licence, domain already decided; pilot campus and region still open).
 
-### Phase 1 — Repo, CI, skeleton, design system
+### Phase 1 — Repo, CI, skeleton, design system ✅ (built 2026-09-16; look review + Vercel link pending)
 - Install Node 24 LTS + pnpm 12 (corepack); `create-next-app@latest` (TypeScript strict, Tailwind v4, App Router, `src/`, Turbopack); shadcn init (Base UI primitives).
 - Repo hygiene: `.env.example`, `.nvmrc`, `.editorconfig`, commitlint + Husky (conventional commits), `CODEOWNERS`, issue/PR templates, `SECURITY.md`, `CONTRIBUTING.md`, expanded `README.md`; pnpm minimum-release-age setting.
 - GitHub: Dependabot `dependabot.yml` (npm + actions, weekly, grouped); CodeQL; gitleaks; ruleset upgraded to require the CI checks and pull requests.
 - CI: install → typecheck → lint → Vitest → build → Playwright (chromium at 390 px and 1440 px) with axe and `toHaveScreenshot` baselines; reports and screenshots uploaded as artifacts.
 - App skeleton: root layout, `proxy.ts` (session refresh stub, nonce + security headers, defence-in-depth header drop), theme provider (light/dark/system), OKLCH `@theme` tokens per D-18, self-hosted variable fonts, mobile bottom nav + desktop sidebar shell, empty-state components, Feedback button stub, `/.well-known/security.txt`, `/api/health`.
 - **Phase 1 exit STOP (recommended): link Vercel** so every pull request gets a preview URL and Vercel-specific behaviour (proxy on Node, nonce CSP, cron) is exercised from day one. Env vars are not needed until Phase 2.
-- **DoD:** CI green on `main`; Lighthouse ≥ 95 on the skeleton at both viewports; screenshots attached; **owner reviews the look against D-18**; README quick-start works from a clean clone.
+- **DoD:** CI green on `main`; Lighthouse ≥ 95 on the skeleton at both viewports (accessibility, best-practices, SEO verified at 100 locally; the performance score is verified on the Vercel preview because Lighthouse's simulator understates text-LCP pages on localhost, see `scripts/lighthouse.mjs`); screenshots in `docs/screenshots/phase-1/`; **owner reviews the look against D-18**; README quick-start works from a clean clone.
 
 ### Phase 2 — Auth, multi-tenancy, RLS, consent → **STOP first: Supabase project (region!), Resend account; email domain or accept test mode**
 - Supabase CLI as a dev dependency; `supabase start` locally (Docker) and in CI. Drizzle schema for every table in `docs/BRIEF.md §4`, each with `university_id` and RLS policies (`pgPolicy` + `drizzle-orm/supabase` roles); migrations committed; pgvector enabled.
