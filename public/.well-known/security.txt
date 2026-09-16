@@ -1,0 +1,6 @@
+# Security contact information for Campus Wide (RFC 9116). See SECURITY.md.
+Contact: https://github.com/AdityaKumar0927/campus-wide/security/advisories/new
+Expires: 2027-09-16T00:00:00.000Z
+Preferred-Languages: en
+Canonical: https://campus-wide.vercel.app/.well-known/security.txt
+Policy: https://github.com/AdityaKumar0927/campus-wide/blob/main/SECURITY.md

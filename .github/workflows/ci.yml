@@ -1,0 +1,96 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+env:
+  APP_URL: http://localhost:3000
+  NEXT_TELEMETRY_DISABLED: "1"
+
+jobs:
+  checks:
+    name: typecheck · lint · unit · build · e2e · lighthouse
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - uses: pnpm/action-setup@v6 # version comes from "packageManager" in package.json
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+
+      - name: Install (frozen lockfile, supply-chain policies from pnpm-workspace.yaml)
+        run: pnpm install --frozen-lockfile
+
+      - name: Commit messages follow Conventional Commits
+        if: github.event_name == 'pull_request'
+        run: pnpm exec commitlint --from ${{ github.event.pull_request.base.sha }} --to ${{ github.event.pull_request.head.sha }} --verbose
+
+      - name: Typecheck
+        run: pnpm typecheck
+
+      - name: Lint
+        run: pnpm lint
+
+      - name: Unit tests
+        run: pnpm test
+
+      - name: Dependency audit (high and above)
+        run: pnpm audit --audit-level high
+
+      - name: Build
+        run: pnpm build
+
+      - name: Playwright browsers
+        run: pnpm exec playwright install --with-deps chromium
+
+      - name: E2E + accessibility + visual (390 px and 1440 px)
+        run: pnpm test:e2e
+        env:
+          CI: "true"
+
+      - name: Upload Playwright report and screenshots
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: playwright
+          path: |
+            playwright-report
+            test-results
+            tests/e2e/__screenshots__
+          retention-days: 14
+          if-no-files-found: ignore
+
+      - name: Lighthouse budget (≥ 95 in every category, mobile + desktop)
+        run: |
+          pnpm start > server.log 2>&1 &
+          for i in $(seq 1 60); do
+            if curl -fsS http://localhost:3000/api/health > /dev/null; then break; fi
+            sleep 1
+          done
+          pnpm lighthouse
+        env:
+          CHROME_PATH: /usr/bin/google-chrome
+
+      - name: Upload Lighthouse reports
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: lighthouse
+          path: lighthouse-reports
+          retention-days: 14
+          if-no-files-found: ignore
