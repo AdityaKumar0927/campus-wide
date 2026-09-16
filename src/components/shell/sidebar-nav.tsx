@@ -1,0 +1,48 @@
+"use client";
+
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { cn } from "@/lib/utils";
+import { moduleNav, primaryNav, type NavItem } from "./nav-items";
+
+function NavList({ items, heading }: { items: NavItem[]; heading?: string }) {
+  const pathname = usePathname();
+  return (
+    <div>
+      {heading && (
+        <p className="mb-1 px-3 font-heading text-sm italic text-muted-foreground">{heading}</p>
+      )}
+      <ul className="space-y-0.5">
+        {items.map(({ href, label, icon: Icon }) => {
+          const active = pathname === href || pathname.startsWith(`${href}/`);
+          return (
+            <li key={href}>
+              <Link
+                href={href}
+                aria-current={active ? "page" : undefined}
+                className={cn(
+                  "flex items-center gap-2.5 rounded-md px-3 py-1.5 text-sm outline-none transition-colors focus-visible:ring-3 focus-visible:ring-ring/50",
+                  active
+                    ? "bg-accent font-medium text-accent-foreground"
+                    : "text-sidebar-foreground/80 hover:bg-muted hover:text-foreground",
+                )}
+              >
+                <Icon className="size-4 shrink-0" aria-hidden />
+                <span>{label}</span>
+              </Link>
+            </li>
+          );
+        })}
+      </ul>
+    </div>
+  );
+}
+
+export function SidebarNav() {
+  return (
+    <nav aria-label="Sections" className="flex flex-col gap-5">
+      <NavList items={primaryNav.filter((i) => i.href !== "/more")} />
+      <NavList items={moduleNav} heading="Around campus" />
+    </nav>
+  );
+}
