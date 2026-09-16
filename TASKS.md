@@ -9,10 +9,10 @@ Live checklist; tick as work lands. Detail is finest for the next two phases and
 - [x] Write `docs/BRIEF.md`, `docs/research/*`, `CLAUDE.md`, `.gitignore`
 - [x] Write `PLAN.md`, `ROADMAP.md`, `ARCHITECTURE.md`, `TASKS.md`
 - [x] Initial commit on `main` (local only; remote created in Phase 1)
-- [ ] **Owner approval** + answers: repo name, visibility, licence, pilot campus
+- [ ] **Owner approval** of the plan + answers: licence (MIT proposed), pilot campus, sending domain
 
 ## Phase 1 — Repo, CI, skeleton, design system
-- [ ] STOP: confirm repo name + visibility → `gh repo create`, push `main`
+- [x] Repo created: https://github.com/AdityaKumar0927/campus-wide (public), `main` pushed 2026-09-16
 - [ ] Install Node 24 LTS (nvm-windows or winget) and pnpm 12 via corepack; add `.nvmrc`, `engines`
 - [ ] `create-next-app@latest` (TS strict, Tailwind v4, App Router, `src/`), pin versions
 - [ ] shadcn init (Base UI), base components (button, input, dialog, popover, sheet, tabs, toast)
