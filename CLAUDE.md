@@ -19,5 +19,6 @@ Multi-tenant, university-verified student community platform. Read in this order
 - **STOP checkpoints** (accounts, API keys, repo creation, domain verification, deploy linking): pause and give the owner exact numbered instructions. Everything else: proceed autonomously.
 - Update `TASKS.md` as work lands; keep `PLAN.md` phase status current.
 
-## Commands (populated in Phase 1)
-`pnpm dev` · `pnpm typecheck` · `pnpm lint` · `pnpm test` · `pnpm test:e2e` · `pnpm build`
+## Commands
+`pnpm dev` · `pnpm typecheck` (runs `next typegen` first) · `pnpm lint` · `pnpm test` (Vitest) · `pnpm build` then `pnpm test:e2e` (Playwright 390/1440 + axe) · `pnpm lighthouse:server` (budget check against a production build).
+On this Windows machine Node 24 comes from fnm: prefix commands with `export PATH="/c/Users/Artis/AppData/Roaming/fnm/node-versions/v24.21.0/installation:$PATH"`. Kill stray servers with PowerShell `Stop-Process`, not `taskkill` (Git Bash mangles its flags).
