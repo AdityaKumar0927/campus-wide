@@ -45,3 +45,14 @@ pnpm-debug.log*
 .vscode/*
 !.vscode/extensions.json
 !.vscode/settings.json
+
+# extra (from create-next-app)
+*.pem
+/build
+.pnpm-debug.log*
+
+# lighthouse
+lighthouse-reports/
+
+# local server logs
+server.log

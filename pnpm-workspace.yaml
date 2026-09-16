@@ -1,0 +1,16 @@
+# pnpm settings (pnpm 12). See ARCHITECTURE.md §10 "Supply chain".
+
+# Dependency build scripts are denied unless reviewed here.
+# unrs-resolver ships prebuilt binaries as optional deps; its postinstall is only a fallback.
+allowBuilds:
+  unrs-resolver: false
+strictDepBuilds: true
+
+# Do not install versions published less than 24 hours ago (blunts supply-chain worms).
+minimumReleaseAge: 1440
+minimumReleaseAgeStrict: true
+
+# Fail if a package's trust level (provenance / trusted publishing) regresses for any version
+# published in the last 90 days. Older versions are ignored: a takeover ships a *new* version.
+trustPolicy: no-downgrade
+trustPolicyIgnoreAfter: 129600
