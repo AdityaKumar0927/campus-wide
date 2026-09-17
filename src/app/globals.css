@@ -282,12 +282,13 @@
 
 /* ---- Motion (CSS only; every rule degrades to "just visible") ---------------------------- */
 
-/* Scroll-driven reveal: a notice settles onto the board as it enters the viewport. */
+/* Scroll-driven reveal: a notice settles onto the board as it enters the viewport. It never starts
+   fully invisible, so print, find-in-page, full-page captures, and crawlers always see the content. */
 @keyframes reveal-up {
   from {
-    opacity: 0;
+    opacity: 0.35;
     transform: translateY(12px);
-    filter: blur(4px);
+    filter: blur(2px);
   }
   to {
     opacity: 1;
@@ -343,4 +344,8 @@
     mask-image: none;
     flex-wrap: wrap;
   }
+}
+  ::view-transition-old(root), ::view-transition-new(root) {
+    animation: none;
+    mix-blend-mode: normal;
 }

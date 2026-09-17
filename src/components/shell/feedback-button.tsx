@@ -1,7 +1,8 @@
 "use client";
 
+import confetti from "canvas-confetti";
 import { MessageSquareTextIcon } from "lucide-react";
-import { useId, useState } from "react";
+import { useId, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
@@ -29,6 +30,24 @@ export function FeedbackButton() {
   const [includeContext, setIncludeContext] = useState(true);
   const textId = useId();
   const contextId = useId();
+  const formRef = useRef<HTMLFormElement>(null);
+
+  /** Paper scraps in the board's stock colours; skipped automatically for reduced motion. */
+  function celebrate() {
+    const rect = formRef.current?.getBoundingClientRect();
+    confetti({
+      particleCount: 36,
+      spread: 55,
+      startVelocity: 22,
+      gravity: 1.1,
+      ticks: 110,
+      scalar: 0.9,
+      shapes: ["square"],
+      colors: ["#dce9f6", "#f6e9c2", "#fbf3b9", "#f8dfe3", "#d7efe2", "#2c6a4a"],
+      origin: rect ? { x: (rect.left + rect.width / 2) / window.innerWidth, y: rect.top / window.innerHeight } : undefined,
+      disableForReducedMotion: true,
+    });
+  }
 
   function reset() {
     setSent(false);
@@ -59,10 +78,12 @@ export function FeedbackButton() {
           </div>
         ) : (
           <form
+            ref={formRef}
             className="space-y-3"
             onSubmit={(e) => {
               e.preventDefault();
               setSent(true);
+              celebrate();
             }}
           >
             <div className="space-y-1.5">
