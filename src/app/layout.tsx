@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Instrument_Sans, Instrument_Serif, JetBrains_Mono } from "next/font/google";
+import { Bricolage_Grotesque, JetBrains_Mono, Manrope } from "next/font/google";
 import { headers } from "next/headers";
 import { ThemeProvider } from "@/components/theme-provider";
 import { SkipLink } from "@/components/shell/skip-link";
@@ -10,17 +10,16 @@ import "./globals.css";
 // Self-hosted at build time by next/font: no requests to Google from the browser.
 // Static instances keep the payload small, and display: "optional" means a slow first load falls back
 // to the system stack instead of delaying Largest Contentful Paint; the font is cached for the next page.
-const sans = Instrument_Sans({
-  variable: "--font-instrument-sans",
+const sans = Manrope({
+  variable: "--font-manrope",
   subsets: ["latin"],
-  weight: ["400", "500", "600"],
+  weight: ["400", "500", "600", "700"],
   display: "optional",
 });
-const serif = Instrument_Serif({
-  variable: "--font-instrument-serif",
+const display = Bricolage_Grotesque({
+  variable: "--font-bricolage",
   subsets: ["latin"],
-  weight: "400",
-  style: ["normal", "italic"],
+  weight: ["500", "600", "700", "800"],
   display: "optional",
 });
 const mono = JetBrains_Mono({
@@ -64,7 +63,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   const nonce = (await headers()).get("x-nonce") ?? undefined;
 
   return (
-    <html lang="en" suppressHydrationWarning className={`${sans.variable} ${serif.variable} ${mono.variable} h-full antialiased`}>
+    <html lang="en" suppressHydrationWarning className={`${sans.variable} ${display.variable} ${mono.variable} h-full antialiased`}>
       <body className="flex min-h-full flex-col">
         <SkipLink />
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange nonce={nonce}>

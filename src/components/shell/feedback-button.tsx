@@ -6,7 +6,9 @@ import { useId, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { ComicText } from "@/components/ui/comic-text";
 import { Textarea } from "@/components/ui/textarea";
+import { bangers } from "@/lib/fonts/bangers";
 import { cn } from "@/lib/utils";
 
 const sentiments = [
@@ -69,8 +71,10 @@ export function FeedbackButton() {
       </PopoverTrigger>
       <PopoverContent align="end" className="w-80 p-4">
         {sent ? (
-          <div className="space-y-2 text-center" role="status">
-            <p className="font-heading text-xl">Thank you.</p>
+          <div className={`space-y-2 text-center ${bangers.variable}`} role="status">
+            <ComicText fontSize={2.4} style={{ fontFamily: "var(--font-bangers), Impact, sans-serif" }} className="py-2">
+              Thanks!
+            </ComicText>
             <p className="text-sm text-muted-foreground">Feedback is read by a human, usually within a week.</p>
             <Button variant="ghost" size="sm" onClick={() => setOpen(false)}>
               Close
