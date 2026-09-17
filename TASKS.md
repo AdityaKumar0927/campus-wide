@@ -35,6 +35,11 @@ Live checklist; tick as work lands. Detail is finest for the next two phases and
 - [x] Production Lighthouse (2026-09-16): mobile 97/97/100 performance, accessibility 100, SEO 100, best-practices 96-100; desktop performance 86-93 (observed LCP 0.3 s; simulator attributes JS to the text paint) → Phase 8 task below
 
 ## Phase 2 — Auth, multi-tenancy, RLS, consent
+- [x] Illinois Tech research (dining, identity, safety, policy) and pilot design: `docs/pilot/illinois-tech.md` (2026-09-17)
+- [x] Supabase CLI + local stack (Docker); Drizzle schema for tenancy/identity/consent/audit with RLS; helper + hook + trigger migrations; Illinois Tech seed
+- [x] Integration test suite against the local stack (`pnpm test:rls`): OTP sign-up via Mailpit, hook rejection, declared name, isolation (14 tests)
+- [x] Sign-in (code + magic link), onboarding (declared name, age, house rules → consent ledger), settings (sessions, privacy mode, sign out everywhere), session-aware shell; proxy refresh + redirects; E2E signs in through the real UI
+- [x] CI runs the local Supabase stack and the integration tests
 - [ ] STOP: Supabase project (**region**, URL, publishable + secret keys, DB URLs) + Resend (API key; domain or test mode)
 - [ ] Verify before building: before-user-created hook and Postgres custom-access-token hook on Free; `auth.sessions` columns; pgvector + pg_cron on Free
 - [ ] Supabase CLI dev dependency; `supabase init`; `supabase start` locally and in CI (Docker)
