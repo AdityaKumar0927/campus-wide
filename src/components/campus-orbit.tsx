@@ -19,7 +19,7 @@ import { OrbitingCircles } from "@/components/ui/orbiting-circles";
 export function CampusOrbit() {
   const cls = "size-full rounded-full border border-rule bg-card p-2.5 text-primary shadow-sm";
   return (
-    <div className="relative mx-auto flex size-[22rem] items-center justify-center overflow-hidden" aria-hidden>
+    <div data-nondeterministic className="relative mx-auto flex size-[22rem] items-center justify-center overflow-hidden" aria-hidden>
       <div className="flex size-16 items-center justify-center rounded-full border border-rule bg-card shadow-sm">
         <PinMark className="size-7 rotate-0" />
       </div>

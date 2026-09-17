@@ -37,7 +37,12 @@ for (const route of routes) {
       expect(axe.violations, JSON.stringify(axe.violations, null, 2)).toEqual([]);
 
       expect(violations).toEqual([]);
-      await expect(page).toHaveScreenshot(`${route.name}.png`, { fullPage: true, animations: "disabled" });
+      await expect(page).toHaveScreenshot(`${route.name}.png`, {
+        fullPage: true,
+        animations: "disabled",
+        // Canvas-driven pieces render a different frame each run; compare everything else.
+        mask: [page.locator("[data-nondeterministic]")],
+      });
       // Always keep a full-page capture for human review (test-results/screens, uploaded by CI).
       const shot = await page.screenshot({
         fullPage: true,

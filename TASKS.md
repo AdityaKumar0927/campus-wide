@@ -28,7 +28,8 @@ Live checklist; tick as work lands. Detail is finest for the next two phases and
 - [x] Owner look review 2026-09-17: v1 judged clean but soulless → D-18 revised to the notice-board direction
 - [x] Board motion (CSS-only scroll reveal + "recently pinned" ticker, reduced-motion safe) and a board-styled Open Graph card (`src/app/opengraph-image.tsx`, Instrument Serif OFL); Magic UI Pro template reviewed and not copied (licence), its MDX pipeline noted for Phase 7
 - [x] Magic UI (MIT registry) used creatively: animated-beam → twine relay diagram ("Take a tab" section), highlighter → marker pen, spinning-text → rubber-stamp seal, canvas-confetti → paper scraps on feedback, theme wipe via View Transitions; reduced-motion safe
-- [ ] **Owner look review (round 2)** of `docs/screenshots/phase-1b/` (incl. `og.png`, `phase-1b-motion/`)
+- [x] Owner look review round 2 (2026-09-17): serif and italics rejected → Bricolage Grotesque + Manrope, tight tracking; Chicago map hero with live ripple; dock, orbiting circles, icon cloud, comic text added
+- [ ] **Owner look review (round 3)** of `docs/screenshots/phase-2/` and `phase-2-motion/`
 - [x] Vercel project `campus-wide` created and linked via CLI (2026-09-16); production live at https://campus-wide.vercel.app with `ENABLE_EXPERIMENTAL_COREPACK=1` (pnpm 12) and `APP_URL`
 - [x] Vercel GitHub app installed by the owner (2026-09-17); PR previews and production deploys are automatic
 - [x] Footer static/external links are plain anchors (fixed a prefetch 404; best-practices 100 on production)
