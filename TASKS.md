@@ -28,6 +28,7 @@ Live checklist; tick as work lands. Detail is finest for the next two phases and
 - [ ] **Owner look review** of `docs/screenshots/phase-1/` against D-18
 - [x] Vercel project `campus-wide` created and linked via CLI (2026-09-16); production live at https://campus-wide.vercel.app with `ENABLE_EXPERIMENTAL_COREPACK=1` (pnpm 12) and `APP_URL`
 - [ ] STOP: owner installs the Vercel GitHub app for the repo so pushes and PRs deploy automatically (CLI `git connect` needs it)
+- [x] Footer static/external links are plain anchors (fixed a prefetch 404; best-practices 100 on production)
 - [x] Production Lighthouse (2026-09-16): mobile 97/97/100 performance, accessibility 100, SEO 100, best-practices 96-100; desktop performance 86-93 (observed LCP 0.3 s; simulator attributes JS to the text paint) → Phase 8 task below
 
 ## Phase 2 — Auth, multi-tenancy, RLS, consent
