@@ -91,7 +91,7 @@
   --muted-foreground: var(--ink-muted);
   --accent: oklch(0.93 0.03 var(--accent-hue));
   --accent-foreground: oklch(0.3 0.08 var(--accent-hue));
-  --destructive: oklch(0.55 0.2 27);
+  --destructive: oklch(0.49 0.19 27); /* ≥ 4.5:1 on the tinted destructive button background */
   --border: var(--rule);
   --input: oklch(0.88 0.012 80);
   --ring: oklch(0.55 0.1 var(--accent-hue));
