@@ -21,7 +21,7 @@ export default async function SectionPage({ params }: { params: Promise<Params> 
   return (
     <div className="space-y-6">
       <header className="border-b border-rule pb-4">
-        <p className="stamp">Demo campus · the board</p>
+        <p className="stamp">Illinois Tech · the board</p>
         <h1 className="mt-1 text-5xl">{meta.label}</h1>
       </header>
       <EmptyState

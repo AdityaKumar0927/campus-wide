@@ -48,7 +48,7 @@ export const placeholderSections: Record<string, { label: string; phase: number;
   questions: { label: "Questions", phase: 3, blurb: "Ask once, get a real answer, mark it accepted so the next person finds it." },
   post: { label: "Pin a notice", phase: 3, blurb: "Structured post types with expiry: no endless feed of stale notices." },
   inbox: { label: "Inbox", phase: 3, blurb: "Replies, thank-yous, and relay messages. Digests go out weekly, not hourly." },
-  more: { label: "Menu", phase: 3, blurb: "Spaces, settings, sessions, and your data export live here." },
+  more: { label: "Menu", phase: 3, blurb: "Spaces and your data export live here; account and sessions are already in Settings." },
   events: { label: "Events", phase: 4, blurb: "RSVP and add to your calendar with one tap." },
   market: { label: "Marketplace", phase: 4, blurb: "Buy and sell within campus. No payments here, and your email stays masked." },
   meals: { label: "Meal gifting", phase: 4, blurb: "Treat a friend or donate a swipe. Gifting only: nothing is ever sold." },

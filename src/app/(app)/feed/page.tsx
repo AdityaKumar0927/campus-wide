@@ -11,7 +11,7 @@ export default function FeedPage() {
     <div className="space-y-6">
       <header className="flex items-end justify-between border-b border-rule pb-4">
         <div>
-          <p className="stamp">Demo campus · the board</p>
+          <p className="stamp">Illinois Tech · the board</p>
           <h1 className="mt-1 text-5xl">Feed</h1>
         </div>
         <p className="stamp hidden sm:block">Newest first · no infinite scroll</p>

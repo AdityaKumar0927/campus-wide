@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { buttonVariants } from "@/components/ui/button";
+import { getSession } from "@/lib/dal/session";
 import { FeedbackButton } from "./feedback-button";
 import { ThemeToggle } from "./theme-toggle";
 import { Wordmark } from "./wordmark";
@@ -10,7 +11,8 @@ const links = [
   { href: "/#safety", label: "Safety" },
 ];
 
-export function SiteHeader() {
+export async function SiteHeader() {
+  const session = await getSession();
   return (
     <header className="sticky top-0 z-40 border-b border-rule bg-background/90 pt-safe-top backdrop-blur supports-[backdrop-filter]:bg-background/75">
       <div className="mx-auto flex h-14 max-w-6xl items-center justify-between gap-4 px-4">
@@ -29,8 +31,8 @@ export function SiteHeader() {
         <div className="flex items-center gap-1.5">
           <FeedbackButton />
           <ThemeToggle />
-          <Link href="/feed" className={buttonVariants({ size: "sm" })}>
-            Preview
+          <Link href={session ? "/feed" : "/sign-in"} className={buttonVariants({ size: "sm" })}>
+            {session ? "Open the board" : "Sign in"}
           </Link>
         </div>
       </div>

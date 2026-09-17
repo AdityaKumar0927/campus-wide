@@ -1,4 +1,6 @@
 import type { ReactNode } from "react";
+import Link from "next/link";
+import type { Session } from "@/lib/dal/session";
 import { BottomNav } from "./bottom-nav";
 import { FeedbackButton } from "./feedback-button";
 import { KeyboardShortcuts } from "./keyboard-shortcuts";
@@ -10,7 +12,8 @@ import { Wordmark } from "./wordmark";
  * Authenticated-area chrome: desktop sidebar + top bar, mobile top bar + bottom nav.
  * Server component; interactive pieces are small client islands.
  */
-export function AppShell({ children }: { children: ReactNode }) {
+export function AppShell({ children, session }: { children: ReactNode; session?: Session | null }) {
+  const readOnly = session?.membership?.status && session.membership.status !== "active";
   return (
     <div className="flex min-h-dvh flex-col md:flex-row">
       <aside className="hidden w-60 shrink-0 border-r border-rule bg-sidebar md:flex md:flex-col">
@@ -30,14 +33,26 @@ export function AppShell({ children }: { children: ReactNode }) {
           <div className="md:hidden">
             <Wordmark href="/feed" />
           </div>
-          <p className="stamp hidden md:block">Demo campus · preview build · nothing pinned yet</p>
+          <p className="stamp hidden md:block">Illinois Tech · Mies Campus{readOnly ? " · read-only" : ""}</p>
           <div className="flex items-center gap-1">
             <FeedbackButton />
             <ThemeToggle />
+            {session?.profile ? (
+              <Link href="/settings" aria-label="Your account" className="ml-1 flex size-8 items-center justify-center rounded-full border border-rule bg-[var(--stock-blue)] font-mono text-xs font-medium text-foreground outline-none focus-visible:ring-3 focus-visible:ring-ring/50">
+                {session.profile.initials}
+              </Link>
+            ) : null}
           </div>
         </header>
         <main id="main" tabIndex={-1} className="flex-1 px-4 pt-6 pb-24 outline-none md:px-8 md:pb-10">
-          <div className="mx-auto w-full max-w-3xl">{children}</div>
+          <div className="mx-auto w-full max-w-3xl">
+            {readOnly && (
+              <p role="status" className="notice mb-6 px-4 py-3 text-sm" style={{ "--stock": "var(--stock-yellow)" } as React.CSSProperties}>
+                Your account is read-only until you re-verify your campus email for this term. Sign out and back in to do that.
+              </p>
+            )}
+            {children}
+          </div>
         </main>
       </div>
 

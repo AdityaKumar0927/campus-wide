@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { cspFromEnv } from "@/lib/security/csp";
+import { refreshSession } from "@/lib/supabase/proxy";
 
 /**
  * Network boundary. This file NEVER makes authorization decisions — those live in the Data Access
@@ -9,7 +10,9 @@ import { cspFromEnv } from "@/lib/security/csp";
  *     edge already filters it and Next.js ≥ 15.2.3 is patched),
  *  3. (Phase 2) refreshes the Supabase session cookie and redirects signed-out users for UX.
  */
-export function proxy(request: NextRequest) {
+const SIGNED_IN_ONLY = ["/feed", "/questions", "/post", "/inbox", "/more", "/events", "/market", "/meals", "/lost-found", "/rides", "/study", "/roommates", "/polls", "/settings", "/onboarding"];
+
+export async function proxy(request: NextRequest) {
   const nonce = Buffer.from(crypto.randomUUID()).toString("base64");
   const csp = cspFromEnv(nonce);
 
@@ -20,6 +23,19 @@ export function proxy(request: NextRequest) {
 
   const response = NextResponse.next({ request: { headers: requestHeaders } });
   response.headers.set("Content-Security-Policy", csp);
+
+  // Session refresh + UX redirect only. The DAL and RLS decide what a request may actually do.
+  const claims = await refreshSession(request, response);
+  const path = request.nextUrl.pathname;
+  const needsSession = SIGNED_IN_ONLY.some((p) => path === p || path.startsWith(p + "/"));
+  if (needsSession && !claims && process.env.NEXT_PUBLIC_SUPABASE_URL) {
+    const url = request.nextUrl.clone();
+    url.pathname = "/sign-in";
+    url.searchParams.set("next", path);
+    const redirect = NextResponse.redirect(url);
+    redirect.headers.set("Content-Security-Policy", csp);
+    return redirect;
+  }
   return response;
 }
 
