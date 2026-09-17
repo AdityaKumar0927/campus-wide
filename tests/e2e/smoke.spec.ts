@@ -125,7 +125,7 @@ test.describe("app shell", () => {
     await dialog.getByRole("radio", { name: "Love it" }).click();
     await expect(dialog.getByRole("radio", { name: "Love it" })).toHaveAttribute("aria-checked", "true");
     await dialog.getByRole("button", { name: "Send" }).click();
-    await expect(dialog.getByRole("status")).toContainText("Thank you");
+    await expect(dialog.getByRole("status")).toContainText(/Thanks/);
   });
 
   test("theme can be switched to dark and back", async ({ page }) => {

@@ -10,7 +10,7 @@ function NavList({ items, heading }: { items: NavItem[]; heading?: string }) {
   return (
     <div>
       {heading && (
-        <p className="mb-1 px-3 font-heading text-sm italic text-muted-foreground">{heading}</p>
+        <p className="stamp mb-1 px-3">{heading}</p>
       )}
       <ul className="space-y-0.5">
         {items.map(({ href, label, icon: Icon }) => {

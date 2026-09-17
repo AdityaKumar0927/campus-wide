@@ -9,11 +9,14 @@ import {
   UsersIcon,
   UtensilsIcon,
 } from "lucide-react";
+import { CampusDock } from "@/components/campus-dock";
+import { CampusIconCloud } from "@/components/campus-icon-cloud";
+import { CampusOrbit } from "@/components/campus-orbit";
+import { ChicagoMap } from "@/components/chicago-map";
 import { Marker } from "@/components/marker";
 import { NoticeBoard } from "@/components/notice-board";
 import { PinnedTicker } from "@/components/pinned-ticker";
 import { RelayDiagram } from "@/components/relay-diagram";
-import { StampSeal } from "@/components/stamp-seal";
 import { buttonVariants } from "@/components/ui/button";
 
 const modules = [
@@ -46,11 +49,11 @@ export default function LandingPage() {
   return (
     <div className="mx-auto max-w-6xl px-4">
       {/* Masthead */}
-      <section className="relative pt-14 pb-10 md:pt-20 md:pb-14">
-        <StampSeal className="absolute top-16 right-0 hidden lg:block" />
+      <section className="grid items-center gap-10 pt-12 pb-10 md:pt-16 md:pb-14 lg:grid-cols-[1.15fr_1fr] lg:gap-14">
+        <div>
         <p className="stamp">Campus Wide · a notice board for the whole campus</p>
-        <h1 className="mt-4 max-w-4xl text-6xl md:text-[6.5rem]">
-          Your campus, <em className="text-primary">helping itself.</em>
+        <h1 className="mt-4 max-w-4xl text-6xl md:text-[5.75rem]">
+          Your campus, <span className="text-primary">helping itself.</span>
         </h1>
         <p className="mt-6 max-w-2xl text-lg text-muted-foreground md:text-xl">
           Every campus already runs on notices: the flyer in the stairwell, the index card by the vending machine,
@@ -65,6 +68,11 @@ export default function LandingPage() {
             Read the plan
           </Link>
         </div>
+        <div className="mt-8 hidden md:block">
+          <CampusDock />
+        </div>
+        </div>
+        <ChicagoMap className="w-full max-w-[26rem] justify-self-center lg:max-w-none" />
       </section>
 
       <NoticeBoard />
@@ -129,6 +137,19 @@ export default function LandingPage() {
         </div>
       </section>
 
+      {/* The stuff of campus life */}
+      <section className="masthead-rule grid items-center gap-8 py-16 md:grid-cols-2">
+        <div>
+          <p className="stamp">Lost, lent, found, passed on</p>
+          <h2 className="mt-3 text-4xl md:text-6xl">The stuff of campus life, kept in circulation.</h2>
+          <p className="mt-4 max-w-xl text-muted-foreground">
+            Keys, umbrellas, calculators the night before the midterm, a bike at the end of the year. Most of it already
+            changes hands on campus; the board just makes sure it finds the right hands, safely.
+          </p>
+        </div>
+        <CampusIconCloud />
+      </section>
+
       {/* Principles */}
       <section id="safety" className="masthead-rule scroll-mt-20 py-16">
         <p className="stamp">House rules</p>
@@ -148,7 +169,7 @@ export default function LandingPage() {
 
       {/* Universities */}
       <section id="universities" className="masthead-rule scroll-mt-20 py-16">
-        <div className="grid gap-10 md:grid-cols-[1.2fr_1fr] md:items-start">
+        <div className="grid gap-10 md:grid-cols-[1.2fr_1fr] md:items-center">
           <div>
             <p className="stamp">For universities</p>
             <h2 className="mt-3 text-4xl md:text-6xl">Built to be adopted, not just tolerated.</h2>
@@ -157,6 +178,8 @@ export default function LandingPage() {
               domains, features, policy text, and moderators, and see aggregate numbers only, never individual students.
             </p>
           </div>
+          <div className="space-y-6">
+          <CampusOrbit />
           <ul className="space-y-3 text-sm">
             {[
               "Row-level isolation between campuses, proven by automated tests",
@@ -171,6 +194,7 @@ export default function LandingPage() {
               </li>
             ))}
           </ul>
+          </div>
         </div>
       </section>
     </div>
