@@ -28,7 +28,7 @@ export async function proxy(request: NextRequest) {
   const claims = await refreshSession(request, response);
   const path = request.nextUrl.pathname;
   const needsSession = SIGNED_IN_ONLY.some((p) => path === p || path.startsWith(p + "/"));
-  if (needsSession && !claims && process.env.NEXT_PUBLIC_SUPABASE_URL) {
+  if (needsSession && !claims && (process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.SUPABASE_URL)) {
     const url = request.nextUrl.clone();
     url.pathname = "/sign-in";
     url.searchParams.set("next", path);

@@ -1,5 +1,6 @@
 import { createServerClient } from "@supabase/ssr";
 import type { NextRequest, NextResponse } from "next/server";
+import { supabaseEnv } from "./env";
 
 /**
  * Refreshes the Supabase session cookie inside proxy.ts and returns the verified claims (or null).
@@ -8,8 +9,8 @@ import type { NextRequest, NextResponse } from "next/server";
  * be written to both the forwarded request and the response.
  */
 export async function refreshSession(request: NextRequest, response: NextResponse) {
-  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const key = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY;
+  const url = supabaseEnv.url;
+  const key = supabaseEnv.publishableKey;
   if (!url || !key) return null;
 
   const supabase = createServerClient(url, key, {
