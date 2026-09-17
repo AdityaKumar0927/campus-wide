@@ -31,7 +31,9 @@ update public.universities set dining_locations = '[
   {"slug": "tech-yeah", "name": "Tech Yeah Market", "building": "McCormick Tribune Campus Center", "kind": "mobile-order", "guest_meals": false}
 ]'::jsonb,
 policy_text = jsonb_build_object(
-  'meals', 'Guest meals belong to All Access plans (10 per semester) and can only be used at The Commons with the plan holder present at the register. The HawkCard is non-transferable: never lend it, share a PIN, or accept anything in return. Offers here are gifts between students; nothing is bought, sold, or traded. Confirm the current Room and Board Contract wording before enabling.'
+  'meals', 'Guest meals belong to All Access plans (10 per semester) and can only be used at The Commons with the plan holder present at the register. The HawkCard is non-transferable: never lend it, share a PIN, or accept anything in return. Offers here are gifts between students; nothing is bought, sold, or traded.',
+  'meals_contract', '2026-27 License Agreement, Section F: the dining card is property of Illinois Tech, non-transferable; unauthorized use may cost housing privileges. Signature clause: the Dining program is for the student''s own use and no portion may be used by any other person. Guest meal swipes are sold by the plan to treat a friend or family member. Dining periods: 9 Aug–12 Dec 2026 and 7 Jan–8 May 2027; no service 13 Dec–6 Jan.',
+  'meals_authorization', 'pending: written confirmation from the Office of Residential Life (housing@illinoistech.edu) that guest meal swipes may be used for a fellow student met on the board, holder present.'
 )
 where slug = 'illinois-tech';
 

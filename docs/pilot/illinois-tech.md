@@ -92,8 +92,7 @@ not lend their HawkCard to any other person"; "permitting another person to wron
 intent to obtain University services, privileges, or goods" is prohibited; the Code of Conduct reaches
 both parties through its misuse-of-ID, unauthorised-use, and complicity clauses, with sanctions up to
 loss of housing. No official text permits selling or trading swipes, and no transfer mechanism exists.
-The Room and Board Contract itself sits behind the housing portal and could not be read; the owner, as a
-student, should read its dining clause before the board is switched on.
+The Residence Hall & Dining License Agreement is analysed in §3a below.
 
 **So what can be shared, legally?** Exactly one thing: an **All Access holder's guest meal, used in
 person at The Commons, with the holder standing at the register.** That is a normal, sanctioned use of a
@@ -128,6 +127,46 @@ quotes the presence and non-transfer rules above.
 the safety page and every request confirmation link Illinois Tech's Dean of Students resources, the
 Housing Insecurity Resources page, and the Hawks 4 Hawks Hardship Fund, because a guest meal is a kindness,
 not a food-security program.
+
+### 3a. The 2026–27 Residence Hall & Dining License Agreement (read 2026-09-17, supplied by the owner)
+
+The contract is now in hand. The clauses that touch the board, quoted:
+
+- **Section B.** "Student shall not make or permit any use of their assigned room or residence hall
+  or dining privileges for (i) any commercial purposes."
+- **Section F.** "This dining card is property of Illinois Tech, non-transferable, and must be
+  surrendered to any Illinois Tech official upon request. Alteration or use of the student's campus
+  wide identification card for any unauthorized purpose will result in disciplinary action which could
+  include loss of housing privileges. Food and related articles may not be taken from the Commons
+  dining Hall, except as permitted by Dining Services." Dining plan periods: 9 August–12 December
+  2026 and 7 January–8 May 2027; no dining service between 13 December and 6 January.
+- **Sections K and O.** The ID card "acts as the dining pass"; "Student may not lend their ID card to
+  any other person. Unauthorized use of ID cards will be reported."
+- **Signature clause.** "I agree … to take the Dining program exclusively for my own use and not allow
+  any portion of such … Dining program to be used by any other person. … Violation of this provision
+  immediately terminates this License Agreement."
+
+**What this means for the board.**
+1. Everything already excluded stays excluded, now with contract force: no lending, no transfers, no
+   money, no taking food out for someone else.
+2. Guest meals are the one open question. The plan itself sells All Access "plus 10 Guest Meal Swipes to
+   treat a friend or family member" (dineoncampus.com/iit), so a holder swiping a guest in at the register
+   is the sanctioned use of a plan feature, not another person "using the Dining program". But the
+   signature clause is written broadly ("exclusively for my own use"), and a board that organises guest
+   meals for students the holder has never met is a use the contract's authors did not have in mind.
+3. **Decision M-5: the board stays off until the Office of Residential Life confirms in writing** that
+   an All Access holder may use guest meal swipes to treat a fellow student they met on the board, with
+   the holder present at the register. The request goes to housing@illinoistech.edu; suggested wording:
+
+   > I hold the All Access plan, which includes 10 guest meal swipes per semester. A student-run,
+   > non-commercial campus board would let students who have spare guest swipes offer a Commons meal to
+   > another Illinois Tech student, always with the plan holder present and tapping their own HawkCard;
+   > nothing is sold, traded, or lent. Under Section F and the signature clause of the 2026–27 License
+   > Agreement, is that an acceptable use of guest meal swipes? If not, we will not offer the feature.
+
+   The reply, whichever way it goes, is stored in `policy_text.meals_authorization` and shown to admins.
+4. The board's calendar is now contractual: offers only inside the dining periods above, and closed from
+   13 December to 6 January.
 
 ## 4. Messaging: the relay, the one-message rule, and blocking
 
@@ -309,8 +348,8 @@ addresses and does not integrate with any Illinois Tech system. Details in §10.
   lobby, and the Galvin Library entrance, labelled as app suggestions.
 
 **Owner actions (STOP items)**
-1. Read the Room and Board Contract's dining clause in the housing portal and confirm nothing forbids a
-   holder treating a present guest; paste the wording into `policy_text.meals` for the campus.
+1. Done 2026-09-17: the License Agreement was read (§3a). Remaining: email the Office of Residential Life
+   using the §3a wording and store the reply; the board stays off until then (Decision M-5).
 2. Create the Supabase project in `us-east-2` and enter the Turnstile keys and the OTP email template.
 3. Create a Resend account and verify a sending domain (a real domain is required; the Vercel subdomain
    cannot carry DNS records).
