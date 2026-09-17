@@ -22,6 +22,8 @@ export default defineConfig({
     baseURL,
     trace: "retain-on-failure",
     screenshot: "only-on-failure",
+    // Deterministic captures: CSS/JS motion pauses (the icon cloud and orbit honour this signal).
+    reducedMotion: "reduce",
   },
   projects: [
     {

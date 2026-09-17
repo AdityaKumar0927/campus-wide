@@ -39,7 +39,7 @@ const icons = [
 /** The stuff of campus life: what gets lost, lent, found, and passed on. Drag to spin. */
 export function CampusIconCloud() {
   return (
-    <div className="relative mx-auto flex size-[24rem] items-center justify-center overflow-hidden text-foreground" aria-hidden>
+    <div data-nondeterministic className="relative mx-auto flex size-[24rem] items-center justify-center overflow-hidden text-foreground" aria-hidden>
       <IconCloud showControl={false} icons={icons.map((Icon, i) => <Icon key={i} size={64} strokeWidth={1.6} color="currentColor" />)} />
     </div>
   );
