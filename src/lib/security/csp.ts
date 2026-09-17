@@ -80,7 +80,7 @@ export function cspFromEnv(nonce: string): string {
   return buildCsp({
     nonce,
     isDev: process.env.NODE_ENV === "development",
-    supabaseUrl: process.env.NEXT_PUBLIC_SUPABASE_URL,
+    supabaseUrl: process.env.NEXT_PUBLIC_SUPABASE_URL ?? process.env.SUPABASE_URL,
     umamiSrc: process.env.NEXT_PUBLIC_UMAMI_SRC,
     turnstileEnabled: Boolean(process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY),
     browserAiEnabled: process.env.NEXT_PUBLIC_BROWSER_AI === "1",

@@ -1,6 +1,9 @@
 import { createServerClient } from "@supabase/ssr";
 import { cookies } from "next/headers";
 import "server-only";
+import { supabaseEnv } from "./env";
+
+export { isSupabaseConfigured } from "./env";
 
 /**
  * Server client for Server Components, Server Actions, and Route Handlers. Sessions live in cookies
@@ -9,7 +12,7 @@ import "server-only";
  */
 export async function createClient() {
   const cookieStore = await cookies();
-  return createServerClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY!, {
+  return createServerClient(supabaseEnv.url!, supabaseEnv.publishableKey!, {
     cookies: {
       getAll() {
         return cookieStore.getAll();
@@ -26,7 +29,3 @@ export async function createClient() {
   });
 }
 
-/** True when the Supabase environment is configured (lets the skeleton run without a project). */
-export function isSupabaseConfigured() {
-  return Boolean(process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY);
-}

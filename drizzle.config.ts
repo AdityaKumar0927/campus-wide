@@ -9,7 +9,9 @@ export default defineConfig({
   schema: "./src/lib/db/schema/index.ts",
   out: "./supabase/migrations",
   migrations: { prefix: "supabase" },
-  dbCredentials: { url: process.env.DIRECT_DATABASE_URL ?? "postgresql://postgres:postgres@127.0.0.1:54322/postgres" },
+  dbCredentials: {
+    url: process.env.DIRECT_DATABASE_URL ?? process.env.POSTGRES_URL_NON_POOLING ?? "postgresql://postgres:postgres@127.0.0.1:54322/postgres",
+  },
   entities: { roles: { provider: "supabase" } },
   strict: true,
   verbose: true,
