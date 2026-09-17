@@ -17,7 +17,7 @@ export function Wordmark({ className, href = "/" }: { className?: string; href?:
     <Link
       href={href}
       className={cn(
-        "inline-flex items-center gap-1.5 rounded-sm font-heading text-[1.25rem] font-bold leading-none tracking-[-0.04em] text-foreground outline-none focus-visible:ring-3 focus-visible:ring-ring/50",
+        "inline-flex items-center gap-1.5 rounded-sm font-heading text-[1.25rem] font-medium leading-none tracking-[-0.045em] text-foreground outline-none focus-visible:ring-3 focus-visible:ring-ring/50",
         className,
       )}
       aria-label="Campus Wide home"

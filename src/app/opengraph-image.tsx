@@ -9,7 +9,7 @@ export const contentType = "image/png";
 // Static assets read once at module scope (Next.js docs pattern). Both faces are OFL-licensed;
 // see the *-OFL.txt files next to them.
 const fontsDir = join(process.cwd(), "src", "assets", "fonts");
-const display = await readFile(join(fontsDir, "BricolageGrotesque-700.woff"));
+const display = await readFile(join(fontsDir, "BricolageGrotesque-400.woff"));
 const body = await readFile(join(fontsDir, "Manrope-500.woff"));
 
 const paper = "#faf7f2";
@@ -44,8 +44,8 @@ export default async function Image() {
             <span style={{ color: green }}>Wide</span>
           </div>
           <div style={{ display: "flex", flexDirection: "column" }}>
-            <div style={{ fontSize: 92, lineHeight: 0.96, letterSpacing: -4 }}>Your campus,</div>
-            <div style={{ fontSize: 92, lineHeight: 0.96, letterSpacing: -4, color: green }}>helping itself.</div>
+            <div style={{ fontSize: 92, lineHeight: 0.96, letterSpacing: -5 }}>Your campus,</div>
+            <div style={{ fontSize: 92, lineHeight: 0.96, letterSpacing: -5, color: green }}>helping itself.</div>
           </div>
           <div style={{ fontFamily: "monospace", fontSize: 18, letterSpacing: 2, color: "#6b6258" }}>
             A NOTICE BOARD FOR THE WHOLE CAMPUS · VERIFIED · NO ADS
@@ -89,7 +89,7 @@ export default async function Image() {
     {
       ...size,
       fonts: [
-        { name: "Bricolage Grotesque", data: display, style: "normal", weight: 700 },
+        { name: "Bricolage Grotesque", data: display, style: "normal", weight: 400 },
         { name: "Manrope", data: body, style: "normal", weight: 500 },
       ],
     },

@@ -12,8 +12,8 @@ import {
 import { CampusDock } from "@/components/campus-dock";
 import { CampusIconCloud } from "@/components/campus-icon-cloud";
 import { CampusOrbit } from "@/components/campus-orbit";
-import { ChicagoMap } from "@/components/chicago-map";
 import { Marker } from "@/components/marker";
+import { StampSeal } from "@/components/stamp-seal";
 import { NoticeBoard } from "@/components/notice-board";
 import { PinnedTicker } from "@/components/pinned-ticker";
 import { RelayDiagram } from "@/components/relay-diagram";
@@ -72,7 +72,7 @@ export default function LandingPage() {
           <CampusDock />
         </div>
         </div>
-        <ChicagoMap className="w-full max-w-[26rem] justify-self-center lg:max-w-none" />
+        <StampSeal className="justify-self-center" />
       </section>
 
       <NoticeBoard />
