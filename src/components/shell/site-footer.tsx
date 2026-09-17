@@ -46,16 +46,26 @@ export function SiteFooter() {
           <nav key={col.heading} aria-label={col.heading}>
             <p className="mb-3 text-xs font-semibold tracking-wider text-muted-foreground uppercase">{col.heading}</p>
             <ul className="space-y-2 text-sm">
-              {col.links.map((l) => (
-                <li key={l.href}>
-                  <Link
-                    href={l.href}
-                    className="-my-1 inline-block rounded-sm py-1 underline-offset-4 hover:underline focus-visible:ring-3 focus-visible:ring-ring/50"
-                  >
-                    {l.label}
-                  </Link>
-                </li>
-              ))}
+              {col.links.map((l) => {
+                const cls =
+                  "-my-1 inline-block rounded-sm py-1 underline-offset-4 hover:underline focus-visible:ring-3 focus-visible:ring-ring/50";
+                // Static files and external URLs are not app routes: a plain anchor avoids Link prefetching
+                // them as RSC requests (which 404).
+                const isAppRoute = l.href.startsWith("/") && !l.href.startsWith("/.well-known/");
+                return (
+                  <li key={l.href}>
+                    {isAppRoute ? (
+                      <Link href={l.href} className={cls}>
+                        {l.label}
+                      </Link>
+                    ) : (
+                      <a href={l.href} className={cls} rel={l.href.startsWith("http") ? "noopener" : undefined}>
+                        {l.label}
+                      </a>
+                    )}
+                  </li>
+                );
+              })}
             </ul>
           </nav>
         ))}

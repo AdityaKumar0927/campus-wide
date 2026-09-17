@@ -22,3 +22,11 @@ updates:
       day: monday
     commit-message:
       prefix: ci
+    ignore:
+      # Major bumps of the toolchain are evaluated deliberately (PLAN.md D-01, stack verification):
+      # @types/node must match the Node 24 runtime; TypeScript 6/7 needs eslint-config-next support.
+      - dependency-name: "@types/node"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "typescript"
+        update-types: ["version-update:semver-major"]
+

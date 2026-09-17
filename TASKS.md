@@ -26,7 +26,9 @@ Live checklist; tick as work lands. Detail is finest for the next two phases and
 - [x] Shell: header with Feedback popover (local thank-you state), theme menu, mobile bottom nav (safe-area), desktop sidebar + `?` shortcuts, empty states, `/offline`, 404, placeholder sections
 - [x] `/api/health`; 7 unit + 16 E2E tests green; Lighthouse a11y/best-practices/SEO = 100, performance 93-95 mobile / 81-83 desktop on localhost (simulator artifact, see `scripts/lighthouse.mjs`; re-verified on the Vercel preview); screenshots in `docs/screenshots/phase-1/`
 - [ ] **Owner look review** of `docs/screenshots/phase-1/` against D-18
-- [ ] STOP (recommended): owner links the repo in Vercel for preview deployments
+- [x] Vercel project `campus-wide` created and linked via CLI (2026-09-16); production live at https://campus-wide.vercel.app with `ENABLE_EXPERIMENTAL_COREPACK=1` (pnpm 12) and `APP_URL`
+- [ ] STOP: owner installs the Vercel GitHub app for the repo so pushes and PRs deploy automatically (CLI `git connect` needs it)
+- [x] Production Lighthouse (2026-09-16): mobile 97/97/100 performance, accessibility 100, SEO 100, best-practices 96-100; desktop performance 86-93 (observed LCP 0.3 s; simulator attributes JS to the text paint) → Phase 8 task below
 
 ## Phase 2 — Auth, multi-tenancy, RLS, consent
 - [ ] STOP: Supabase project (**region**, URL, publishable + secret keys, DB URLs) + Resend (API key; domain or test mode)
@@ -75,6 +77,7 @@ Live checklist; tick as work lands. Detail is finest for the next two phases and
 
 ## Phase 8 — Hardening verification + HECVAT
 - [ ] Verify headers + full CSP on a preview; SSRF and rate-limit coverage audits; Lighthouse ≥ 95 all routes
+- [ ] Desktop performance ≥ 95: JS diet for public pages (drop Sonner/Base UI menus from the public layout) and evaluate static rendering of public pages with a hash-based CSP once Next SRI leaves experimental
 - [ ] `docs/compliance/HECVAT.md`, data map, subprocessors, incident response; `ADMIN_GUIDE.md`, `UNIVERSITY_ONBOARDING.md`
 
 ## Phase 9 — Deploy
