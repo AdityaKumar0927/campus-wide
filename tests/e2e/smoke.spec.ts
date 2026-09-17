@@ -1,5 +1,6 @@
 import { expect, test } from "@playwright/test";
 import AxeBuilder from "@axe-core/playwright";
+import { signInNewStudent } from "./auth.helpers";
 
 const routes = [
   { path: "/", name: "landing" },
@@ -69,6 +70,10 @@ test("keyboard users can reach the primary navigation", async ({ page }) => {
 });
 
 test.describe("app shell", () => {
+  test.beforeEach(async ({ page }) => {
+    await signInNewStudent(page);
+  });
+
   test("feed and a placeholder section render inside the shell with no dead nav links", async ({ page }, testInfo) => {
     await page.goto("/feed");
     await expect(page.getByRole("heading", { level: 1, name: "Feed" })).toBeVisible();
@@ -89,6 +94,26 @@ test.describe("app shell", () => {
     await expect(page.getByRole("heading", { level: 1, name: "Marketplace" })).toBeVisible();
     await page.goto("/definitely-not-a-section");
     await expect(page.getByRole("heading", { level: 1 })).toContainText("taken down");
+  });
+
+  test("signed-out visitors are sent to sign in, and a non-campus address is refused", async ({ browser }) => {
+    const context = await browser.newContext();
+    const page = await context.newPage();
+    await page.goto("/feed");
+    await expect(page).toHaveURL(/sign-in/);
+    expect(page.url()).toContain("/sign-in?next=%2Ffeed");
+    await page.getByLabel("Campus email").fill("someone@gmail.com");
+    await page.getByRole("button", { name: "Send me a code" }).click();
+    await expect(page.locator("#sign-in-error")).toContainText(/Only Illinois Tech addresses/);
+    await context.close();
+  });
+
+  test("settings shows the locked identity and the current session", async ({ page }) => {
+    await page.goto("/settings");
+    await expect(page.getByRole("heading", { level: 1, name: "Your account" })).toBeVisible();
+    await expect(page.getByText("this device")).toBeVisible();
+    const axe = await new AxeBuilder({ page }).withTags(["wcag2a", "wcag2aa", "wcag21aa", "wcag22aa"]).analyze();
+    expect(axe.violations, JSON.stringify(axe.violations, null, 2)).toEqual([]);
   });
 
   test("feedback popover collects a message and a sentiment, then thanks the user", async ({ page }) => {
