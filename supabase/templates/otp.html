@@ -1,0 +1,15 @@
+<!doctype html>
+<html lang="en">
+  <body style="margin:0;padding:24px;background:#faf7f2;font-family:ui-sans-serif,system-ui,sans-serif;color:#2b2620">
+    <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="max-width:520px;margin:0 auto">
+      <tr><td style="padding:0 0 16px 0;font-size:20px"><span style="display:inline-block;width:10px;height:10px;border-radius:999px;background:#2c6a4a;margin-right:6px"></span>Campus Wide</td></tr>
+      <tr><td style="background:#ffffff;border:1px solid #e6e0d6;border-radius:6px;padding:24px">
+        <p style="margin:0 0 8px 0;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#6b6258">Your sign-in code</p>
+        <p style="margin:0 0 16px 0;font-size:34px;letter-spacing:.2em;font-family:ui-monospace,Menlo,monospace">{{ .Token }}</p>
+        <p style="margin:0 0 16px 0;font-size:14px;line-height:1.5">Enter this code on the sign-in page within 10 minutes. It only works for <strong>{{ .Email }}</strong>. If you did not request it, ignore this email; nobody can use it without access to this mailbox.</p>
+        <p style="margin:0;font-size:14px;line-height:1.5">Prefer a link? <a href="{{ .ConfirmationURL }}" style="color:#2c6a4a">Sign in with one tap</a>.</p>
+      </td></tr>
+      <tr><td style="padding:16px 0 0 0;font-size:12px;color:#6b6258;line-height:1.5">Campus Wide is student-run and not affiliated with or endorsed by Illinois Institute of Technology. We never ask for your password. Questions: reply to this email.</td></tr>
+    </table>
+  </body>
+</html>
