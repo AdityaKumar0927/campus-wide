@@ -4,41 +4,37 @@ import {
   CalendarDaysIcon,
   CarFrontIcon,
   CircleHelpIcon,
-  HandHeartIcon,
   SearchIcon,
-  ShieldCheckIcon,
   ShoppingBagIcon,
   UsersIcon,
   UtensilsIcon,
 } from "lucide-react";
+import { NoticeBoard } from "@/components/notice-board";
 import { buttonVariants } from "@/components/ui/button";
 
 const modules = [
-  { icon: CircleHelpIcon, title: "Questions & answers", text: "Ask once. Accepted answers stay findable for the next student." },
-  { icon: CalendarDaysIcon, title: "Events", text: "RSVP, then add it to your calendar in one tap." },
-  { icon: ShoppingBagIcon, title: "Marketplace", text: "Campus-only listings. No payments, and your email stays masked." },
-  { icon: UtensilsIcon, title: "Meal gifting", text: "Treat a friend or donate a swipe. Gifting only, never for sale." },
-  { icon: SearchIcon, title: "Lost & found", text: "Post what you found. Claim what you lost." },
-  { icon: CarFrontIcon, title: "Rides", text: "Share the drive home for the break." },
-  { icon: BookOpenIcon, title: "Study groups", text: "Find the people in your section before the midterm." },
-  { icon: UsersIcon, title: "Roommates & sublets", text: "Listings that expire, so nothing stale lingers." },
-];
+  { icon: CircleHelpIcon, stock: "blue", stamp: "Index card", title: "Questions & answers", text: "Ask once. The accepted answer stays pinned for the next person who needs it." },
+  { icon: CalendarDaysIcon, stock: "white", stamp: "Flyer", title: "Events", text: "RSVP, then drop it into your calendar in one tap." },
+  { icon: ShoppingBagIcon, stock: "manila", stamp: "Tear-off tabs", title: "Marketplace", text: "Campus-only listings. No payments. Your email stays in your pocket until you both say so." },
+  { icon: UtensilsIcon, stock: "green", stamp: "Gift only", title: "Meal gifting", text: "Treat a friend or donate a swipe. Nothing here is ever for sale." },
+  { icon: SearchIcon, stock: "yellow", stamp: "Sticky note", title: "Lost & found", text: "Post what you found. Claim what you lost. Water bottles, mostly." },
+  { icon: CarFrontIcon, stock: "green", stamp: "Ride board", title: "Rides", text: "Fill the empty seats on the drive home for the break." },
+  { icon: BookOpenIcon, stock: "blue", stamp: "Index card", title: "Study groups", text: "Find the people in your section before the midterm, not after." },
+  { icon: UsersIcon, stock: "pink", stamp: "Expires", title: "Roommates & sublets", text: "Listings that take themselves down, so nothing stale lingers." },
+] as const;
 
 const principles = [
   {
-    icon: ShieldCheckIcon,
     title: "Real people, gentle names",
-    text: "Everyone verifies with a university email. Display names can be pseudonyms, but nobody is anonymous to the campus moderators. That one design choice removes most of what went wrong with anonymous campus apps.",
+    text: "Everyone verifies with a university email. Display names can be pseudonyms, but nobody is anonymous to the campus moderators. That one choice removes most of what went wrong with anonymous campus apps.",
   },
   {
-    icon: HandHeartIcon,
     title: "Helpfulness, not karma",
-    text: "There is no score to farm. Your profile shows how many people you helped, thank-yous you received, and answers that were accepted.",
+    text: "There is no score to farm. Your profile shows how many people you helped, the thank-yous you received, and the answers that were accepted.",
   },
   {
-    icon: UsersIcon,
-    title: "Humans moderate",
-    text: "Trusted students and staff review reports, every action comes with a written reason, and every decision can be appealed. Software never bans anyone on its own.",
+    title: "Humans take things down",
+    text: "Trusted students and staff review reports. Every action comes with a written reason, and every decision can be appealed. Software never bans anyone on its own.",
   },
 ];
 
@@ -46,67 +42,73 @@ export default function LandingPage() {
   return (
     <div className="mx-auto max-w-6xl px-4">
       {/* Masthead */}
-      <section className="border-b border-rule py-16 md:py-24">
-        <p className="font-heading text-base italic text-muted-foreground">A calmer campus network</p>
-        <h1 className="mt-3 max-w-4xl text-5xl leading-[1.02] md:text-7xl">
+      <section className="pt-14 pb-10 md:pt-20 md:pb-14">
+        <p className="stamp">Campus Wide · a notice board for the whole campus</p>
+        <h1 className="mt-4 max-w-4xl text-6xl md:text-[6.5rem]">
           Your campus, <em className="text-primary">helping itself.</em>
         </h1>
         <p className="mt-6 max-w-2xl text-lg text-muted-foreground md:text-xl">
-          Campus Wide is a community platform any university can adopt. Verified students ask, answer, share, and
-          organise, in a space designed to be kinder than the feeds it replaces.
+          Every campus already runs on notices: the flyer in the stairwell, the index card by the vending machine,
+          the group chat that scrolled away. Campus Wide is that board, rebuilt for everyone with a university email,
+          and kinder than the feeds it replaces.
         </p>
         <div className="mt-8 flex flex-wrap gap-3">
           <Link href="/feed" className={buttonVariants({ size: "lg" })}>
-            Preview the app
+            Preview the board
           </Link>
-          <Link
-            href="https://github.com/AdityaKumar0927/campus-wide/blob/main/PLAN.md"
-            className={buttonVariants({ size: "lg", variant: "outline" })}
-          >
+          <Link href="https://github.com/AdityaKumar0927/campus-wide/blob/main/PLAN.md" className={buttonVariants({ size: "lg", variant: "outline" })}>
             Read the plan
           </Link>
         </div>
-        <dl className="mt-10 grid max-w-3xl grid-cols-1 gap-x-8 gap-y-3 text-sm sm:grid-cols-3">
-          {[
-            ["Verified", "university email required"],
-            ["No ads", "no data sales, no tracking cookies"],
-            ["No resale", "meals are gifted, never sold"],
-          ].map(([k, v]) => (
-            <div key={k} className="border-l-2 border-primary pl-3">
-              <dt className="font-medium">{k}</dt>
-              <dd className="text-muted-foreground">{v}</dd>
-            </div>
-          ))}
-        </dl>
       </section>
 
+      <NoticeBoard />
+
+      <dl className="mt-8 grid max-w-3xl grid-cols-1 gap-x-8 gap-y-3 text-sm sm:grid-cols-3">
+        {[
+          ["Verified", "a university email is the only way in"],
+          ["No ads", "no data sales, no tracking cookies"],
+          ["No resale", "meals are gifted, never sold"],
+        ].map(([k, v]) => (
+          <div key={k} className="border-l-2 border-primary pl-3">
+            <dt className="font-medium">{k}</dt>
+            <dd className="text-muted-foreground">{v}</dd>
+          </div>
+        ))}
+      </dl>
+
       {/* Modules */}
-      <section id="how-it-works" className="scroll-mt-20 py-16">
-        <div className="flex items-baseline justify-between gap-4">
-          <h2 className="text-3xl md:text-4xl">Everything a campus already does, in one calm place.</h2>
-        </div>
-        <ul className="mt-10 grid gap-px overflow-hidden rounded-xl border border-rule bg-rule sm:grid-cols-2 lg:grid-cols-4">
+      <section id="how-it-works" className="scroll-mt-20 pt-24 pb-16">
+        <p className="stamp">What goes on the board</p>
+        <h2 className="mt-3 max-w-3xl text-4xl md:text-6xl">Everything a campus already does, without the group chat.</h2>
+        <ul className="mt-12 grid gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
           {modules.map((m) => (
-            <li key={m.title} className="bg-card p-5">
-              <m.icon className="size-5 text-primary" aria-hidden />
-              <h3 className="mt-3 text-xl">{m.title}</h3>
+            <li key={m.title} className="notice px-4 pt-5 pb-4" style={{ "--stock": `var(--stock-${m.stock})` } as React.CSSProperties}>
+              <div className="flex items-center justify-between">
+                <p className="stamp">{m.stamp}</p>
+                <m.icon className="size-4 text-primary" aria-hidden />
+              </div>
+              <h3 className="mt-3 text-lg">{m.title}</h3>
               <p className="mt-1.5 text-sm text-muted-foreground">{m.text}</p>
             </li>
           ))}
         </ul>
-        <p className="mt-4 text-sm text-muted-foreground">
-          Every module is a switch your university admin can turn on or off. Meal gifting is off until a campus opts in.
+        <p className="mt-8 text-sm text-muted-foreground">
+          Every module is a switch your university admin can turn on or off. Meal gifting stays off until a campus opts in.
         </p>
       </section>
 
       {/* Principles */}
       <section id="safety" className="masthead-rule scroll-mt-20 py-16">
-        <h2 className="text-3xl md:text-4xl">Why it feels different.</h2>
+        <p className="stamp">House rules</p>
+        <h2 className="mt-3 text-4xl md:text-6xl">Why it feels different.</h2>
         <div className="mt-10 grid gap-10 md:grid-cols-3">
-          {principles.map((p) => (
+          {principles.map((p, i) => (
             <article key={p.title}>
-              <p.icon className="size-6 text-primary" aria-hidden />
-              <h3 className="mt-4 text-2xl">{p.title}</h3>
+              <p className="font-heading text-5xl text-primary/70" aria-hidden>
+                {String(i + 1).padStart(2, "0")}
+              </p>
+              <h3 className="mt-2 text-xl">{p.title}</h3>
               <p className="mt-2 text-muted-foreground">{p.text}</p>
             </article>
           ))}
@@ -117,7 +119,8 @@ export default function LandingPage() {
       <section id="universities" className="masthead-rule scroll-mt-20 py-16">
         <div className="grid gap-10 md:grid-cols-[1.2fr_1fr] md:items-start">
           <div>
-            <h2 className="text-3xl md:text-4xl">Built for universities to adopt, not just tolerate.</h2>
+            <p className="stamp">For universities</p>
+            <h2 className="mt-3 text-4xl md:text-6xl">Built to be adopted, not just tolerated.</h2>
             <p className="mt-4 text-muted-foreground">
               Each campus is an isolated tenant enforced inside the database, not just in the app. Admins configure
               domains, features, policy text, and moderators, and see aggregate numbers only, never individual students.

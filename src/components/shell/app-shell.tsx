@@ -20,8 +20,8 @@ export function AppShell({ children }: { children: ReactNode }) {
         <div className="flex-1 overflow-y-auto px-2 py-4">
           <SidebarNav />
         </div>
-        <div className="border-t border-rule px-4 py-3 text-xs text-muted-foreground">
-          Press <kbd className="rounded border border-rule bg-muted px-1 font-mono">?</kbd> for shortcuts
+        <div className="stamp border-t border-rule px-4 py-3 normal-case tracking-normal">
+          Press <kbd className="rounded border border-rule bg-muted px-1">?</kbd> for shortcuts
         </div>
       </aside>
 
@@ -30,7 +30,7 @@ export function AppShell({ children }: { children: ReactNode }) {
           <div className="md:hidden">
             <Wordmark href="/feed" />
           </div>
-          <p className="hidden text-sm text-muted-foreground md:block">Demo campus · preview build</p>
+          <p className="stamp hidden md:block">Demo campus · preview build · nothing pinned yet</p>
           <div className="flex items-center gap-1">
             <FeedbackButton />
             <ThemeToggle />

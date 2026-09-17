@@ -25,7 +25,8 @@ Live checklist; tick as work lands. Detail is finest for the next two phases and
 - [x] Theme per D-18: OKLCH `@theme` tokens, next-themes, self-hosted Instrument Sans + Newsreader (display: optional), reduced-motion base
 - [x] Shell: header with Feedback popover (local thank-you state), theme menu, mobile bottom nav (safe-area), desktop sidebar + `?` shortcuts, empty states, `/offline`, 404, placeholder sections
 - [x] `/api/health`; 7 unit + 16 E2E tests green; Lighthouse a11y/best-practices/SEO = 100, performance 93-95 mobile / 81-83 desktop on localhost (simulator artifact, see `scripts/lighthouse.mjs`; re-verified on the Vercel preview); screenshots in `docs/screenshots/phase-1/`
-- [ ] **Owner look review** of `docs/screenshots/phase-1/` against D-18
+- [x] Owner look review 2026-09-17: v1 judged clean but soulless → D-18 revised to the notice-board direction
+- [ ] **Owner look review (round 2)** of `docs/screenshots/phase-1b/`
 - [x] Vercel project `campus-wide` created and linked via CLI (2026-09-16); production live at https://campus-wide.vercel.app with `ENABLE_EXPERIMENTAL_COREPACK=1` (pnpm 12) and `APP_URL`
 - [ ] STOP: owner installs the Vercel GitHub app for the repo so pushes and PRs deploy automatically (CLI `git connect` needs it)
 - [x] Footer static/external links are plain anchors (fixed a prefetch 404; best-practices 100 on production)
