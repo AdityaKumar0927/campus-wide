@@ -58,8 +58,8 @@ export default function LandingPage() {
           and <Marker action="underline">kinder than the feeds it replaces</Marker>.
         </p>
         <div className="mt-8 flex flex-wrap gap-3">
-          <Link href="/feed" className={buttonVariants({ size: "lg" })}>
-            Preview the board
+          <Link href="/sign-in" className={buttonVariants({ size: "lg" })}>
+            Sign in with your campus email
           </Link>
           <Link href="https://github.com/AdityaKumar0927/campus-wide/blob/main/PLAN.md" className={buttonVariants({ size: "lg", variant: "outline" })}>
             Read the plan
