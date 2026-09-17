@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Instrument_Sans, Newsreader } from "next/font/google";
+import { Instrument_Sans, Instrument_Serif, JetBrains_Mono } from "next/font/google";
 import { headers } from "next/headers";
 import { ThemeProvider } from "@/components/theme-provider";
 import { SkipLink } from "@/components/shell/skip-link";
@@ -16,11 +16,17 @@ const sans = Instrument_Sans({
   weight: ["400", "500", "600"],
   display: "optional",
 });
-const serif = Newsreader({
-  variable: "--font-newsreader",
+const serif = Instrument_Serif({
+  variable: "--font-instrument-serif",
   subsets: ["latin"],
-  weight: ["400"],
+  weight: "400",
   style: ["normal", "italic"],
+  display: "optional",
+});
+const mono = JetBrains_Mono({
+  variable: "--font-jetbrains-mono",
+  subsets: ["latin"],
+  weight: ["400", "500"],
   display: "optional",
 });
 
@@ -57,7 +63,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   const nonce = (await headers()).get("x-nonce") ?? undefined;
 
   return (
-    <html lang="en" suppressHydrationWarning className={`${sans.variable} ${serif.variable} h-full antialiased`}>
+    <html lang="en" suppressHydrationWarning className={`${sans.variable} ${serif.variable} ${mono.variable} h-full antialiased`}>
       <body className="flex min-h-full flex-col">
         <SkipLink />
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange nonce={nonce}>

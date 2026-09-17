@@ -21,12 +21,14 @@ export default async function SectionPage({ params }: { params: Promise<Params> 
   return (
     <div className="space-y-6">
       <header className="border-b border-rule pb-4">
-        <p className="font-heading text-sm italic text-muted-foreground">Demo campus</p>
-        <h1 className="text-4xl">{meta.label}</h1>
+        <p className="stamp">Demo campus · the board</p>
+        <h1 className="mt-1 text-5xl">{meta.label}</h1>
       </header>
       <EmptyState
         icon={ConstructionIcon}
-        title={`${meta.label} arrives in Phase ${meta.phase}.`}
+        stock="manila"
+        stamp={`Coming in Phase ${meta.phase}`}
+        title={`${meta.label} is not on the board yet.`}
         description={meta.blurb}
       />
     </div>

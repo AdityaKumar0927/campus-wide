@@ -6,7 +6,7 @@ import {
   CircleHelpIcon,
   HomeIcon,
   MenuIcon,
-  PlusIcon,
+  PinIcon,
   SearchIcon,
   ShoppingBagIcon,
   UtensilsIcon,
@@ -27,7 +27,7 @@ export interface NavItem {
 export const primaryNav: NavItem[] = [
   { href: "/feed", label: "Feed", icon: HomeIcon, phase: 3 },
   { href: "/questions", label: "Questions", icon: CircleHelpIcon, phase: 3 },
-  { href: "/post", label: "Post", icon: PlusIcon, phase: 3 },
+  { href: "/post", label: "Pin", icon: PinIcon, phase: 3 },
   { href: "/inbox", label: "Inbox", icon: BellIcon, phase: 3 },
   { href: "/more", label: "Menu", icon: MenuIcon, phase: 3 },
 ];
@@ -46,7 +46,7 @@ export const moduleNav: NavItem[] = [
 
 export const placeholderSections: Record<string, { label: string; phase: number; blurb: string }> = {
   questions: { label: "Questions", phase: 3, blurb: "Ask once, get a real answer, mark it accepted so the next person finds it." },
-  post: { label: "New post", phase: 3, blurb: "Structured post types with expiry: no endless feed of stale notices." },
+  post: { label: "Pin a notice", phase: 3, blurb: "Structured post types with expiry: no endless feed of stale notices." },
   inbox: { label: "Inbox", phase: 3, blurb: "Replies, thank-yous, and relay messages. Digests go out weekly, not hourly." },
   more: { label: "Menu", phase: 3, blurb: "Spaces, settings, sessions, and your data export live here." },
   events: { label: "Events", phase: 4, blurb: "RSVP and add to your calendar with one tap." },
