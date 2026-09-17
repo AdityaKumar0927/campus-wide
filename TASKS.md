@@ -30,7 +30,7 @@ Live checklist; tick as work lands. Detail is finest for the next two phases and
 - [x] Magic UI (MIT registry) used creatively: animated-beam → twine relay diagram ("Take a tab" section), highlighter → marker pen, spinning-text → rubber-stamp seal, canvas-confetti → paper scraps on feedback, theme wipe via View Transitions; reduced-motion safe
 - [ ] **Owner look review (round 2)** of `docs/screenshots/phase-1b/` (incl. `og.png`, `phase-1b-motion/`)
 - [x] Vercel project `campus-wide` created and linked via CLI (2026-09-16); production live at https://campus-wide.vercel.app with `ENABLE_EXPERIMENTAL_COREPACK=1` (pnpm 12) and `APP_URL`
-- [ ] STOP: owner installs the Vercel GitHub app for the repo so pushes and PRs deploy automatically (CLI `git connect` needs it)
+- [x] Vercel GitHub app installed by the owner (2026-09-17); PR previews and production deploys are automatic
 - [x] Footer static/external links are plain anchors (fixed a prefetch 404; best-practices 100 on production)
 - [x] Production Lighthouse (2026-09-16): mobile 97/97/100 performance, accessibility 100, SEO 100, best-practices 96-100; desktop performance 86-93 (observed LCP 0.3 s; simulator attributes JS to the text paint) → Phase 8 task below
 
@@ -40,7 +40,10 @@ Live checklist; tick as work lands. Detail is finest for the next two phases and
 - [x] Integration test suite against the local stack (`pnpm test:rls`): OTP sign-up via Mailpit, hook rejection, declared name, isolation (14 tests)
 - [x] Sign-in (code + magic link), onboarding (declared name, age, house rules → consent ledger), settings (sessions, privacy mode, sign out everywhere), session-aware shell; proxy refresh + redirects; E2E signs in through the real UI
 - [x] CI runs the local Supabase stack and the integration tests
-- [ ] STOP: Supabase project (**region**, URL, publishable + secret keys, DB URLs) + Resend (API key; domain or test mode)
+- [x] Supabase project created by the owner via the Vercel Marketplace (us-east-1), connected to the `campus-wide` Vercel project; migrations + seed applied to production 2026-09-17
+- [ ] STOP: Supabase Auth configuration on the production project (hooks, OTP template, site/redirect URLs) — needs the dashboard or a personal access token
+- [ ] Deferred by owner: Cloudflare Turnstile and Resend + sending domain (production codes use the Supabase built-in mailer, 2 per hour, until then)
+- [x] Vercel GitHub app installed; pushes to `main` deploy automatically (2026-09-17)
 - [ ] Verify before building: before-user-created hook and Postgres custom-access-token hook on Free; `auth.sessions` columns; pgvector + pg_cron on Free
 - [ ] Supabase CLI dev dependency; `supabase init`; `supabase start` locally and in CI (Docker)
 - [ ] Drizzle config (`provider: supabase`, roles), schema for all tables with `university_id` + `pgPolicy`; pgvector
