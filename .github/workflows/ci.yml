@@ -49,6 +49,30 @@ jobs:
       - name: Unit tests
         run: pnpm test
 
+      - name: Supabase CLI
+        uses: supabase/setup-cli@v3
+        with:
+          version: latest
+
+      - name: Start local Supabase (migrations + seed)
+        run: supabase start -x studio,imgproxy,edge-runtime,logflare,vector,supavisor
+
+      # Keys come from the running stack (the CLI's local demo values), never from the repository.
+      - name: Export local Supabase connection details
+        run: |
+          eval "$(supabase status -o env)"
+          {
+            echo "NEXT_PUBLIC_SUPABASE_URL=$API_URL"
+            echo "NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=$PUBLISHABLE_KEY"
+            echo "SUPABASE_SECRET_KEY=$SECRET_KEY"
+            echo "DATABASE_URL=$DB_URL"
+            echo "DIRECT_DATABASE_URL=$DB_URL"
+            echo "MAILPIT_URL=$MAILPIT_URL"
+          } >> "$GITHUB_ENV"
+
+      - name: Database integration tests (auth hooks, triggers, RLS isolation)
+        run: pnpm test:rls
+
       - name: Dependency audit (high and above)
         run: pnpm audit --audit-level high
 
