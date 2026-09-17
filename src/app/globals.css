@@ -191,18 +191,18 @@
     @apply bg-background text-foreground;
     font-feature-settings: "ss01", "cv11";
   }
-  /* Sharp grotesque headlines at tight tracking; italics are not part of the system. */
+  /* Slim grotesque headlines at tight tracking; italics are not part of the system. */
   h1, h2, .font-heading {
     font-family: var(--font-heading);
-    font-weight: 700;
-    letter-spacing: -0.035em;
+    font-weight: 400;
+    letter-spacing: -0.045em;
     line-height: 0.98;
     text-wrap: balance;
   }
   h3 {
     font-family: var(--font-heading);
-    font-weight: 600;
-    letter-spacing: -0.02em;
+    font-weight: 500;
+    letter-spacing: -0.03em;
     text-wrap: balance;
   }
   em, i {
