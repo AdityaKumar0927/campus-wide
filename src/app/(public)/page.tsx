@@ -10,6 +10,7 @@ import {
   UtensilsIcon,
 } from "lucide-react";
 import { NoticeBoard } from "@/components/notice-board";
+import { PinnedTicker } from "@/components/pinned-ticker";
 import { buttonVariants } from "@/components/ui/button";
 
 const modules = [
@@ -64,6 +65,8 @@ export default function LandingPage() {
 
       <NoticeBoard />
 
+      <PinnedTicker className="mt-8" />
+
       <dl className="mt-8 grid max-w-3xl grid-cols-1 gap-x-8 gap-y-3 text-sm sm:grid-cols-3">
         {[
           ["Verified", "a university email is the only way in"],
@@ -83,13 +86,15 @@ export default function LandingPage() {
         <h2 className="mt-3 max-w-3xl text-4xl md:text-6xl">Everything a campus already does, without the group chat.</h2>
         <ul className="mt-12 grid gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
           {modules.map((m) => (
-            <li key={m.title} className="notice px-4 pt-5 pb-4" style={{ "--stock": `var(--stock-${m.stock})` } as React.CSSProperties}>
+            <li key={m.title} className="reveal">
+              <div className="notice h-full px-4 pt-5 pb-4" style={{ "--stock": `var(--stock-${m.stock})` } as React.CSSProperties}>
               <div className="flex items-center justify-between">
                 <p className="stamp">{m.stamp}</p>
                 <m.icon className="size-4 text-primary" aria-hidden />
               </div>
               <h3 className="mt-3 text-lg">{m.title}</h3>
               <p className="mt-1.5 text-sm text-muted-foreground">{m.text}</p>
+              </div>
             </li>
           ))}
         </ul>
