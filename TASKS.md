@@ -27,7 +27,8 @@ Live checklist; tick as work lands. Detail is finest for the next two phases and
 - [x] `/api/health`; 7 unit + 16 E2E tests green; Lighthouse a11y/best-practices/SEO = 100, performance 93-95 mobile / 81-83 desktop on localhost (simulator artifact, see `scripts/lighthouse.mjs`; re-verified on the Vercel preview); screenshots in `docs/screenshots/phase-1/`
 - [x] Owner look review 2026-09-17: v1 judged clean but soulless → D-18 revised to the notice-board direction
 - [x] Board motion (CSS-only scroll reveal + "recently pinned" ticker, reduced-motion safe) and a board-styled Open Graph card (`src/app/opengraph-image.tsx`, Instrument Serif OFL); Magic UI Pro template reviewed and not copied (licence), its MDX pipeline noted for Phase 7
-- [ ] **Owner look review (round 2)** of `docs/screenshots/phase-1b/` (incl. `og.png`)
+- [x] Magic UI (MIT registry) used creatively: animated-beam → twine relay diagram ("Take a tab" section), highlighter → marker pen, spinning-text → rubber-stamp seal, canvas-confetti → paper scraps on feedback, theme wipe via View Transitions; reduced-motion safe
+- [ ] **Owner look review (round 2)** of `docs/screenshots/phase-1b/` (incl. `og.png`, `phase-1b-motion/`)
 - [x] Vercel project `campus-wide` created and linked via CLI (2026-09-16); production live at https://campus-wide.vercel.app with `ENABLE_EXPERIMENTAL_COREPACK=1` (pnpm 12) and `APP_URL`
 - [ ] STOP: owner installs the Vercel GitHub app for the repo so pushes and PRs deploy automatically (CLI `git connect` needs it)
 - [x] Footer static/external links are plain anchors (fixed a prefetch 404; best-practices 100 on production)

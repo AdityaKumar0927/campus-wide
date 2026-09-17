@@ -21,7 +21,8 @@ const viewports = {
 const browser = await chromium.launch();
 try {
   for (const [name, ctxOpts] of Object.entries(viewports)) {
-    const context = await browser.newContext({ ...ctxOpts, colorScheme: "light", reducedMotion: "reduce" });
+    // SHOT_MOTION=1 captures with animations running (for reviewing motion pieces); default is deterministic.
+    const context = await browser.newContext({ ...ctxOpts, colorScheme: "light", reducedMotion: process.env.SHOT_MOTION ? "no-preference" : "reduce" });
     const page = await context.newPage();
     for (const route of routes) {
       const path = route === "root" ? "/" : `/${route.replace(/^\/+/, "")}`;
