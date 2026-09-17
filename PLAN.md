@@ -1,6 +1,6 @@
 # Campus Wide — Delivery Plan
 
-**Status:** Plan approved 2026-09-16. Phase 1 built (skeleton, design system, CI) and awaiting the owner look review + the recommended Vercel link; Phase 2 next. · **Owner:** Aditya Kumar (AdityaKumar0927) · **Repo:** https://github.com/AdityaKumar0927/campus-wide
+**Status:** Plan approved 2026-09-16. Phase 1 merged; production preview live at https://campus-wide.vercel.app (Vercel linked 2026-09-16, GitHub app install pending for auto-deploys). Awaiting the owner look review; Phase 2 next. · **Owner:** Aditya Kumar (AdityaKumar0927) · **Repo:** https://github.com/AdityaKumar0927/campus-wide
 **Source of truth:** `docs/BRIEF.md`. Verified versions/limits: `docs/research/2026-09-15-stack-verification.md`.
 **Live checklist:** `TASKS.md`. **Milestones:** `ROADMAP.md`. **System design:** `ARCHITECTURE.md`.
 

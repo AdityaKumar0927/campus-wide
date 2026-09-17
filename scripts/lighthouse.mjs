@@ -72,7 +72,7 @@ try {
         const lcpNode = a["largest-contentful-paint-element"]?.details?.items?.[0]?.items?.[0]?.node;
         const obs = a["metrics"]?.details?.items?.[0] ?? {};
         console.log(`      ${m}`);
-        console.log(`      observed: TTFB=${Math.round(obs.observedTimeOrigin ? (a["server-response-time"]?.numericValue ?? 0) : 0)}ms, FCP=${Math.round(obs.observedFirstContentfulPaint ?? 0)}ms, LCP=${Math.round(obs.observedLargestContentfulPaint ?? 0)}ms`);
+        console.log(`      observed: TTFB=${Math.round(a["server-response-time"]?.numericValue ?? 0)}ms, FCP=${Math.round(obs.observedFirstContentfulPaint ?? 0)}ms, LCP=${Math.round(obs.observedLargestContentfulPaint ?? 0)}ms`);
         if (lcpNode) console.log(`      LCP element: ${(lcpNode.nodeLabel ?? lcpNode.snippet ?? "").slice(0, 90)}`);
         const lcpPhases = a["largest-contentful-paint-element"]?.details?.items?.[1]?.items;
         if (lcpPhases) console.log(`      LCP phases: ${lcpPhases.map((p) => `${p.phase} ${Math.round(p.timing)}ms`).join(", ")}`);
