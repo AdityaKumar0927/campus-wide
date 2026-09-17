@@ -4,6 +4,10 @@
 # unrs-resolver ships prebuilt binaries as optional deps; its postinstall is only a fallback.
 allowBuilds:
   unrs-resolver: false
+  # The Supabase CLI package downloads its platform binary in postinstall (reviewed).
+  supabase: true
+  # esbuild verifies its platform binary in postinstall (used by drizzle-kit and the Supabase CLI).
+  esbuild: true
 strictDepBuilds: true
 
 # Do not install versions published less than 24 hours ago (blunts supply-chain worms).
