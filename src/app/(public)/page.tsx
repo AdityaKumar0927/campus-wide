@@ -1,34 +1,14 @@
 import Link from "next/link";
-import {
-  BookOpenIcon,
-  CalendarDaysIcon,
-  CarFrontIcon,
-  CircleHelpIcon,
-  SearchIcon,
-  ShoppingBagIcon,
-  UsersIcon,
-  UtensilsIcon,
-} from "lucide-react";
 import { CampusDock } from "@/components/campus-dock";
 import { CampusIconCloud } from "@/components/campus-icon-cloud";
 import { CampusOrbit } from "@/components/campus-orbit";
+import { FeaturePreviews } from "@/components/feature-previews";
 import { Marker } from "@/components/marker";
 import { StampSeal } from "@/components/stamp-seal";
 import { NoticeBoard } from "@/components/notice-board";
 import { PinnedTicker } from "@/components/pinned-ticker";
 import { RelayDiagram } from "@/components/relay-diagram";
 import { buttonVariants } from "@/components/ui/button";
-
-const modules = [
-  { icon: CircleHelpIcon, stock: "blue", stamp: "Index card", title: "Questions & answers", text: "Ask once. The accepted answer stays pinned for the next person who needs it." },
-  { icon: CalendarDaysIcon, stock: "white", stamp: "Flyer", title: "Events", text: "RSVP, then drop it into your calendar in one tap." },
-  { icon: ShoppingBagIcon, stock: "manila", stamp: "Tear-off tabs", title: "Marketplace", text: "Campus-only listings. No payments. Your email stays in your pocket until you both say so." },
-  { icon: UtensilsIcon, stock: "green", stamp: "Gift only", title: "Meal gifting", text: "Treat a friend or donate a swipe.", mark: "Nothing here is ever for sale." },
-  { icon: SearchIcon, stock: "yellow", stamp: "Sticky note", title: "Lost & found", text: "Post what you found. Claim what you lost. Water bottles, mostly." },
-  { icon: CarFrontIcon, stock: "green", stamp: "Ride board", title: "Rides", text: "Fill the empty seats on the drive home for the break." },
-  { icon: BookOpenIcon, stock: "blue", stamp: "Index card", title: "Study groups", text: "Find the people in your section before the midterm, not after." },
-  { icon: UsersIcon, stock: "pink", stamp: "Expires", title: "Roommates & sublets", text: "Listings that take themselves down, so nothing stale lingers." },
-] as const;
 
 const principles = [
   {
@@ -94,30 +74,15 @@ export default function LandingPage() {
 
       {/* Modules */}
       <section id="how-it-works" className="scroll-mt-20 pt-24 pb-16">
-        <p className="stamp">What goes on the board</p>
+        <p className="stamp">What goes on the board · live previews, sample data</p>
         <h2 className="mt-3 max-w-3xl text-4xl md:text-6xl">Everything a campus already does, without the group chat.</h2>
-        <ul className="mt-12 grid gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
-          {modules.map((m) => (
-            <li key={m.title} className="reveal">
-              <div className="notice h-full px-4 pt-5 pb-4" style={{ "--stock": `var(--stock-${m.stock})` } as React.CSSProperties}>
-              <div className="flex items-center justify-between">
-                <p className="stamp">{m.stamp}</p>
-                <m.icon className="size-4 text-primary" aria-hidden />
-              </div>
-              <h3 className="mt-3 text-lg">{m.title}</h3>
-              <p className="mt-1.5 text-sm text-muted-foreground">
-                {m.text}
-                {"mark" in m && (
-                  <>
-                    {" "}
-                    <Marker>{m.mark}</Marker>
-                  </>
-                )}
-              </p>
-              </div>
-            </li>
-          ))}
-        </ul>
+        <p className="mt-4 max-w-2xl text-muted-foreground">
+          These are the real components, filled with sample notices. Click around: thank an answer, take a tab, vote,
+          claim the keys, download the calendar file.
+        </p>
+        <div className="mt-12">
+          <FeaturePreviews />
+        </div>
         <p className="mt-8 text-sm text-muted-foreground">
           Every module is a switch your university admin can turn on or off. Meal gifting stays off until a campus opts in.
         </p>
