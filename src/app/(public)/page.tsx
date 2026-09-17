@@ -9,15 +9,18 @@ import {
   UsersIcon,
   UtensilsIcon,
 } from "lucide-react";
+import { Marker } from "@/components/marker";
 import { NoticeBoard } from "@/components/notice-board";
 import { PinnedTicker } from "@/components/pinned-ticker";
+import { RelayDiagram } from "@/components/relay-diagram";
+import { StampSeal } from "@/components/stamp-seal";
 import { buttonVariants } from "@/components/ui/button";
 
 const modules = [
   { icon: CircleHelpIcon, stock: "blue", stamp: "Index card", title: "Questions & answers", text: "Ask once. The accepted answer stays pinned for the next person who needs it." },
   { icon: CalendarDaysIcon, stock: "white", stamp: "Flyer", title: "Events", text: "RSVP, then drop it into your calendar in one tap." },
   { icon: ShoppingBagIcon, stock: "manila", stamp: "Tear-off tabs", title: "Marketplace", text: "Campus-only listings. No payments. Your email stays in your pocket until you both say so." },
-  { icon: UtensilsIcon, stock: "green", stamp: "Gift only", title: "Meal gifting", text: "Treat a friend or donate a swipe. Nothing here is ever for sale." },
+  { icon: UtensilsIcon, stock: "green", stamp: "Gift only", title: "Meal gifting", text: "Treat a friend or donate a swipe.", mark: "Nothing here is ever for sale." },
   { icon: SearchIcon, stock: "yellow", stamp: "Sticky note", title: "Lost & found", text: "Post what you found. Claim what you lost. Water bottles, mostly." },
   { icon: CarFrontIcon, stock: "green", stamp: "Ride board", title: "Rides", text: "Fill the empty seats on the drive home for the break." },
   { icon: BookOpenIcon, stock: "blue", stamp: "Index card", title: "Study groups", text: "Find the people in your section before the midterm, not after." },
@@ -43,7 +46,8 @@ export default function LandingPage() {
   return (
     <div className="mx-auto max-w-6xl px-4">
       {/* Masthead */}
-      <section className="pt-14 pb-10 md:pt-20 md:pb-14">
+      <section className="relative pt-14 pb-10 md:pt-20 md:pb-14">
+        <StampSeal className="absolute top-16 right-0 hidden lg:block" />
         <p className="stamp">Campus Wide · a notice board for the whole campus</p>
         <h1 className="mt-4 max-w-4xl text-6xl md:text-[6.5rem]">
           Your campus, <em className="text-primary">helping itself.</em>
@@ -51,7 +55,7 @@ export default function LandingPage() {
         <p className="mt-6 max-w-2xl text-lg text-muted-foreground md:text-xl">
           Every campus already runs on notices: the flyer in the stairwell, the index card by the vending machine,
           the group chat that scrolled away. Campus Wide is that board, rebuilt for everyone with a university email,
-          and kinder than the feeds it replaces.
+          and <Marker action="underline">kinder than the feeds it replaces</Marker>.
         </p>
         <div className="mt-8 flex flex-wrap gap-3">
           <Link href="/feed" className={buttonVariants({ size: "lg" })}>
@@ -93,7 +97,15 @@ export default function LandingPage() {
                 <m.icon className="size-4 text-primary" aria-hidden />
               </div>
               <h3 className="mt-3 text-lg">{m.title}</h3>
-              <p className="mt-1.5 text-sm text-muted-foreground">{m.text}</p>
+              <p className="mt-1.5 text-sm text-muted-foreground">
+                {m.text}
+                {"mark" in m && (
+                  <>
+                    {" "}
+                    <Marker>{m.mark}</Marker>
+                  </>
+                )}
+              </p>
               </div>
             </li>
           ))}
@@ -101,6 +113,20 @@ export default function LandingPage() {
         <p className="mt-8 text-sm text-muted-foreground">
           Every module is a switch your university admin can turn on or off. Meal gifting stays off until a campus opts in.
         </p>
+      </section>
+
+      {/* Take a tab */}
+      <section id="take-a-tab" className="masthead-rule scroll-mt-20 py-16">
+        <p className="stamp">Take a tab</p>
+        <h2 className="mt-3 max-w-3xl text-4xl md:text-6xl">Contact without handing out your email.</h2>
+        <p className="mt-4 max-w-2xl text-muted-foreground">
+          Every listing has tear-off tabs. Take one and your message travels along the string, through the board, to
+          the seller. Talk, agree on the library desk, and neither of you sees an address unless you both choose to
+          share it.
+        </p>
+        <div className="mt-10">
+          <RelayDiagram />
+        </div>
       </section>
 
       {/* Principles */}

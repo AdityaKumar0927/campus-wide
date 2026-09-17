@@ -2,7 +2,8 @@
 
 import { MonitorIcon, MoonIcon, SunIcon } from "lucide-react";
 import { useTheme } from "next-themes";
-import { useState, useSyncExternalStore } from "react";
+import { useRef, useState, useSyncExternalStore } from "react";
+import { withThemeWipe } from "@/lib/theme-wipe";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -25,20 +26,23 @@ export function ThemeToggle() {
   const { theme, setTheme } = useTheme();
   const mounted = useMounted();
   const [open, setOpen] = useState(false);
+  const triggerRef = useRef<HTMLButtonElement>(null);
   const current = options.find((o) => o.value === theme) ?? options[2];
   const Icon = mounted ? current.icon : MonitorIcon;
 
   return (
     <DropdownMenu open={open} onOpenChange={setOpen}>
-      <DropdownMenuTrigger render={<Button variant="ghost" size="icon" aria-label="Change theme" />}>
+      <DropdownMenuTrigger render={<Button ref={triggerRef} variant="ghost" size="icon" aria-label="Change theme" />}>
         <Icon className="size-4" aria-hidden />
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
         <DropdownMenuRadioGroup
           value={mounted ? theme : "system"}
           onValueChange={(v) => {
-            setTheme(String(v));
+            const next = String(v);
+            const targetIsDark = next === "dark" || (next === "system" && window.matchMedia("(prefers-color-scheme: dark)").matches);
             setOpen(false); // radio items keep the menu open by default; a theme pick is a one-shot choice
+            withThemeWipe(triggerRef.current, targetIsDark, () => setTheme(next));
           }}
         >
           {options.map((o) => (
