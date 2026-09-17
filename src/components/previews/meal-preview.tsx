@@ -1,6 +1,6 @@
 "use client";
 
-import { UtensilsIcon } from "lucide-react";
+import { MealIcon } from "@/components/icons/board-icons";
 import { useState } from "react";
 import { Chip, Person, PreviewNotice } from "./frame";
 
@@ -13,12 +13,12 @@ export function MealPreview() {
       <div className="flex flex-wrap items-center gap-2">
         {state === "open" && (
           <Chip onClick={() => setState("requested")}>
-            <UtensilsIcon className="size-3.5" aria-hidden /> Ask for one
+            <MealIcon className="size-3.5" aria-hidden /> Ask for one
           </Chip>
         )}
         {state === "requested" && (
           <>
-            <span className="stamp text-foreground">Requested · Sam accepts…</span>
+            <span className="stamp text-foreground">Requested. Waiting for Sam…</span>
             <Chip onClick={() => setState("confirmed")}>Sam accepted</Chip>
           </>
         )}

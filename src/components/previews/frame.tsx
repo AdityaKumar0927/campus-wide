@@ -1,4 +1,5 @@
 import type { CSSProperties, ReactNode } from "react";
+import { WashiTape } from "@/components/washi-tape";
 import { cn } from "@/lib/utils";
 
 export type Stock = "white" | "manila" | "blue" | "pink" | "yellow" | "green";
@@ -12,6 +13,7 @@ export function PreviewNotice({
   className,
   pinHue = 25,
   rotate = "",
+  held,
 }: {
   stock: Stock;
   stamp: string;
@@ -20,6 +22,8 @@ export function PreviewNotice({
   className?: string;
   pinHue?: number;
   rotate?: string;
+  /** Tape instead of a pin. */
+  held?: "tape";
 }) {
   return (
     <li className={cn("reveal", className)}>
@@ -27,7 +31,9 @@ export function PreviewNotice({
         className={cn("notice flex h-full flex-col px-4 pt-5 pb-4", rotate)}
         style={{ "--stock": `var(--stock-${stock})`, "--pin-hue": pinHue } as CSSProperties}
         aria-label={`${title} preview`}
+        data-held={held}
       >
+        {held === "tape" && <WashiTape hue={pinHue === 155 ? 150 : 100} className="absolute -top-2.5 left-1/2 h-5 w-28 -translate-x-1/2 -rotate-3" />}
         <p className="stamp">{stamp}</p>
         <h3 className="mt-2 text-lg leading-snug">{title}</h3>
         <div className="mt-3 flex flex-1 flex-col gap-3 text-sm">{children}</div>
@@ -40,7 +46,7 @@ export function PreviewNotice({
 export function Person({ initials, name, uid, className }: { initials: string; name: string; uid: string; className?: string }) {
   return (
     <span className={cn("inline-flex items-center gap-2", className)}>
-      <span aria-hidden className="flex size-6 items-center justify-center rounded-full border border-rule bg-[var(--card)] font-mono text-[10px] font-medium">
+      <span aria-hidden className="flex size-6 items-center justify-center rounded-full border border-rule bg-[var(--card)] text-[10px] font-medium">
         {initials}
       </span>
       <span className="text-foreground">{name}</span>

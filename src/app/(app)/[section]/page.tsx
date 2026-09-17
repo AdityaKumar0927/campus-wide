@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { ConstructionIcon } from "lucide-react";
+import { ComingSoonIllustration } from "@/components/illustrations";
 import { EmptyState } from "@/components/empty-state";
 import { placeholderSections } from "@/components/shell/nav-items";
 
@@ -21,11 +21,11 @@ export default async function SectionPage({ params }: { params: Promise<Params> 
   return (
     <div className="space-y-6">
       <header className="border-b border-rule pb-4">
-        <p className="stamp">Illinois Tech · the board</p>
+        <p className="stamp">Illinois Tech</p>
         <h1 className="mt-1 text-5xl">{meta.label}</h1>
       </header>
       <EmptyState
-        icon={ConstructionIcon}
+        illustration={<ComingSoonIllustration className="w-44" />}
         stock="manila"
         stamp={`Coming in Phase ${meta.phase}`}
         title={`${meta.label} is not on the board yet.`}

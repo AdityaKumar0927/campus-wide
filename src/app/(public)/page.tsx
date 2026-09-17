@@ -9,6 +9,7 @@ import { NoticeBoard } from "@/components/notice-board";
 import { PinnedTicker } from "@/components/pinned-ticker";
 import { RelayDiagram } from "@/components/relay-diagram";
 import { buttonVariants } from "@/components/ui/button";
+import { Kicker, TapeLabel } from "@/components/kicker";
 
 const principles = [
   {
@@ -31,7 +32,7 @@ export default function LandingPage() {
       {/* Masthead */}
       <section className="grid items-center gap-10 pt-12 pb-10 md:pt-16 md:pb-14 lg:grid-cols-[1.15fr_1fr] lg:gap-14">
         <div>
-        <p className="stamp">Campus Wide · a notice board for the whole campus</p>
+        <TapeLabel>Illinois Tech pilot, fall 2026</TapeLabel>
         <h1 className="mt-4 max-w-4xl text-6xl md:text-[5.75rem]">
           Your campus, <span className="text-primary">helping itself.</span>
         </h1>
@@ -74,7 +75,7 @@ export default function LandingPage() {
 
       {/* Modules */}
       <section id="how-it-works" className="scroll-mt-20 pt-24 pb-16">
-        <p className="stamp">What goes on the board · live previews, sample data</p>
+        <Kicker>Live previews, sample data</Kicker>
         <h2 className="mt-3 max-w-3xl text-4xl md:text-6xl">Everything a campus already does, without the group chat.</h2>
         <p className="mt-4 max-w-2xl text-muted-foreground">
           These are the real components, filled with sample notices. Click around: thank an answer, take a tab, vote,
@@ -90,7 +91,7 @@ export default function LandingPage() {
 
       {/* Take a tab */}
       <section id="take-a-tab" className="masthead-rule scroll-mt-20 py-16">
-        <p className="stamp">Take a tab</p>
+        <Kicker>Take a tab</Kicker>
         <h2 className="mt-3 max-w-3xl text-4xl md:text-6xl">Contact without handing out your email.</h2>
         <p className="mt-4 max-w-2xl text-muted-foreground">
           Every listing has tear-off tabs. Take one and your message travels along the string, through the board, to
@@ -105,7 +106,7 @@ export default function LandingPage() {
       {/* The stuff of campus life */}
       <section className="masthead-rule grid items-center gap-8 py-16 md:grid-cols-2">
         <div>
-          <p className="stamp">Lost, lent, found, passed on</p>
+          <Kicker>Lost, lent, found, passed on</Kicker>
           <h2 className="mt-3 text-4xl md:text-6xl">The stuff of campus life, kept in circulation.</h2>
           <p className="mt-4 max-w-xl text-muted-foreground">
             Keys, umbrellas, calculators the night before the midterm, a bike at the end of the year. Most of it already
@@ -117,7 +118,7 @@ export default function LandingPage() {
 
       {/* Principles */}
       <section id="safety" className="masthead-rule scroll-mt-20 py-16">
-        <p className="stamp">House rules</p>
+        <Kicker>House rules</Kicker>
         <h2 className="mt-3 text-4xl md:text-6xl">Why it feels different.</h2>
         <div className="mt-10 grid gap-10 md:grid-cols-3">
           {principles.map((p, i) => (
@@ -136,7 +137,7 @@ export default function LandingPage() {
       <section id="universities" className="masthead-rule scroll-mt-20 py-16">
         <div className="grid gap-10 md:grid-cols-[1.2fr_1fr] md:items-center">
           <div>
-            <p className="stamp">For universities</p>
+            <Kicker>For universities</Kicker>
             <h2 className="mt-3 text-4xl md:text-6xl">Built to be adopted, not just tolerated.</h2>
             <p className="mt-4 text-muted-foreground">
               Each campus is an isolated tenant enforced inside the database, not just in the app. Admins configure
