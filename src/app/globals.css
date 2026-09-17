@@ -16,8 +16,8 @@
   --color-ink: var(--ink);
   --color-ink-muted: var(--ink-muted);
   --color-rule: var(--rule);
-  --font-sans: var(--font-instrument-sans), ui-sans-serif, system-ui, sans-serif;
-  --font-heading: var(--font-instrument-serif), ui-serif, Georgia, serif;
+  --font-sans: var(--font-manrope), ui-sans-serif, system-ui, sans-serif;
+  --font-heading: var(--font-bricolage), var(--font-manrope), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-jetbrains-mono), ui-monospace, "Cascadia Mono", Menlo, monospace;
   /* Paper stocks: one per notice type, held by a pin. */
   --color-stock-white: var(--stock-white);
@@ -65,6 +65,24 @@
   --radius-4xl: calc(var(--radius) * 2.6);
   --spacing-safe-bottom: env(safe-area-inset-bottom, 0px);
   --spacing-safe-top: env(safe-area-inset-top, 0px);
+  --animate-orbit: orbit calc(var(--duration)*1s) linear infinite;
+  --animate-ripple: ripple var(--duration,2s) ease calc(var(--i, 0)*.2s) infinite;
+  @keyframes orbit {
+  0% {
+    transform: rotate(calc(var(--angle) * 1deg)) translateY(calc(var(--radius) * 1px)) rotate(calc(var(--angle) * -1deg));
+    }
+  100% {
+    transform: rotate(calc(var(--angle) * 1deg + 360deg)) translateY(calc(var(--radius) * 1px)) rotate(calc((var(--angle) * -1deg) - 360deg));
+    }
+  }
+  @keyframes ripple {
+  0%, 100% {
+    transform: translate(-50%, -50%) scale(1);
+    }
+  50% {
+    transform: translate(-50%, -50%) scale(0.9);
+    }
+  }
 }
 
 :root {
@@ -173,17 +191,26 @@
     @apply bg-background text-foreground;
     font-feature-settings: "ss01", "cv11";
   }
+  /* Sharp grotesque headlines at tight tracking; italics are not part of the system. */
   h1, h2, .font-heading {
     font-family: var(--font-heading);
-    font-weight: 400;
-    letter-spacing: -0.015em;
-    line-height: 1.02;
+    font-weight: 700;
+    letter-spacing: -0.035em;
+    line-height: 0.98;
     text-wrap: balance;
   }
   h3 {
+    font-family: var(--font-heading);
     font-weight: 600;
-    letter-spacing: -0.01em;
+    letter-spacing: -0.02em;
     text-wrap: balance;
+  }
+  em, i {
+    font-style: normal;
+    color: var(--primary);
+  }
+  body {
+    letter-spacing: -0.01em;
   }
   p {
     text-wrap: pretty;

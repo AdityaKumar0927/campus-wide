@@ -56,3 +56,6 @@ lighthouse-reports/
 
 # local server logs
 server.log
+
+# pulled Vercel env snapshots (never auto-loaded by Next)
+.vercel-env*

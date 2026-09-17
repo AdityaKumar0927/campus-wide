@@ -6,11 +6,11 @@ export const alt = "Campus Wide: your campus, helping itself. A notice board for
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
-// Static assets read once at module scope (Next.js docs pattern). Instrument Serif is OFL-licensed;
-// see src/assets/fonts/InstrumentSerif-OFL.txt.
+// Static assets read once at module scope (Next.js docs pattern). Both faces are OFL-licensed;
+// see the *-OFL.txt files next to them.
 const fontsDir = join(process.cwd(), "src", "assets", "fonts");
-const serif = await readFile(join(fontsDir, "InstrumentSerif-Regular.ttf"));
-const serifItalic = await readFile(join(fontsDir, "InstrumentSerif-Italic.ttf")).catch(() => null);
+const display = await readFile(join(fontsDir, "BricolageGrotesque-700.woff"));
+const body = await readFile(join(fontsDir, "Manrope-500.woff"));
 
 const paper = "#faf7f2";
 const ink = "#2b2620";
@@ -33,21 +33,19 @@ export default async function Image() {
           backgroundImage: "radial-gradient(circle, #d9d2c6 1.5px, transparent 2px)",
           backgroundSize: "28px 28px",
           color: ink,
-          fontFamily: "Instrument Serif",
+          fontFamily: "Bricolage Grotesque",
           padding: 64,
         }}
       >
         <div style={{ display: "flex", flexDirection: "column", justifyContent: "space-between", width: 640 }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 10, fontSize: 30 }}>
-            <div style={{ width: 16, height: 16, borderRadius: 999, background: green, transform: "rotate(-18deg)" }} />
+          <div style={{ display: "flex", alignItems: "center", gap: 10, fontSize: 30, letterSpacing: -1.5 }}>
+            <div style={{ width: 16, height: 16, borderRadius: 999, background: green }} />
             <span>Campus</span>
-            <span style={{ color: green, fontStyle: "italic" }}>Wide</span>
+            <span style={{ color: green }}>Wide</span>
           </div>
           <div style={{ display: "flex", flexDirection: "column" }}>
-            <div style={{ fontSize: 96, lineHeight: 0.98, letterSpacing: -2 }}>Your campus,</div>
-            <div style={{ fontSize: 96, lineHeight: 0.98, letterSpacing: -2, color: green, fontStyle: "italic" }}>
-              helping itself.
-            </div>
+            <div style={{ fontSize: 92, lineHeight: 0.96, letterSpacing: -4 }}>Your campus,</div>
+            <div style={{ fontSize: 92, lineHeight: 0.96, letterSpacing: -4, color: green }}>helping itself.</div>
           </div>
           <div style={{ fontFamily: "monospace", fontSize: 18, letterSpacing: 2, color: "#6b6258" }}>
             A NOTICE BOARD FOR THE WHOLE CAMPUS · VERIFIED · NO ADS
@@ -82,7 +80,7 @@ export default async function Image() {
                 }}
               />
               <div style={{ fontFamily: "monospace", fontSize: 14, letterSpacing: 2, color: "#6b6258" }}>{n.stamp}</div>
-              <div style={{ fontSize: 30, marginTop: 8, lineHeight: 1.15 }}>{n.text}</div>
+              <div style={{ fontSize: 26, marginTop: 8, lineHeight: 1.2, fontFamily: "Manrope", letterSpacing: -0.5 }}>{n.text}</div>
             </div>
           ))}
         </div>
@@ -91,8 +89,8 @@ export default async function Image() {
     {
       ...size,
       fonts: [
-        { name: "Instrument Serif", data: serif, style: "normal", weight: 400 },
-        ...(serifItalic ? [{ name: "Instrument Serif", data: serifItalic, style: "italic" as const, weight: 400 as const }] : []),
+        { name: "Bricolage Grotesque", data: display, style: "normal", weight: 700 },
+        { name: "Manrope", data: body, style: "normal", weight: 500 },
       ],
     },
   );
