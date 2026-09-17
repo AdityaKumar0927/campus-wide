@@ -1,3 +1,4 @@
+import { randomUUID } from "node:crypto";
 import { createClient, type SupabaseClient } from "@supabase/supabase-js";
 
 /**
@@ -22,7 +23,7 @@ export function serviceClient(): SupabaseClient {
 }
 
 export function uniqueEmail(domain: string, prefix = "t") {
-  return `${prefix}${Date.now().toString(36)}${Math.floor(Math.random() * 1e4)}@${domain}`;
+  return `${prefix}${randomUUID().replace(/-/g, "").slice(0, 10)}@${domain}`;
 }
 
 interface MailpitMessage { ID: string; To: { Address: string }[]; Created: string }
