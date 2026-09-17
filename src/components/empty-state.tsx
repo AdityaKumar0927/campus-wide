@@ -1,5 +1,5 @@
 import type { LucideIcon } from "lucide-react";
-import type { ReactNode } from "react";
+import type { CSSProperties, ReactNode } from "react";
 import { cn } from "@/lib/utils";
 
 interface EmptyStateProps {
@@ -7,27 +7,30 @@ interface EmptyStateProps {
   title: string;
   description?: ReactNode;
   action?: ReactNode;
+  /** Paper stock for the notice; defaults to a white index card. */
+  stock?: "white" | "manila" | "blue" | "pink" | "yellow" | "green";
+  stamp?: string;
   className?: string;
 }
 
-/** Editorial empty state: a dashed hairline plate with a serif headline. Never a sad face. */
-export function EmptyState({ icon: Icon, title, description, action, className }: EmptyStateProps) {
+/** An empty board is not sad: it is one pinned index card telling you what to do next. */
+export function EmptyState({ icon: Icon, title, description, action, stock = "white", stamp = "Nothing pinned yet", className }: EmptyStateProps) {
   return (
-    <section
-      aria-live="polite"
-      className={cn(
-        "flex flex-col items-center rounded-xl border border-dashed border-rule bg-card/60 px-6 py-12 text-center",
-        className,
-      )}
-    >
-      {Icon && (
-        <span className="mb-4 flex size-12 items-center justify-center rounded-full bg-accent text-accent-foreground">
-          <Icon className="size-6" aria-hidden />
-        </span>
-      )}
-      <h2 className="text-2xl">{title}</h2>
-      {description && <p className="mt-2 max-w-prose text-sm text-muted-foreground">{description}</p>}
-      {action && <div className="mt-6">{action}</div>}
+    <section aria-live="polite" className={cn("board rounded-2xl border border-rule px-4 py-10 md:px-8", className)}>
+      <div
+        className="notice mx-auto max-w-md -rotate-[0.8deg] px-6 pt-6 pb-5 text-center"
+        style={{ "--stock": `var(--stock-${stock})` } as CSSProperties}
+      >
+        <p className="stamp">{stamp}</p>
+        {Icon && (
+          <span className="mx-auto mt-4 flex size-11 items-center justify-center rounded-full bg-accent text-accent-foreground">
+            <Icon className="size-5" aria-hidden />
+          </span>
+        )}
+        <h2 className="mt-3 text-3xl">{title}</h2>
+        {description && <p className="mt-2 text-sm text-muted-foreground">{description}</p>}
+        {action && <div className="mt-5">{action}</div>}
+      </div>
     </section>
   );
 }

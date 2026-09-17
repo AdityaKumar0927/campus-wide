@@ -11,7 +11,8 @@ export default function OfflinePage() {
       <span className="mb-6 flex size-14 items-center justify-center rounded-full bg-accent text-accent-foreground">
         <WifiOffIcon className="size-7" aria-hidden />
       </span>
-      <h1 className="text-4xl">You are offline.</h1>
+      <p className="stamp">No signal</p>
+      <h1 className="mt-3 text-6xl">The board is out of reach.</h1>
       <p className="mt-3 text-muted-foreground">
         Nothing here needs a signal right now. When you are back online, this page will pick up where you left off.
       </p>

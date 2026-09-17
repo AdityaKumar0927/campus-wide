@@ -88,7 +88,7 @@ test.describe("app shell", () => {
     await page.goto("/market");
     await expect(page.getByRole("heading", { level: 1, name: "Marketplace" })).toBeVisible();
     await page.goto("/definitely-not-a-section");
-    await expect(page.getByRole("heading", { level: 1 })).toContainText("nowhere");
+    await expect(page.getByRole("heading", { level: 1 })).toContainText("taken down");
   });
 
   test("feedback popover collects a message and a sentiment, then thanks the user", async ({ page }) => {

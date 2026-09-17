@@ -29,7 +29,7 @@ export function BottomNav() {
                 <span
                   className={cn(
                     "flex items-center justify-center rounded-full",
-                    isPost ? "size-9 bg-primary text-primary-foreground" : "size-7",
+                    isPost ? "size-9 -rotate-12 bg-primary text-primary-foreground" : "size-7",
                   )}
                 >
                   <Icon className="size-5" aria-hidden />

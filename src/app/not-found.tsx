@@ -9,9 +9,9 @@ export default function NotFound() {
         <Wordmark />
       </div>
       <div className="mx-auto flex max-w-xl flex-1 flex-col items-center justify-center px-4 py-20 text-center">
-        <p className="font-heading text-sm italic text-muted-foreground">Page not found</p>
-        <h1 className="mt-2 text-5xl">This corridor leads nowhere.</h1>
-        <p className="mt-4 text-muted-foreground">The page may have moved, expired, or never existed. Posts here expire on purpose.</p>
+        <p className="stamp">404 · Not on the board</p>
+        <h1 className="mt-3 text-6xl">This notice has been taken down.</h1>
+        <p className="mt-4 text-muted-foreground">It may have expired, moved, or never been pinned. Notices here take themselves down on purpose.</p>
         <Link href="/" className={`${buttonVariants()} mt-8`}>
           Back to the front page
         </Link>
