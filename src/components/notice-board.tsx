@@ -79,7 +79,8 @@ const notices: Notice[] = [
 export function NoticeCard({ n }: { n: Notice }) {
   const style = { "--stock": `var(--stock-${n.stock})`, "--pin-hue": n.pinHue ?? 25 } as React.CSSProperties;
   return (
-    <li className={cn("notice px-4 pt-5 pb-3 transition-transform duration-300 hover:-translate-y-0.5 motion-reduce:transition-none", n.rotate, n.className)} style={style}>
+    <li className={cn("reveal", n.className)}>
+      <div className={cn("notice h-full px-4 pt-5 pb-3 transition-transform duration-300 hover:-translate-y-0.5 motion-reduce:transition-none", n.rotate)} style={style}>
       <p className="stamp">{n.stamp}</p>
       <p className="mt-2 text-[1.05rem] leading-snug">{n.title}</p>
       {n.body && <p className="mt-1.5 text-sm text-muted-foreground">{n.body}</p>}
@@ -93,6 +94,7 @@ export function NoticeCard({ n }: { n: Notice }) {
           ))}
         </ul>
       )}
+      </div>
     </li>
   );
 }

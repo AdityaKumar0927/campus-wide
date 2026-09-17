@@ -42,8 +42,9 @@ export const metadata: Metadata = {
     type: "website",
     siteName: "Campus Wide",
     title: "Campus Wide",
-    description: "Your campus, helping itself.",
+    description: "Your campus, helping itself. A notice board for the whole campus.",
   },
+  twitter: { card: "summary_large_image" },
   robots: { index: true, follow: true },
 };
 
