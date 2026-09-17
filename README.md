@@ -7,7 +7,7 @@ found, rides, study groups, roommates, and polls, with human-first moderation an
 privacy and compliance functionality. Each university is an isolated tenant enforced by
 Postgres Row-Level Security.
 
-**Status:** Phase 1 (skeleton, design system, CI) — see [ROADMAP.md](ROADMAP.md). Sign-in and
+**Status:** Phase 1 (skeleton, design system, CI) — see [ROADMAP.md](ROADMAP.md). Preview: https://campus-wide.vercel.app Sign-in and
 content arrive in Phases 2 and 3; today the app is a themed shell with working navigation.
 
 ## Quick start
