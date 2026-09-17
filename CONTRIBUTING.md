@@ -67,7 +67,7 @@ Optional scopes in parentheses are welcome (`feat(events): ...`). Use the body t
 
 ## Code rules
 
-These come from `CLAUDE.md` and do not bend:
+These come from `AGENTS.md` and do not bend:
 
 - **Authorization lives in the Data Access Layer *and* Postgres Row-Level Security.** Every query goes through `src/lib/dal/`, takes the caller's session, and scopes by `university_id`; every domain table has an RLS policy. `proxy.ts` (middleware) is never the security boundary. If you touch the DAL or a policy, update the cross-tenant isolation tests.
 - **No secrets in git.** Real values live in `.env.local` and Vercel environment variables. Keep `.env.example` current when you add a variable. gitleaks runs in CI.
@@ -96,7 +96,7 @@ These come from `CLAUDE.md` and do not bend:
 | `docs/research/` | Versions and limits verified against official docs |
 | `docs/audits/` | Phase audits |
 | `SECURITY.md` | Vulnerability reporting policy |
-| `CLAUDE.md` / `AGENTS.md` | Working agreement for AI coding agents |
+| `AGENTS.md` | Working agreement for AI coding agents |
 
 Update the relevant document in the same PR as the code change.
 

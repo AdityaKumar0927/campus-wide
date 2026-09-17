@@ -1,6 +1,6 @@
 # Phase 0 audit — 2026-09-16
 
-Scope: the planning set (`PLAN.md`, `ARCHITECTURE.md`, `ROADMAP.md`, `TASKS.md`, `CLAUDE.md`) against
+Scope: the planning set (`PLAN.md`, `ARCHITECTURE.md`, `ROADMAP.md`, `TASKS.md`, `AGENTS.md`) against
 `docs/BRIEF.md`, plus the GitHub repository configuration. No application code exists yet, so there is
 no code, dependency, or runtime audit; those start in Phase 1 (CodeQL, gitleaks, `pnpm audit`, Playwright + axe).
 Method: one independent reviewer agent cross-read every document against the brief; the lead audited the
@@ -32,7 +32,7 @@ repository via the GitHub API and re-checked the verified facts in `docs/researc
 | # | Severity | Finding | Fix |
 |---|---|---|---|
 | L1 | high | **Email sending needs a domain you control.** With only a Vercel subdomain, Resend cannot verify SPF/DKIM, so magic links to real students cannot be sent from production. Local dev is unaffected (Supabase mail catcher). | Recorded as D-17 with the consequence; Phase 2 STOP now includes "domain or accept test-mode (owner-only recipient)". |
-| L2 | medium | `CLAUDE.md` said "Node ≥ 20 LTS" while the verified stack requires Node ≥ 22.12 (vitest 5, supabase-js) and the plan chose Node 24. | Fixed to Node 24 LTS. |
+| L2 | medium | `AGENTS.md` said "Node ≥ 20 LTS" while the verified stack requires Node ≥ 22.12 (vitest 5, supabase-js) and the plan chose Node 24. | Fixed to Node 24 LTS. |
 | L3 | medium | Brief §8 asks for "optional AI-assisted event creation from pasted text"; the phase plan had dropped it. | Added to Phase 6. |
 | L4 | medium | Brief §6 lists "encryption at rest (Supabase)" and "npm provenance"; the security-controls table had neither. | Added Encryption and Dependency-freshness rows to ARCHITECTURE §10. |
 | L5 | low | Brief §3 wires Vercel deploy early ("Enable preview deployments"); the plan deferred all Vercel work to Phase 9, losing preview URLs for eight phases. | Added an optional Phase 1 exit STOP to link Vercel for previews. |
@@ -54,7 +54,7 @@ The reviewer agent returned 35 findings. Disposition: **fixed** = documents chan
 | 25 | med | Vercel not linked until Phase 9; no previews for eight phases | **fixed** — recommended STOP at Phase 1 exit |
 | 26 | med | Supabase region never chosen; immutable and drives GDPR/DSA answers | **owner** — added as decision 5 in PLAN §7 and to the Phase 2 STOP |
 | 1 | med | In-app relay silently replaced the brief's email relay | **owner** — disclosed in D-14; assumed accepted unless the owner objects |
-| 8 | med | CLAUDE.md said Node ≥ 20 | **fixed** (earlier commit) |
+| 8 | med | AGENTS.md said Node ≥ 20 | **fixed** (earlier commit) |
 | 2 | low | AI event creation from pasted text missing | **fixed** (Phase 6) |
 | 3 | low | Safe-exchange zones and guest-pass kind missing from the model | **fixed** — `safe_exchange_locations`, `meal_shares.kind` (ARCH §3, §6) |
 | 4 | low | No design direction for the "fresh, distinctive" requirement | **fixed** — D-18 "campus editorial" + owner look review in Phase 1 DoD |
