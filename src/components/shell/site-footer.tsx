@@ -35,7 +35,7 @@ export function SiteFooter() {
     <footer className="masthead-rule mt-24 bg-background">
       <div className="mx-auto grid max-w-6xl gap-10 px-4 py-12 sm:grid-cols-2 lg:grid-cols-4">
         <div className="space-y-3">
-          <p className="font-heading text-2xl font-bold tracking-[-0.04em]">
+          <p className="font-heading text-2xl font-medium tracking-[-0.045em]">
             Campus<span className="text-primary">Wide</span>
           </p>
           <p className="max-w-xs text-sm text-muted-foreground">
