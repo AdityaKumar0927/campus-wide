@@ -1,9 +1,10 @@
+import { randomUUID } from "node:crypto";
 import { expect, type Page } from "@playwright/test";
 
 const mailpit = process.env.MAILPIT_URL ?? "http://127.0.0.1:54324";
 
 export function uniqueEmail(prefix = "jdoe") {
-  return `${prefix}${Date.now().toString(36)}${Math.floor(Math.random() * 1e4)}@hawk.illinoistech.edu`;
+  return `${prefix}${randomUUID().replace(/-/g, "").slice(0, 10)}@hawk.illinoistech.edu`;
 }
 
 export async function readOtpCode(email: string, attempts = 30): Promise<string> {
