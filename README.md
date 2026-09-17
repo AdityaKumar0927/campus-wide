@@ -7,7 +7,7 @@ found, rides, study groups, roommates, and polls, with human-first moderation an
 privacy and compliance functionality. Each university is an isolated tenant enforced by
 Postgres Row-Level Security.
 
-**Status:** Phase 1 (skeleton, design system, CI) — see [ROADMAP.md](ROADMAP.md). Preview: https://campus-wide.vercel.app Sign-in and
+**Status:** Phase 2 (sign-in, tenancy, RLS) for the Illinois Tech pilot — see [ROADMAP.md](ROADMAP.md) and [docs/pilot/illinois-tech.md](docs/pilot/illinois-tech.md). Preview: https://campus-wide.vercel.app Sign-in and
 content arrive in Phases 2 and 3; today the app is a themed shell with working navigation.
 
 ## Quick start
@@ -18,8 +18,9 @@ or nvm) and **pnpm 12** via corepack. Node 25 is end-of-life and is not supporte
 ```bash
 corepack enable && corepack prepare pnpm@12.4.2 --activate
 pnpm install                 # supply-chain policies live in pnpm-workspace.yaml
-cp .env.example .env.local   # nothing is required for Phase 1
-pnpm dev                     # http://localhost:3000
+cp .env.example .env.local
+pnpm db:start                # local Supabase in Docker; paste the printed URL/keys into .env.local
+pnpm dev                     # http://localhost:3000 — sign-in codes land in Mailpit at http://127.0.0.1:54324
 ```
 
 | Command | What it does |
@@ -28,6 +29,8 @@ pnpm dev                     # http://localhost:3000
 | `pnpm typecheck` | `tsc --noEmit` |
 | `pnpm lint` | ESLint (eslint-config-next) |
 | `pnpm test` | Vitest unit tests |
+| `pnpm test:rls` | Integration tests against the local Supabase stack: auth hooks, triggers, tenant isolation |
+| `pnpm db:generate` / `pnpm db:reset` | Generate a Drizzle migration from `src/lib/db/schema`; reapply all migrations and the seed |
 | `pnpm build` then `pnpm test:e2e` | Playwright at 390 px and 1440 px with axe accessibility checks; visual baselines are Linux-only and produced by CI |
 | `pnpm build` then `pnpm lighthouse:server` | Lighthouse budget at mobile and desktop (starts and stops the server for you) |
 
