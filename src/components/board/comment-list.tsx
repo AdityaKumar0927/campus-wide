@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { AuthorChip } from "@/components/board/author-chip";
 import { ConfirmButton } from "@/components/board/confirm-button";
 import { ThanksButton } from "@/components/board/thanks-button";
@@ -54,6 +55,11 @@ export function CommentList({ postId, comments, isQuestion, open, viewerId, isOw
                 </form>
               )}
               {viewerId === c.author_id && <ConfirmButton label="Delete" confirmLabel={`Delete my ${noun}`} variant="ghost" onConfirm={onDelete.bind(null, postId, c.id)} />}
+              {viewerId && viewerId !== c.author_id && (
+                <Link href={`/report?type=comment&id=${c.id}`} className="text-xs text-muted-foreground underline-offset-4 hover:underline">
+                  Report
+                </Link>
+              )}
             </div>
           </li>
         ))}

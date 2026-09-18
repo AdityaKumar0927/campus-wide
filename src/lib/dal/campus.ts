@@ -27,6 +27,7 @@ export interface Campus {
   name: string;
   shortName: string;
   timezone: string;
+  accentHue: string;
   featureFlags: Record<string, boolean>;
   policyText: Record<string, string>;
   safeExchangeLocations: SafeSpot[];
@@ -36,13 +37,14 @@ export interface Campus {
 /** The caller's campus row (RLS returns exactly one). Cached per request. */
 export const getCampus = cache(async (): Promise<Campus | null> => {
   const supabase = await createClient();
-  const { data } = await supabase.from("universities").select("id, name, short_name, timezone, feature_flags, policy_text, safe_exchange_locations, dining_locations").limit(1).maybeSingle();
+  const { data } = await supabase.from("universities").select("id, name, short_name, timezone, accent_hue, feature_flags, policy_text, safe_exchange_locations, dining_locations").limit(1).maybeSingle();
   if (!data) return null;
   return {
     id: data.id,
     name: data.name,
     shortName: data.short_name ?? data.name,
     timezone: data.timezone,
+    accentHue: data.accent_hue,
     featureFlags: (data.feature_flags as Record<string, boolean>) ?? {},
     policyText: (data.policy_text as Record<string, string>) ?? {},
     safeExchangeLocations: (data.safe_exchange_locations as unknown as SafeSpot[]) ?? [],

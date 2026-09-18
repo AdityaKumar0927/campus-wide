@@ -135,11 +135,15 @@ export default async function PostPage({ params }: { params: Promise<Params> }) 
       )}
 
       <p className="text-xs text-muted-foreground">
-        Something wrong here? Read the{" "}
+        Something wrong here?{" "}
+        <Link href={`/report?type=post&id=${post.id}`} className="underline underline-offset-4">
+          Report this notice
+        </Link>
+        {" "}or read the{" "}
         <Link href="/#safety" className="underline underline-offset-4">
           house rules
         </Link>
-        . Reporting lands with moderation in Phase 5.
+        .
       </p>
     </div>
   );

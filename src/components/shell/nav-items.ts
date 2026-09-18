@@ -12,6 +12,7 @@ import {
   RideIcon,
   RoommateIcon,
   StudyIcon,
+  TickIcon,
   type IconComponent,
 } from "@/components/icons/board-icons";
 
@@ -39,6 +40,12 @@ export const exploreNav: NavItem[] = [
   { href: "/spaces", label: "Spaces", icon: RoommateIcon, phase: 3 },
   { href: "/threads", label: "Threads", icon: MarketIcon, phase: 4 },
   { href: "/search", label: "Search", icon: LostFoundIcon, phase: 3 },
+];
+
+/** Role links: shown only to moderators and campus admins. */
+export const roleNav: (NavItem & { role: "moderator" | "university_admin" })[] = [
+  { href: "/mod", label: "Moderation", icon: TickIcon, phase: 5, role: "moderator" },
+  { href: "/admin", label: "Campus admin", icon: BoardIcon, phase: 5, role: "university_admin" },
 ];
 
 /** Desktop sidebar: everything, grouped. */
