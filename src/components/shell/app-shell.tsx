@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import Link from "next/link";
+import { unreadCount } from "@/lib/dal/notifications";
 import type { Session } from "@/lib/dal/session";
 import { BottomNav } from "./bottom-nav";
 import { FeedbackButton } from "./feedback-button";
@@ -12,7 +13,8 @@ import { Wordmark } from "./wordmark";
  * Authenticated-area chrome: desktop sidebar + top bar, mobile top bar + bottom nav.
  * Server component; interactive pieces are small client islands.
  */
-export function AppShell({ children, session }: { children: ReactNode; session?: Session | null }) {
+export async function AppShell({ children, session }: { children: ReactNode; session?: Session | null }) {
+  const unread = session ? await unreadCount() : 0;
   const readOnly = session?.membership?.status && session.membership.status !== "active";
   return (
     <div className="flex min-h-dvh flex-col md:flex-row">
@@ -21,7 +23,7 @@ export function AppShell({ children, session }: { children: ReactNode; session?:
           <Wordmark href="/feed" />
         </div>
         <div className="flex-1 overflow-y-auto px-2 py-4">
-          <SidebarNav />
+          <SidebarNav unread={unread} />
         </div>
         <div className="stamp border-t border-rule px-4 py-3">
           Press <kbd className="rounded border border-rule bg-muted px-1">?</kbd> for shortcuts
@@ -56,7 +58,7 @@ export function AppShell({ children, session }: { children: ReactNode; session?:
         </main>
       </div>
 
-      <BottomNav />
+      <BottomNav unread={unread} />
       <KeyboardShortcuts />
     </div>
   );

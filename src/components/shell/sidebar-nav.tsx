@@ -3,9 +3,9 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
-import { moduleNav, primaryNav, type NavItem } from "./nav-items";
+import { exploreNav, moduleNav, primaryNav, type NavItem } from "./nav-items";
 
-function NavList({ items, heading }: { items: NavItem[]; heading?: string }) {
+function NavList({ items, heading, unread = 0 }: { items: NavItem[]; heading?: string; unread?: number }) {
   const pathname = usePathname();
   return (
     <div>
@@ -29,6 +29,12 @@ function NavList({ items, heading }: { items: NavItem[]; heading?: string }) {
               >
                 <Icon className="size-4 shrink-0" aria-hidden />
                 <span>{label}</span>
+                {href === "/inbox" && unread > 0 && (
+                  <span className="ml-auto rounded-full bg-primary px-1.5 text-[10px] font-medium text-primary-foreground">
+                    {unread > 99 ? "99+" : unread}
+                    <span className="sr-only"> unread</span>
+                  </span>
+                )}
               </Link>
             </li>
           );
@@ -38,10 +44,11 @@ function NavList({ items, heading }: { items: NavItem[]; heading?: string }) {
   );
 }
 
-export function SidebarNav() {
+export function SidebarNav({ unread = 0 }: { unread?: number }) {
   return (
     <nav aria-label="Sections" className="flex flex-col gap-5">
-      <NavList items={primaryNav.filter((i) => i.href !== "/more")} />
+      <NavList items={primaryNav.filter((i) => i.href !== "/more")} unread={unread} />
+      <NavList items={exploreNav} />
       <NavList items={moduleNav} heading="Around campus" />
     </nav>
   );
