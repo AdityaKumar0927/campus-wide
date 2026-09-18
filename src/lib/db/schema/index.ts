@@ -8,3 +8,4 @@ export * from "./content";
 export * from "./social";
 export * from "./engagement";
 export * from "./modules";
+export * from "./moderation";
