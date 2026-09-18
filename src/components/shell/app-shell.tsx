@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import Link from "next/link";
+import { getCampus } from "@/lib/dal/campus";
 import { unreadCount } from "@/lib/dal/notifications";
 import type { Session } from "@/lib/dal/session";
 import { BottomNav } from "./bottom-nav";
@@ -14,7 +15,7 @@ import { Wordmark } from "./wordmark";
  * Server component; interactive pieces are small client islands.
  */
 export async function AppShell({ children, session }: { children: ReactNode; session?: Session | null }) {
-  const unread = session ? await unreadCount() : 0;
+  const [unread, campus] = session ? await Promise.all([unreadCount(), getCampus()]) : [0, null];
   const readOnly = session?.membership?.status && session.membership.status !== "active";
   return (
     <div className="flex min-h-dvh flex-col md:flex-row">
@@ -23,7 +24,7 @@ export async function AppShell({ children, session }: { children: ReactNode; ses
           <Wordmark href="/feed" />
         </div>
         <div className="flex-1 overflow-y-auto px-2 py-4">
-          <SidebarNav unread={unread} />
+          <SidebarNav unread={unread} flags={campus?.featureFlags} />
         </div>
         <div className="stamp border-t border-rule px-4 py-3">
           Press <kbd className="rounded border border-rule bg-muted px-1">?</kbd> for shortcuts
@@ -35,7 +36,7 @@ export async function AppShell({ children, session }: { children: ReactNode; ses
           <div className="md:hidden">
             <Wordmark href="/feed" />
           </div>
-          <p className="stamp hidden md:block">Illinois Tech, Mies Campus{readOnly ? ". Read-only until you re-verify" : ""}</p>
+          <p className="stamp hidden md:block">{campus?.shortName ?? "Illinois Tech"}, Mies Campus{readOnly ? ". Read-only until you re-verify" : ""}</p>
           <div className="flex items-center gap-1">
             <FeedbackButton />
             <ThemeToggle />

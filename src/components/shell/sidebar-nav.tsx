@@ -44,12 +44,12 @@ function NavList({ items, heading, unread = 0 }: { items: NavItem[]; heading?: s
   );
 }
 
-export function SidebarNav({ unread = 0 }: { unread?: number }) {
+export function SidebarNav({ unread = 0, flags = {} }: { unread?: number; flags?: Record<string, boolean> }) {
   return (
     <nav aria-label="Sections" className="flex flex-col gap-5">
       <NavList items={primaryNav.filter((i) => i.href !== "/more")} unread={unread} />
       <NavList items={exploreNav} />
-      <NavList items={moduleNav} heading="Around campus" />
+      <NavList items={moduleNav.filter((i) => !i.flag || flags[i.flag])} heading="Around campus" />
     </nav>
   );
 }

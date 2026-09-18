@@ -3,6 +3,7 @@ import Link from "next/link";
 import type { CSSProperties } from "react";
 import { TickIcon } from "@/components/icons/board-icons";
 import type { PostWithAuthor } from "@/lib/dal/posts";
+import { summaryLine } from "@/lib/posts/summary";
 import { POST_TYPE_META, type PostType } from "@/lib/posts/types";
 import { relativeTime } from "@/lib/text";
 import { postImageUrl } from "@/lib/uploads/urls";
@@ -15,6 +16,7 @@ const rotations = ["-rotate-[0.6deg]", "rotate-[0.5deg]", "-rotate-[0.3deg]", "r
 export function PostCard({ post, index = 0, now, spaceName }: { post: PostWithAuthor; index?: number; now?: Date; spaceName?: string | null }) {
   const meta = POST_TYPE_META[post.type as PostType];
   const images = (post.images as string[]) ?? [];
+  const summary = summaryLine(post.type as PostType, post.payload);
   const excerpt = post.body.length > 180 ? `${post.body.slice(0, 180).trimEnd()}…` : post.body;
   const replies = post.type === "question" ? `${post.comment_count} answer${post.comment_count === 1 ? "" : "s"}` : `${post.comment_count} repl${post.comment_count === 1 ? "y" : "ies"}`;
   return (
@@ -35,6 +37,7 @@ export function PostCard({ post, index = 0, now, spaceName }: { post: PostWithAu
             {post.title}
           </Link>
         </h3>
+        {summary && <p className="mt-1.5 text-sm font-medium">{summary}</p>}
         {excerpt && <p className="mt-1.5 text-sm whitespace-pre-line text-muted-foreground">{excerpt}</p>}
         {images[0] && (
           <div className="relative mt-3 aspect-[4/3] w-full overflow-hidden rounded-sm border border-rule bg-muted">

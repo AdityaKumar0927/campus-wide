@@ -74,9 +74,11 @@ Live checklist; tick as work lands. Detail is finest for the next two phases and
 - [ ] Owner look review of `docs/screenshots/phase-3/`
 
 ## Phase 4 — Modules
-- [ ] Events + RSVP + `.ics`; Marketplace + prohibited items + safe-exchange locations + in-app relay (mutual reveal)
-- [ ] Meal gifting (flag OFF, policy gate, kinds, no price fields); Lost & found; Rides; Study groups; Roommates; Polls
-- [ ] `pg_cron` expiry sweeper; E2E per module at both viewports; relay leak tests
+- [x] Events (RSVP via `post_participants`, `.ics` at `/p/[id]/calendar.ics`), Marketplace (price/condition/category, prohibited-items check on both sides, safe-exchange spots, double-blind relay with the one-message rule, payment-word cautions, mutual reveal through `relay_contact()`, thread export for reports, block freezes the thread, "it happened" credits the helper) (2026-09-18)
+- [x] Meal gifting (flag OFF, `audience = meal_holders` for private requests visible to attested holders only, per-term self-attestation + meal-sharing consent recorded before every offer, no price fields), Lost & found (claim through the relay), Rides (seats enforced), Study groups (capacity), Roommates (expiry, relay), Polls (`poll_votes`, private ballots, `poll_results()`)
+- [x] Feature flags enforced in the database (`app.type_enabled`) and mirrored in the composer, sidebar, and module pages; `pg_cron` hourly `app.expire_posts()` plus a daily `/api/cron/expire` backstop
+- [x] RLS suite: 37 tests; E2E: relay (leak assertions on rendered HTML), events + calendar file, polls, expiry sweep, meals switched off, at both viewports
+- [ ] Owner look review of `docs/screenshots/phase-4/`
 
 ## Phase 5 — Moderation, admin, feedback
 - [ ] Reports (DSA categories), mute, block, queue, actions + statement of reasons, appeals, audit log

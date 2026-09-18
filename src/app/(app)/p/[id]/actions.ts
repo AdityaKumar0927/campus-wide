@@ -72,3 +72,41 @@ export async function deleteComment(postId: string, commentId: string): Promise<
   if (error) throw new Error(explainDbError(error.message));
   revalidatePath(`/p/${postId}`);
 }
+
+export async function joinPost(postId: string): Promise<void> {
+  const session = await member(`/p/${postId}`);
+  const supabase = await createClient();
+  const { error } = await supabase.from("post_participants").insert({ university_id: session.universityId, post_id: postId, user_id: session.userId, kind: "member" });
+  if (error && !/duplicate/i.test(error.message)) throw new Error(explainDbError(error.message));
+  revalidatePath(`/p/${postId}`);
+}
+
+export async function leavePost(postId: string): Promise<void> {
+  const session = await member(`/p/${postId}`);
+  const supabase = await createClient();
+  await supabase.from("post_participants").delete().eq("post_id", postId).eq("user_id", session.userId);
+  revalidatePath(`/p/${postId}`);
+}
+
+export async function castVote(postId: string, options: number[]): Promise<void> {
+  await member(`/p/${postId}`);
+  const supabase = await createClient();
+  const { error } = await supabase.rpc("cast_poll_vote", { p_post_id: postId, p_options: options });
+  if (error) throw new Error(explainDbError(error.message));
+  revalidatePath(`/p/${postId}`);
+}
+
+/** Take a tab: opens (or reopens) the double-blind thread with the notice owner. */
+export async function openThread(postId: string): Promise<void> {
+  const session = await member(`/p/${postId}`);
+  const supabase = await createClient();
+  const { data: existing } = await supabase.from("relay_threads").select("id").eq("post_id", postId).eq("initiator_id", session.userId).maybeSingle();
+  if (existing) redirect(`/t/${existing.id}`);
+  const { data, error } = await supabase
+    .from("relay_threads")
+    .insert({ university_id: session.universityId, post_id: postId, initiator_id: session.userId, owner_id: session.userId })
+    .select("id")
+    .single();
+  if (error || !data) throw new Error(explainDbError(error?.message ?? ""));
+  redirect(`/t/${data.id}`);
+}

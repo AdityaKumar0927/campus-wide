@@ -19,6 +19,8 @@ export interface NavItem {
   href: string;
   label: string;
   icon: IconComponent;
+  /** Feature flag on universities.feature_flags that switches the module on. */
+  flag?: string;
   /** Phase in which the real page lands; used by the placeholder route. */
   phase: number;
 }
@@ -35,29 +37,18 @@ export const primaryNav: NavItem[] = [
 /** Desktop sidebar extras: ways around the board. */
 export const exploreNav: NavItem[] = [
   { href: "/spaces", label: "Spaces", icon: RoommateIcon, phase: 3 },
+  { href: "/threads", label: "Threads", icon: MarketIcon, phase: 4 },
   { href: "/search", label: "Search", icon: LostFoundIcon, phase: 3 },
 ];
 
 /** Desktop sidebar: everything, grouped. */
 export const moduleNav: NavItem[] = [
-  { href: "/events", label: "Events", icon: EventIcon, phase: 4 },
-  { href: "/market", label: "Marketplace", icon: MarketIcon, phase: 4 },
-  { href: "/meals", label: "Meal gifting", icon: MealIcon, phase: 4 },
-  { href: "/lost-found", label: "Lost & found", icon: LostFoundIcon, phase: 4 },
-  { href: "/rides", label: "Rides", icon: RideIcon, phase: 4 },
-  { href: "/study", label: "Study groups", icon: StudyIcon, phase: 4 },
-  { href: "/roommates", label: "Roommates", icon: RoommateIcon, phase: 4 },
-  { href: "/polls", label: "Polls", icon: PollIcon, phase: 4 },
+  { href: "/events", label: "Events", icon: EventIcon, phase: 4, flag: "events" },
+  { href: "/market", label: "Marketplace", icon: MarketIcon, phase: 4, flag: "market" },
+  { href: "/meals", label: "Meal gifting", icon: MealIcon, phase: 4, flag: "meals" },
+  { href: "/lost-found", label: "Lost & found", icon: LostFoundIcon, phase: 4, flag: "lost_found" },
+  { href: "/rides", label: "Rides", icon: RideIcon, phase: 4, flag: "rides" },
+  { href: "/study", label: "Study groups", icon: StudyIcon, phase: 4, flag: "study" },
+  { href: "/roommates", label: "Roommates", icon: RoommateIcon, phase: 4, flag: "roommates" },
+  { href: "/polls", label: "Polls", icon: PollIcon, phase: 4, flag: "polls" },
 ];
-
-export const placeholderSections: Record<string, { label: string; phase: number; blurb: string }> = {
-  more: { label: "Menu", phase: 3, blurb: "Spaces and your data export live here; account and sessions are already in Settings." },
-  events: { label: "Events", phase: 4, blurb: "RSVP and add to your calendar with one tap." },
-  market: { label: "Marketplace", phase: 4, blurb: "Buy and sell within campus. No payments here, and your email stays masked." },
-  meals: { label: "Meal gifting", phase: 4, blurb: "Treat a friend or donate a swipe. Gifting only: nothing is ever sold." },
-  "lost-found": { label: "Lost & found", phase: 4, blurb: "Post what you found, claim what you lost." },
-  rides: { label: "Rides", phase: 4, blurb: "Share a ride home for the break." },
-  study: { label: "Study groups", phase: 4, blurb: "Find people taking the same class this term." },
-  roommates: { label: "Roommates", phase: 4, blurb: "Roommate and sublet listings with expiry." },
-  polls: { label: "Polls", phase: 4, blurb: "Quick campus polls, one vote per verified student." },
-};

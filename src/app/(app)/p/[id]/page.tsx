@@ -8,8 +8,10 @@ import { AuthorChip } from "@/components/board/author-chip";
 import { CommentList } from "@/components/board/comment-list";
 import { ConfirmButton } from "@/components/board/confirm-button";
 import { ThanksButton } from "@/components/board/thanks-button";
+import { TypePanel } from "@/components/board/type-panels";
 import { Kicker } from "@/components/kicker";
 import { Button } from "@/components/ui/button";
+import { getCampus } from "@/lib/dal/campus";
 import { getPost, listComments, myThanks } from "@/lib/dal/posts";
 import { getSession } from "@/lib/dal/session";
 import { getSpaceById } from "@/lib/dal/spaces";
@@ -28,7 +30,7 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
 
 export default async function PostPage({ params }: { params: Promise<Params> }) {
   const { id } = await params;
-  const [post, session] = await Promise.all([getPost(id), getSession()]);
+  const [post, session, campus] = await Promise.all([getPost(id), getSession(), getCampus()]);
   if (!post) notFound();
   const [comments, space] = await Promise.all([listComments(post.id), post.space_id ? getSpaceById(post.space_id) : null]);
   const thanked = await myThanks([post.id, ...comments.map((c) => c.id)]);
@@ -96,6 +98,12 @@ export default async function PostPage({ params }: { params: Promise<Params> }) 
           </div>
         </footer>
       </article>
+
+      {post.type !== "question" && post.type !== "notice" && (
+        <div className="rounded-md border border-rule bg-card p-4">
+          <TypePanel post={post} session={session} campus={campus} />
+        </div>
+      )}
 
       <CommentList
         postId={post.id}
