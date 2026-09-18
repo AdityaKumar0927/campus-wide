@@ -1,6 +1,6 @@
 "use client";
 
-import { CheckCircle2Icon, HeartHandshakeIcon } from "lucide-react";
+import { ThanksIcon, TickIcon } from "@/components/icons/board-icons";
 import { useState } from "react";
 import { Chip, Person, PreviewNotice } from "./frame";
 
@@ -20,8 +20,8 @@ export function QaPreview() {
             <div className="flex items-center justify-between gap-2">
               <Person initials={a.who.initials} name={a.who.name} uid={a.who.uid} className="text-xs" />
               {a.accepted && (
-                <span className="inline-flex items-center gap-1 font-mono text-[10px] tracking-wider text-primary uppercase">
-                  <CheckCircle2Icon className="size-3.5" aria-hidden /> Accepted
+                <span className="inline-flex items-center gap-1 text-[11px] font-medium text-primary">
+                  <TickIcon className="size-3.5" aria-hidden /> Accepted
                 </span>
               )}
             </div>
@@ -33,7 +33,7 @@ export function QaPreview() {
                 onClick={() => setThanked((t) => ({ ...t, [a.id]: !t[a.id] }))}
                 ariaLabel={`Thank ${a.who.name}`}
               >
-                <HeartHandshakeIcon className="size-3.5" aria-hidden /> Thank you · {a.thanks + (thanked[a.id] ? 1 : 0)}
+                <ThanksIcon className="size-3.5" aria-hidden /> Thank you · {a.thanks + (thanked[a.id] ? 1 : 0)}
               </Chip>
             </div>
           </li>

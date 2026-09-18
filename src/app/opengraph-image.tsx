@@ -16,9 +16,9 @@ const paper = "#faf7f2";
 const ink = "#2b2620";
 const green = "#2c6a4a";
 const notices = [
-  { bg: "#dce9f6", stamp: "QUESTION · 2H AGO", text: "Anyone have a TI-84 for Thursday?", rot: -2 },
-  { bg: "#f6e9c2", stamp: "FOR SALE · BIKE", text: "Commuter bike, lock included.", rot: 1.5 },
-  { bg: "#fbf3b9", stamp: "LOST · LIBRARY 3F", text: "Blue Hydro Flask, cat sticker.", rot: -1 },
+  { bg: "#dce9f6", stamp: "Question · 2h ago", text: "Anyone have a TI-84 for Thursday?", rot: -2 },
+  { bg: "#f6e9c2", stamp: "For sale · Bike", text: "Commuter bike, lock included.", rot: 1.5 },
+  { bg: "#fbf3b9", stamp: "Lost · Library, 3rd floor", text: "Blue Hydro Flask, cat sticker.", rot: -1 },
 ];
 
 export default async function Image() {
@@ -79,7 +79,7 @@ export default async function Image() {
                   boxShadow: "0 1px 2px rgba(0,0,0,0.4)",
                 }}
               />
-              <div style={{ fontFamily: "monospace", fontSize: 14, letterSpacing: 2, color: "#6b6258" }}>{n.stamp}</div>
+              <div style={{ fontFamily: "Manrope", fontSize: 15, fontWeight: 500, color: "#6b6258" }}>{n.stamp}</div>
               <div style={{ fontSize: 26, marginTop: 8, lineHeight: 1.2, fontFamily: "Manrope", letterSpacing: -0.5 }}>{n.text}</div>
             </div>
           ))}

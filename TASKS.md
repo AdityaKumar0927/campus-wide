@@ -4,7 +4,7 @@ Live checklist; tick as work lands. Detail is finest for the next two phases and
 
 ## Phase 0 — Planning
 - [x] Verify package versions, free-tier limits, and platform capabilities from official sources (2026-09-15)
-- [x] Write `docs/BRIEF.md`, `docs/research/*`, `CLAUDE.md`, `.gitignore`, `.gitattributes`
+- [x] Write `docs/BRIEF.md`, `docs/research/*`, `AGENTS.md`, `.gitignore`, `.gitattributes`
 - [x] Write `PLAN.md`, `ROADMAP.md`, `ARCHITECTURE.md`, `TASKS.md`
 - [x] Repo created: https://github.com/AdityaKumar0927/campus-wide (public), `main` pushed 2026-09-16
 - [x] Owner decisions recorded 2026-09-16: MIT licence (D-16), Vercel subdomain for now (D-17)
@@ -29,7 +29,9 @@ Live checklist; tick as work lands. Detail is finest for the next two phases and
 - [x] Board motion (CSS-only scroll reveal + "recently pinned" ticker, reduced-motion safe) and a board-styled Open Graph card (`src/app/opengraph-image.tsx`, Instrument Serif OFL); Magic UI Pro template reviewed and not copied (licence), its MDX pipeline noted for Phase 7
 - [x] Magic UI (MIT registry) used creatively: animated-beam → twine relay diagram ("Take a tab" section), highlighter → marker pen, spinning-text → rubber-stamp seal, canvas-confetti → paper scraps on feedback, theme wipe via View Transitions; reduced-motion safe
 - [x] Owner look review round 2 (2026-09-17): serif and italics rejected → Bricolage Grotesque + Manrope, tight tracking; Chicago map hero with live ripple; dock, orbiting circles, icon cloud, comic text added
-- [ ] **Owner look review (round 3)** of `docs/screenshots/phase-2/` and `phase-2-motion/`
+- [x] Owner look review rounds 3-4 (2026-09-17): slimmer 400-weight headlines, seal restored at hero scale, working feature previews with sample data
+- [x] Design v5 (2026-09-17): owner rejected mono uppercase kickers and the "notice board for the whole campus" line → sans sentence-case labels, tab-glyph kickers, washi tape label; own SVG set (module icons, campus-object icons for the cloud, tape strips, spot illustrations, hand-ruled section line) replaces library icons; `CLAUDE.md` → `AGENTS.md`; screenshots in `docs/screenshots/phase-2d/`
+- [ ] **Owner look review (round 5)** of `docs/screenshots/phase-2d/`
 - [x] Vercel project `campus-wide` created and linked via CLI (2026-09-16); production live at https://campus-wide.vercel.app with `ENABLE_EXPERIMENTAL_COREPACK=1` (pnpm 12) and `APP_URL`
 - [x] Vercel GitHub app installed by the owner (2026-09-17); PR previews and production deploys are automatic
 - [x] Footer static/external links are plain anchors (fixed a prefetch 404; best-practices 100 on production)

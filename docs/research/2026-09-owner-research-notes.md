@@ -41,5 +41,5 @@ Anonymous campus apps (Yik Yak, Fizz, Sidechat) repeatedly produced harassment a
 ## Design + PWA
 shadcn/ui + Radix/Base UI; Tailwind v4 OKLCH semantic tokens; light/dark/system via next-themes; self-hosted variable fonts via next/font; subtle motion with reduced-motion support; mobile bottom nav + safe-area insets; desktop keyboard shortcuts. iOS Web Push only for home-screen-installed PWAs (iOS 16.4+); Serwist is the current Next.js PWA tooling. Prompt install before requesting notification permission; email as fallback.
 
-## Claude Code practices
-Lean CLAUDE.md; plan before edits; subagents for research; verify in a real browser (Playwright) at mobile + desktop; small conventional commits with green CI; fetch current library docs; never commit secrets; explicit STOP-and-ask checkpoints for accounts and API keys.
+## Agent working practices
+Lean AGENTS.md; plan before edits; subagents for research; verify in a real browser (Playwright) at mobile + desktop; small conventional commits with green CI; fetch current library docs; never commit secrets; explicit STOP-and-ask checkpoints for accounts and API keys.

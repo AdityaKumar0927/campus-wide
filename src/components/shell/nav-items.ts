@@ -1,47 +1,47 @@
 import {
-  BellIcon,
-  BookOpenIcon,
-  CalendarDaysIcon,
-  CarFrontIcon,
-  CircleHelpIcon,
-  HomeIcon,
+  BoardIcon,
+  EventIcon,
+  InboxIcon,
+  LostFoundIcon,
+  MarketIcon,
+  MealIcon,
   MenuIcon,
   PinIcon,
-  SearchIcon,
-  ShoppingBagIcon,
-  UtensilsIcon,
-  Users2Icon,
-  VoteIcon,
-  type LucideIcon,
-} from "lucide-react";
+  PollIcon,
+  QuestionIcon,
+  RideIcon,
+  RoommateIcon,
+  StudyIcon,
+  type IconComponent,
+} from "@/components/icons/board-icons";
 
 export interface NavItem {
   href: string;
   label: string;
-  icon: LucideIcon;
+  icon: IconComponent;
   /** Phase in which the real page lands; used by the placeholder route. */
   phase: number;
 }
 
 /** Mobile bottom bar: five thumb-reachable destinations. */
 export const primaryNav: NavItem[] = [
-  { href: "/feed", label: "Feed", icon: HomeIcon, phase: 3 },
-  { href: "/questions", label: "Questions", icon: CircleHelpIcon, phase: 3 },
+  { href: "/feed", label: "Feed", icon: BoardIcon, phase: 3 },
+  { href: "/questions", label: "Questions", icon: QuestionIcon, phase: 3 },
   { href: "/post", label: "Pin", icon: PinIcon, phase: 3 },
-  { href: "/inbox", label: "Inbox", icon: BellIcon, phase: 3 },
+  { href: "/inbox", label: "Inbox", icon: InboxIcon, phase: 3 },
   { href: "/more", label: "Menu", icon: MenuIcon, phase: 3 },
 ];
 
 /** Desktop sidebar: everything, grouped. */
 export const moduleNav: NavItem[] = [
-  { href: "/events", label: "Events", icon: CalendarDaysIcon, phase: 4 },
-  { href: "/market", label: "Marketplace", icon: ShoppingBagIcon, phase: 4 },
-  { href: "/meals", label: "Meal gifting", icon: UtensilsIcon, phase: 4 },
-  { href: "/lost-found", label: "Lost & found", icon: SearchIcon, phase: 4 },
-  { href: "/rides", label: "Rides", icon: CarFrontIcon, phase: 4 },
-  { href: "/study", label: "Study groups", icon: BookOpenIcon, phase: 4 },
-  { href: "/roommates", label: "Roommates", icon: Users2Icon, phase: 4 },
-  { href: "/polls", label: "Polls", icon: VoteIcon, phase: 4 },
+  { href: "/events", label: "Events", icon: EventIcon, phase: 4 },
+  { href: "/market", label: "Marketplace", icon: MarketIcon, phase: 4 },
+  { href: "/meals", label: "Meal gifting", icon: MealIcon, phase: 4 },
+  { href: "/lost-found", label: "Lost & found", icon: LostFoundIcon, phase: 4 },
+  { href: "/rides", label: "Rides", icon: RideIcon, phase: 4 },
+  { href: "/study", label: "Study groups", icon: StudyIcon, phase: 4 },
+  { href: "/roommates", label: "Roommates", icon: RoommateIcon, phase: 4 },
+  { href: "/polls", label: "Polls", icon: PollIcon, phase: 4 },
 ];
 
 export const placeholderSections: Record<string, { label: string; phase: number; blurb: string }> = {

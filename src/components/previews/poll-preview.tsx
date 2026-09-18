@@ -33,7 +33,7 @@ export function PollPreview() {
                 {vote && <span aria-hidden className="absolute inset-y-0 left-0 bg-accent transition-[width] duration-500 motion-reduce:transition-none" style={{ width: `${pct}%` }} />}
                 <span className="relative flex items-center justify-between">
                   <span>{o.label}</span>
-                  {vote && <span className="font-mono text-[11px] text-muted-foreground">{pct}%</span>}
+                  {vote && <span className="text-[11px] tabular-nums text-muted-foreground">{pct}%</span>}
                 </span>
               </button>
             </li>

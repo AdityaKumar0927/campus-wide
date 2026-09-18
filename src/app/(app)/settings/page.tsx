@@ -31,7 +31,7 @@ export default async function SettingsPage() {
   return (
     <div className="space-y-10">
       <header className="border-b border-rule pb-4">
-        <p className="stamp">Settings · {session.profile?.displayName} · @{session.profile?.campusUsername}</p>
+        <p className="stamp">{session.profile?.displayName} <span className="font-mono">@{session.profile?.campusUsername}</span></p>
         <h1 className="mt-1 text-5xl">Your account</h1>
       </header>
 

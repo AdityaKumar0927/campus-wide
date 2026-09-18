@@ -1,17 +1,17 @@
 "use client";
 
 import {
-  BookOpenIcon,
-  CalendarDaysIcon,
-  CarFrontIcon,
-  CircleHelpIcon,
-  KeyRoundIcon,
-  SearchIcon,
-  ShoppingBagIcon,
-  UsersIcon,
-  UtensilsIcon,
-  VoteIcon,
-} from "lucide-react";
+  EventIcon,
+  InboxIcon,
+  LostFoundIcon,
+  MarketIcon,
+  MealIcon,
+  PollIcon,
+  QuestionIcon,
+  RideIcon,
+  RoommateIcon,
+  StudyIcon,
+} from "@/components/icons/board-icons";
 import { PinMark } from "@/components/shell/wordmark";
 import { OrbitingCircles } from "@/components/ui/orbiting-circles";
 
@@ -24,18 +24,18 @@ export function CampusOrbit() {
         <PinMark className="size-7 rotate-0" />
       </div>
       <OrbitingCircles radius={90} iconSize={40} duration={28}>
-        <CircleHelpIcon className={cls} />
-        <CalendarDaysIcon className={cls} />
-        <ShoppingBagIcon className={cls} />
-        <UtensilsIcon className={cls} />
+        <QuestionIcon className={cls} />
+        <EventIcon className={cls} />
+        <MarketIcon className={cls} />
+        <MealIcon className={cls} />
       </OrbitingCircles>
       <OrbitingCircles radius={150} iconSize={36} duration={40} reverse>
-        <SearchIcon className={cls} />
-        <CarFrontIcon className={cls} />
-        <BookOpenIcon className={cls} />
-        <UsersIcon className={cls} />
-        <VoteIcon className={cls} />
-        <KeyRoundIcon className={cls} />
+        <LostFoundIcon className={cls} />
+        <RideIcon className={cls} />
+        <StudyIcon className={cls} />
+        <RoommateIcon className={cls} />
+        <PollIcon className={cls} />
+        <InboxIcon className={cls} />
       </OrbitingCircles>
     </div>
   );

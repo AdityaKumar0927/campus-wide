@@ -16,7 +16,7 @@ export default async function SignInPage({ searchParams }: { searchParams: Promi
   return (
     <div className="board min-h-dvh px-4 py-12">
       <div className="notice mx-auto max-w-md -rotate-[0.6deg] px-6 pt-8 pb-6" style={{ "--stock": "var(--stock-white)" } as React.CSSProperties}>
-        <p className="stamp">Sign in · Illinois Tech</p>
+        <p className="stamp">For Illinois Tech students, faculty, and staff</p>
         <h1 className="mt-2 text-4xl">Prove it is you. That is all we ask.</h1>
         <p className="mt-3 text-sm text-muted-foreground">
           We email a code to your campus address. We never see your Illinois Tech password, never connect to Okta or Microsoft 365, and never ask for a photo or ID.

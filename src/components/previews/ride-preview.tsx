@@ -1,6 +1,6 @@
 "use client";
 
-import { CarFrontIcon } from "lucide-react";
+import { RideIcon } from "@/components/icons/board-icons";
 import { useState } from "react";
 import { Chip, Person, PreviewNotice } from "./frame";
 
@@ -21,7 +21,7 @@ export function RidePreview() {
             setSeats((s) => (taken ? s + 1 : s - 1));
           }}
         >
-          <CarFrontIcon className="size-3.5" aria-hidden /> {taken ? "Seat taken · you" : "Take a seat"}
+          <RideIcon className="size-3.5" aria-hidden /> {taken ? "Your seat" : "Take a seat"}
         </Chip>
       </div>
       <p className="mt-auto text-xs text-muted-foreground">Costs are split in person. Rides expire the moment they leave.</p>

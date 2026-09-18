@@ -67,7 +67,7 @@ export function RelayDiagram() {
         <Note
           ref={youRef}
           stock="blue"
-          stamp="You · took a tab"
+          stamp="You, after taking a tab"
           title="Is the bike still available? I can do Thursday."
           foot="Sent through the board. No address attached."
           rotate="-rotate-[1.2deg]"
@@ -78,7 +78,7 @@ export function RelayDiagram() {
         <Note
           ref={sellerRef}
           stock="manila"
-          stamp="The seller · replied"
+          stamp="The seller, replying"
           title="Yes. Library front desk at four?"
           foot="Replied from the board. Still no address."
           rotate="rotate-[1deg]"

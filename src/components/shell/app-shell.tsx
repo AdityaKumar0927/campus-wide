@@ -23,7 +23,7 @@ export function AppShell({ children, session }: { children: ReactNode; session?:
         <div className="flex-1 overflow-y-auto px-2 py-4">
           <SidebarNav />
         </div>
-        <div className="stamp border-t border-rule px-4 py-3 normal-case tracking-normal">
+        <div className="stamp border-t border-rule px-4 py-3">
           Press <kbd className="rounded border border-rule bg-muted px-1">?</kbd> for shortcuts
         </div>
       </aside>
@@ -33,12 +33,12 @@ export function AppShell({ children, session }: { children: ReactNode; session?:
           <div className="md:hidden">
             <Wordmark href="/feed" />
           </div>
-          <p className="stamp hidden md:block">Illinois Tech · Mies Campus{readOnly ? " · read-only" : ""}</p>
+          <p className="stamp hidden md:block">Illinois Tech, Mies Campus{readOnly ? ". Read-only until you re-verify" : ""}</p>
           <div className="flex items-center gap-1">
             <FeedbackButton />
             <ThemeToggle />
             {session?.profile ? (
-              <Link href="/settings" aria-label="Your account" className="ml-1 flex size-8 items-center justify-center rounded-full border border-rule bg-[var(--stock-blue)] font-mono text-xs font-medium text-foreground outline-none focus-visible:ring-3 focus-visible:ring-ring/50">
+              <Link href="/settings" aria-label="Your account" className="ml-1 flex size-8 items-center justify-center rounded-full border border-rule bg-[var(--stock-blue)] text-xs font-medium text-foreground outline-none focus-visible:ring-3 focus-visible:ring-ring/50">
                 {session.profile.initials}
               </Link>
             ) : null}

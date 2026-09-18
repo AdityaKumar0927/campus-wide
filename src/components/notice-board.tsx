@@ -1,3 +1,4 @@
+import { WashiTape } from "@/components/washi-tape";
 import { cn } from "@/lib/utils";
 
 /**
@@ -17,6 +18,8 @@ interface Notice {
   takenTabs?: number;
   rotate: string;
   pinHue?: number;
+  /** Tape instead of a pin. */
+  held?: "tape";
   className?: string;
 }
 
@@ -33,6 +36,7 @@ const notices: Notice[] = [
     stock: "white",
     stamp: "Event · Fri 8pm · Union basement",
     title: "Jazz night. Free. Bring someone who has had a long week.",
+    held: "tape",
     foot: "41 going · add to calendar",
     rotate: "rotate-[1.1deg]",
     pinHue: 155,
@@ -60,6 +64,7 @@ const notices: Notice[] = [
     stock: "green",
     stamp: "Ride · Sat 6am · Airport",
     title: "Two seats left to the airport before fall break. Split the gas, not the playlist.",
+    held: "tape",
     foot: "Driver verified · 4 helped",
     rotate: "-rotate-[1deg]",
     pinHue: 250,
@@ -80,7 +85,8 @@ export function NoticeCard({ n }: { n: Notice }) {
   const style = { "--stock": `var(--stock-${n.stock})`, "--pin-hue": n.pinHue ?? 25 } as React.CSSProperties;
   return (
     <li className={cn("reveal", n.className)}>
-      <div className={cn("notice h-full px-4 pt-5 pb-3 transition-transform duration-300 hover:-translate-y-0.5 motion-reduce:transition-none", n.rotate)} style={style}>
+      <div data-held={n.held} className={cn("notice h-full px-4 pt-5 pb-3 transition-transform duration-300 hover:-translate-y-0.5 motion-reduce:transition-none", n.rotate)} style={style}>
+      {n.held === "tape" && <WashiTape hue={n.pinHue === 155 ? 150 : 100} className="absolute -top-2.5 left-1/2 h-5 w-28 -translate-x-1/2 -rotate-3" />}
       <p className="stamp">{n.stamp}</p>
       <p className="mt-2 text-[1.05rem] leading-snug">{n.title}</p>
       {n.body && <p className="mt-1.5 text-sm text-muted-foreground">{n.body}</p>}

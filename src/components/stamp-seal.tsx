@@ -17,7 +17,7 @@ export function StampSeal({ className }: { className?: string }) {
   return (
     <div className={cn("relative mx-auto flex size-[20rem] items-center justify-center text-primary sm:size-[24rem] lg:size-[27rem]", className)}>
       <SpinningText
-        className="stamp absolute inset-0 flex -rotate-6 items-center justify-center font-mono text-[0.95rem] font-medium text-primary sm:text-[1.05rem]"
+        className="absolute inset-0 flex -rotate-6 items-center justify-center font-heading text-[1rem] font-medium text-primary sm:text-[1.1rem]"
         radius={19}
         duration={60}
         variants={reduced ? { container: { visible: { rotate: 0 } } } : undefined}
@@ -27,11 +27,11 @@ export function StampSeal({ className }: { className?: string }) {
       {/* Inner ring */}
       <div className="absolute inset-[14%] rounded-full border-[3px] border-double border-primary/50" aria-hidden />
       {/* Live ripple + pin */}
-      <div className="relative flex size-40 items-center justify-center" aria-hidden>
-        <Ripple mainCircleSize={56} mainCircleOpacity={0.4} numCircles={4} color="oklch(0.72 0.15 25)" />
+      <div className="relative flex size-40 items-center justify-center overflow-hidden rounded-full" aria-hidden>
+        <Ripple mainCircleSize={56} mainCircleOpacity={0.4} numCircles={4} color="oklch(0.72 0.15 25)" className="mask-[radial-gradient(circle,white_40%,transparent_72%)]" />
         <PinMark className="relative z-10 size-14 text-primary" />
       </div>
-      <p className="stamp absolute inset-x-0 -bottom-1 flex items-center justify-center gap-2 text-foreground">
+      <p className="stamp absolute inset-x-0 -bottom-9 flex items-center justify-center gap-2 text-foreground">
         <span className="relative inline-flex size-2">
           <span className="absolute inline-flex size-full animate-ping rounded-full bg-[oklch(0.7_0.16_25)] opacity-75 motion-reduce:hidden" />
           <span className="relative inline-flex size-2 rounded-full bg-[oklch(0.62_0.18_27)]" />

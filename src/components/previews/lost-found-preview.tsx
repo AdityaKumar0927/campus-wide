@@ -26,10 +26,10 @@ export function LostFoundPreview() {
         {items[tab].map((it) => (
           <li key={it.id} className="rounded-md border border-rule bg-[var(--card)] p-2.5">
             <p className="text-[13px] leading-snug">{it.text}</p>
-            <p className="mt-1 font-mono text-[10px] tracking-wider text-muted-foreground uppercase">{it.where}</p>
+            <p className="mt-1 text-[11px] text-muted-foreground">{it.where}</p>
             <div className="mt-2">
               {claimed === it.id ? (
-                <span className="stamp text-foreground">Claim sent · describe it in the thread</span>
+                <span className="stamp text-foreground">Claim sent. Describe it in the thread.</span>
               ) : (
                 <Chip onClick={() => setClaimed(it.id)}>{tab === "found" ? "That is mine" : "I found this"}</Chip>
               )}
