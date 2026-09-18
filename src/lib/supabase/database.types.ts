@@ -805,6 +805,7 @@ export type Database = {
           comment_count: number
           created_at: string
           deleted_at: string | null
+          embedding: string | null
           expires_at: string | null
           id: string
           images: Json
@@ -828,6 +829,7 @@ export type Database = {
           comment_count?: number
           created_at?: string
           deleted_at?: string | null
+          embedding?: string | null
           expires_at?: string | null
           id?: string
           images?: Json
@@ -851,6 +853,7 @@ export type Database = {
           comment_count?: number
           created_at?: string
           deleted_at?: string | null
+          embedding?: string | null
           expires_at?: string | null
           id?: string
           images?: Json
@@ -1181,6 +1184,7 @@ export type Database = {
           subject_id: string | null
           target_id: string
           target_type: Database["public"]["Enums"]["report_target"]
+          triage: Json | null
           university_id: string
         }
         Insert: {
@@ -1198,6 +1202,7 @@ export type Database = {
           subject_id?: string | null
           target_id: string
           target_type: Database["public"]["Enums"]["report_target"]
+          triage?: Json | null
           university_id: string
         }
         Update: {
@@ -1215,6 +1220,7 @@ export type Database = {
           subject_id?: string | null
           target_id?: string
           target_type?: Database["public"]["Enums"]["report_target"]
+          triage?: Json | null
           university_id?: string
         }
         Relationships: [
@@ -1548,6 +1554,17 @@ export type Database = {
         }[]
       }
       mark_notifications_read: { Args: { p_ids?: string[] }; Returns: number }
+      match_questions: {
+        Args: { p_embedding: string; p_exclude?: string; p_limit?: number }
+        Returns: {
+          accepted_comment_id: string
+          comment_count: number
+          id: string
+          similarity: number
+          status: Database["public"]["Enums"]["post_status"]
+          title: string
+        }[]
+      }
       moderate: {
         Args: {
           p_days?: number
@@ -1591,6 +1608,7 @@ export type Database = {
           comment_count: number
           created_at: string
           deleted_at: string | null
+          embedding: string | null
           expires_at: string | null
           id: string
           images: Json
@@ -1612,6 +1630,14 @@ export type Database = {
           isOneToOne: false
           isSetofReturn: true
         }
+      }
+      set_report_triage: {
+        Args: { p_report_id: string; p_triage: Json }
+        Returns: undefined
+      }
+      take_rate_limit: {
+        Args: { p_action: string; p_max: number; p_window_seconds: number }
+        Returns: undefined
       }
       toggle_thanks: {
         Args: {

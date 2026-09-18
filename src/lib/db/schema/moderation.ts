@@ -33,6 +33,8 @@ export const reports = pgTable(
     resolvedAt: timestamp("resolved_at", { withTimezone: true }),
     /** Reporter agreed to escalation to campus offices (pilot §5). */
     escalationConsent: boolean("escalation_consent").notNull().default(false),
+    /** Optional AI triage labels (Phase 6): suggestions for ordering only; never an action. */
+    triage: jsonb("triage"),
   },
   (t) => [
     uniqueIndex("reports_case_idx").on(t.caseNumber),

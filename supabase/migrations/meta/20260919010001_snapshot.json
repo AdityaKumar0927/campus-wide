@@ -1,6 +1,6 @@
 {
-  "id": "7c634417-92d9-469b-817b-442449c8faef",
-  "prevId": "d06a10d6-e702-4bb3-bdc2-adf84dbcecb2",
+  "id": "47329b69-9878-42c4-9dff-7bb5bb8d1ae0",
+  "prevId": "7c634417-92d9-469b-817b-442449c8faef",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
@@ -2011,6 +2011,12 @@
           "notNull": true,
           "default": "now()"
         },
+        "embedding": {
+          "name": "embedding",
+          "type": "vector(384)",
+          "primaryKey": false,
+          "notNull": false
+        },
         "search": {
           "name": "search",
           "type": "tsvector",
@@ -2141,6 +2147,22 @@
           "isUnique": false,
           "concurrently": false,
           "method": "gin",
+          "with": {}
+        },
+        "posts_embedding_idx": {
+          "name": "posts_embedding_idx",
+          "columns": [
+            {
+              "expression": "embedding",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last",
+              "opclass": "vector_cosine_ops"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "hnsw",
           "with": {}
         }
       },
@@ -4308,6 +4330,12 @@
           "primaryKey": false,
           "notNull": true,
           "default": false
+        },
+        "triage": {
+          "name": "triage",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": false
         }
       },
       "indexes": {

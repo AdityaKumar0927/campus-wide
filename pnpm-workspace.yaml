@@ -8,6 +8,9 @@ allowBuilds:
   supabase: true
   # esbuild verifies its platform binary in postinstall (used by drizzle-kit and the Supabase CLI).
   esbuild: true
+  # Transformers.js pulls the Node runtime as an optional dependency; the browser build is all we use.
+  onnxruntime-node: false
+  protobufjs: false
 strictDepBuilds: true
 
 # Do not install versions published less than 24 hours ago (blunts supply-chain worms).
