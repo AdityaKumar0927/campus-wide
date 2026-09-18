@@ -1,7 +1,11 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { ConfirmButton } from "@/components/board/confirm-button";
 import { PostList } from "@/components/board/post-list";
+import { Button, buttonVariants } from "@/components/ui/button";
+import { myRelationTo } from "@/lib/dal/admin";
+import { blockUser, muteUser, unmuteUser } from "./actions";
 import { Kicker } from "@/components/kicker";
 import { listPosts } from "@/lib/dal/posts";
 import { getProfileByUsername } from "@/lib/dal/profiles";
@@ -23,6 +27,7 @@ export default async function ProfilePage({ params, searchParams }: { params: Pr
   const page = Math.max(1, Number.parseInt(pageParam ?? "1", 10) || 1);
   const posts = await listPosts({ authorId: profile.user_id, page });
   const me = session?.userId === profile.user_id;
+  const relation = me || !session ? { blocked: false, muted: false } : await myRelationTo(profile.user_id);
   const base = `/u/${profile.campus_username}`;
   return (
     <div className="space-y-6">
@@ -51,6 +56,20 @@ export default async function ProfilePage({ params, searchParams }: { params: Pr
         </dl>
       </header>
       {profile.bio && <p className="max-w-xl text-sm text-muted-foreground">{profile.bio}</p>}
+      {session && !me && (
+        <div className="flex flex-wrap items-center gap-2" aria-label="Safety">
+          <form action={(relation.muted ? unmuteUser : muteUser).bind(null, profile.user_id, profile.campus_username)}>
+            <Button type="submit" size="sm" variant="outline" aria-pressed={relation.muted}>
+              {relation.muted ? "Unmute" : "Mute"}
+            </Button>
+          </form>
+          <ConfirmButton label="Block" confirmLabel="Block this person" onConfirm={blockUser.bind(null, profile.user_id, profile.campus_username)} />
+          <Link href={`/report?type=profile&id=${profile.user_id}`} className={buttonVariants({ variant: "ghost", size: "sm" })}>
+            Report
+          </Link>
+          <span className="text-xs text-muted-foreground">Blocking is silent and total. Muting hides their notices from you.</span>
+        </div>
+      )}
       {me && (
         <p className="text-xs text-muted-foreground">
           This is how others see you.{" "}

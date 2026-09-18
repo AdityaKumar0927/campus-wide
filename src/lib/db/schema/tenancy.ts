@@ -90,6 +90,8 @@ export const memberships = pgTable(
     verifiedAt: timestamp("verified_at", { withTimezone: true }),
     ssoProviderId: text("sso_provider_id"),
     statusReason: text("status_reason"),
+    /** Set by a suspension; a daily job restores the membership when it passes. */
+    suspendedUntil: timestamp("suspended_until", { withTimezone: true }),
   },
   (t) => [
     uniqueIndex("memberships_user_university_idx").on(t.userId, t.universityId),

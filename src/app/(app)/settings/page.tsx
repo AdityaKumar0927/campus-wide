@@ -4,6 +4,8 @@ import { signOut } from "@/app/(auth)/actions";
 import { Button } from "@/components/ui/button";
 import { AuthError, requireMember } from "@/lib/dal/session";
 import { createClient } from "@/lib/supabase/server";
+import { unblockUser, unmuteUser } from "@/app/(app)/u/[username]/actions";
+import { listBlocked, listMuted } from "@/lib/dal/admin";
 import { revokeSession, setPrivacyMode } from "./actions";
 
 export const metadata: Metadata = { title: "Settings" };
@@ -27,6 +29,7 @@ export default async function SettingsPage() {
   const supabase = await createClient();
   const { data: sessions } = await supabase.rpc("list_my_sessions");
   const rows = (sessions ?? []) as SessionRow[];
+  const [blocked, muted] = await Promise.all([listBlocked(), listMuted()]);
 
   return (
     <div className="space-y-10">
@@ -71,6 +74,37 @@ export default async function SettingsPage() {
           <form action={signOut}><input type="hidden" name="scope" value="local" /><Button type="submit" variant="outline" size="sm">Sign out here</Button></form>
           <form action={signOut}><input type="hidden" name="scope" value="global" /><Button type="submit" variant="destructive" size="sm">Sign out everywhere</Button></form>
         </div>
+      </section>
+
+      <section className="space-y-3">
+        <h2 className="text-2xl">People you blocked or muted</h2>
+        <p className="text-sm text-muted-foreground">Blocked people cannot see you or reach you, and are never told. Muted people are simply hidden from your feed.</p>
+        {blocked.length === 0 && muted.length === 0 ? (
+          <p className="text-sm text-muted-foreground">Nobody.</p>
+        ) : (
+          <ul className="divide-y divide-rule rounded-md border border-rule bg-card">
+            {blocked.map((b) => (
+              <li key={b.id} className="flex items-center justify-between gap-3 px-3 py-2 text-sm">
+                <span>
+                  {b.profile?.display_name ?? "Former member"} <span className="font-mono text-xs text-muted-foreground">@{b.profile?.campus_username}</span> · blocked
+                </span>
+                <form action={unblockUser.bind(null, b.blocked_id)}>
+                  <Button type="submit" size="sm" variant="outline">Unblock</Button>
+                </form>
+              </li>
+            ))}
+            {muted.map((m) => (
+              <li key={m.id} className="flex items-center justify-between gap-3 px-3 py-2 text-sm">
+                <span>
+                  {m.profile?.display_name ?? "Former member"} <span className="font-mono text-xs text-muted-foreground">@{m.profile?.campus_username}</span> · muted
+                </span>
+                <form action={unmuteUser.bind(null, m.muted_id, m.profile?.campus_username)}>
+                  <Button type="submit" size="sm" variant="outline">Unmute</Button>
+                </form>
+              </li>
+            ))}
+          </ul>
+        )}
       </section>
 
       <section className="space-y-2">

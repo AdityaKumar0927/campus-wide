@@ -8,6 +8,7 @@ export default async function AppLayout({ children }: { children: React.ReactNod
   if (isSupabaseConfigured()) {
     if (!session) redirect("/sign-in");
     if (session.namePending || !session.profile?.onboardedAt) redirect("/onboarding");
+    if (session.membership?.status === "banned") redirect("/suspended");
   }
   return <AppShell session={session}>{children}</AppShell>;
 }

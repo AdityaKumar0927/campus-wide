@@ -34,6 +34,60 @@ export type Database = {
   }
   public: {
     Tables: {
+      appeals: {
+        Row: {
+          action_id: string
+          appellant_id: string
+          created_at: string
+          decision_reasons: string | null
+          id: string
+          resolved_at: string | null
+          reviewed_by: string | null
+          status: Database["public"]["Enums"]["appeal_status"]
+          text: string
+          university_id: string
+        }
+        Insert: {
+          action_id: string
+          appellant_id: string
+          created_at?: string
+          decision_reasons?: string | null
+          id?: string
+          resolved_at?: string | null
+          reviewed_by?: string | null
+          status?: Database["public"]["Enums"]["appeal_status"]
+          text: string
+          university_id: string
+        }
+        Update: {
+          action_id?: string
+          appellant_id?: string
+          created_at?: string
+          decision_reasons?: string | null
+          id?: string
+          resolved_at?: string | null
+          reviewed_by?: string | null
+          status?: Database["public"]["Enums"]["appeal_status"]
+          text?: string
+          university_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "appeals_action_id_moderation_actions_id_fk"
+            columns: ["action_id"]
+            isOneToOne: false
+            referencedRelation: "moderation_actions"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "appeals_university_id_universities_id_fk"
+            columns: ["university_id"]
+            isOneToOne: false
+            referencedRelation: "universities"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       audit_log: {
         Row: {
           action: string
@@ -340,6 +394,45 @@ export type Database = {
         }
         Relationships: []
       }
+      feedback: {
+        Row: {
+          consent: boolean
+          created_at: string
+          forwarded_to: string | null
+          id: string
+          message: string
+          page_url: string | null
+          sentiment: Database["public"]["Enums"]["feedback_sentiment"]
+          university_id: string | null
+          user_agent: string | null
+          user_id: string | null
+        }
+        Insert: {
+          consent?: boolean
+          created_at?: string
+          forwarded_to?: string | null
+          id?: string
+          message: string
+          page_url?: string | null
+          sentiment: Database["public"]["Enums"]["feedback_sentiment"]
+          university_id?: string | null
+          user_agent?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          consent?: boolean
+          created_at?: string
+          forwarded_to?: string | null
+          id?: string
+          message?: string
+          page_url?: string | null
+          sentiment?: Database["public"]["Enums"]["feedback_sentiment"]
+          university_id?: string | null
+          user_agent?: string | null
+          user_id?: string | null
+        }
+        Relationships: []
+      }
       memberships: {
         Row: {
           campus_role: Database["public"]["Enums"]["campus_role"]
@@ -350,6 +443,7 @@ export type Database = {
           sso_provider_id: string | null
           status: Database["public"]["Enums"]["membership_status"]
           status_reason: string | null
+          suspended_until: string | null
           university_id: string
           updated_at: string
           user_id: string
@@ -365,6 +459,7 @@ export type Database = {
           sso_provider_id?: string | null
           status?: Database["public"]["Enums"]["membership_status"]
           status_reason?: string | null
+          suspended_until?: string | null
           university_id: string
           updated_at?: string
           user_id: string
@@ -380,6 +475,7 @@ export type Database = {
           sso_provider_id?: string | null
           status?: Database["public"]["Enums"]["membership_status"]
           status_reason?: string | null
+          suspended_until?: string | null
           university_id?: string
           updated_at?: string
           user_id?: string
@@ -389,6 +485,76 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "memberships_university_id_universities_id_fk"
+            columns: ["university_id"]
+            isOneToOne: false
+            referencedRelation: "universities"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      moderation_actions: {
+        Row: {
+          created_at: string
+          expires_at: string | null
+          id: string
+          kind: Database["public"]["Enums"]["moderation_kind"]
+          moderator_id: string
+          report_id: string | null
+          reversed_at: string | null
+          reversed_by: string | null
+          statement_of_reasons: Json
+          subject_id: string | null
+          target_id: string | null
+          target_type: Database["public"]["Enums"]["report_target"] | null
+          university_id: string
+        }
+        Insert: {
+          created_at?: string
+          expires_at?: string | null
+          id?: string
+          kind: Database["public"]["Enums"]["moderation_kind"]
+          moderator_id: string
+          report_id?: string | null
+          reversed_at?: string | null
+          reversed_by?: string | null
+          statement_of_reasons: Json
+          subject_id?: string | null
+          target_id?: string | null
+          target_type?: Database["public"]["Enums"]["report_target"] | null
+          university_id: string
+        }
+        Update: {
+          created_at?: string
+          expires_at?: string | null
+          id?: string
+          kind?: Database["public"]["Enums"]["moderation_kind"]
+          moderator_id?: string
+          report_id?: string | null
+          reversed_at?: string | null
+          reversed_by?: string | null
+          statement_of_reasons?: Json
+          subject_id?: string | null
+          target_id?: string | null
+          target_type?: Database["public"]["Enums"]["report_target"] | null
+          university_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "moderation_actions_report_id_reports_id_fk"
+            columns: ["report_id"]
+            isOneToOne: false
+            referencedRelation: "reports"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "moderation_actions_subject_id_profiles_user_id_fk"
+            columns: ["subject_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "moderation_actions_university_id_universities_id_fk"
             columns: ["university_id"]
             isOneToOne: false
             referencedRelation: "universities"
@@ -999,6 +1165,75 @@ export type Database = {
           },
         ]
       }
+      reports: {
+        Row: {
+          assigned_to: string | null
+          case_number: string
+          category: Database["public"]["Enums"]["report_category"]
+          created_at: string
+          escalation_consent: boolean
+          evidence: Json
+          id: string
+          note: string | null
+          reporter_id: string
+          resolved_at: string | null
+          status: Database["public"]["Enums"]["report_status"]
+          subject_id: string | null
+          target_id: string
+          target_type: Database["public"]["Enums"]["report_target"]
+          university_id: string
+        }
+        Insert: {
+          assigned_to?: string | null
+          case_number: string
+          category: Database["public"]["Enums"]["report_category"]
+          created_at?: string
+          escalation_consent?: boolean
+          evidence?: Json
+          id?: string
+          note?: string | null
+          reporter_id: string
+          resolved_at?: string | null
+          status?: Database["public"]["Enums"]["report_status"]
+          subject_id?: string | null
+          target_id: string
+          target_type: Database["public"]["Enums"]["report_target"]
+          university_id: string
+        }
+        Update: {
+          assigned_to?: string | null
+          case_number?: string
+          category?: Database["public"]["Enums"]["report_category"]
+          created_at?: string
+          escalation_consent?: boolean
+          evidence?: Json
+          id?: string
+          note?: string | null
+          reporter_id?: string
+          resolved_at?: string | null
+          status?: Database["public"]["Enums"]["report_status"]
+          subject_id?: string | null
+          target_id?: string
+          target_type?: Database["public"]["Enums"]["report_target"]
+          university_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "reports_subject_id_profiles_user_id_fk"
+            columns: ["subject_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "reports_university_id_universities_id_fk"
+            columns: ["university_id"]
+            isOneToOne: false
+            referencedRelation: "universities"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       space_memberships: {
         Row: {
           created_at: string
@@ -1267,6 +1502,8 @@ export type Database = {
     }
     Functions: {
       accept_answer: { Args: { p_comment_id: string }; Returns: undefined }
+      admin_campus_stats: { Args: never; Returns: Json }
+      appeal: { Args: { p_action_id: string; p_text: string }; Returns: string }
       before_user_created_hook: { Args: { event: Json }; Returns: Json }
       cast_poll_vote: {
         Args: { p_options: number[]; p_post_id: string }
@@ -1274,11 +1511,29 @@ export type Database = {
       }
       current_term: { Args: never; Returns: string }
       custom_access_token_hook: { Args: { event: Json }; Returns: Json }
+      decide_appeal: {
+        Args: {
+          p_appeal_id: string
+          p_outcome: Database["public"]["Enums"]["appeal_status"]
+          p_reasons: string
+        }
+        Returns: undefined
+      }
       declare_name: {
         Args: { age_attested: boolean; family: string; given: string }
         Returns: undefined
       }
       export_relay_thread: { Args: { p_thread_id: string }; Returns: Json }
+      file_report: {
+        Args: {
+          p_category: Database["public"]["Enums"]["report_category"]
+          p_escalation?: boolean
+          p_note?: string
+          p_target_id: string
+          p_target_type: Database["public"]["Enums"]["report_target"]
+        }
+        Returns: string
+      }
       is_allowed_email: { Args: { email: string }; Returns: boolean }
       list_my_sessions: {
         Args: never
@@ -1293,6 +1548,20 @@ export type Database = {
         }[]
       }
       mark_notifications_read: { Args: { p_ids?: string[] }; Returns: number }
+      moderate: {
+        Args: {
+          p_days?: number
+          p_facts: string
+          p_ground: string
+          p_kind: Database["public"]["Enums"]["moderation_kind"]
+          p_redress?: string
+          p_report_id: string
+          p_subject: string
+          p_target_id: string
+          p_target_type: Database["public"]["Enums"]["report_target"]
+        }
+        Returns: string
+      }
       poll_results: {
         Args: { p_post_id: string }
         Returns: {
@@ -1300,6 +1569,7 @@ export type Database = {
           votes: number
         }[]
       }
+      public_campus_stats: { Args: { p_slug: string }; Returns: Json }
       relay_contact: {
         Args: { p_thread_id: string }
         Returns: {
@@ -1310,6 +1580,7 @@ export type Database = {
       }
       revoke_my_session: { Args: { session_id: string }; Returns: undefined }
       run_expire_posts: { Args: never; Returns: number }
+      run_maintenance: { Args: never; Returns: Json }
       search_posts: {
         Args: { p_limit?: number; q: string }
         Returns: {
@@ -1352,6 +1623,7 @@ export type Database = {
       unread_notification_count: { Args: never; Returns: number }
     }
     Enums: {
+      appeal_status: "open" | "upheld" | "overturned"
       campus_role:
         | "student"
         | "staff"
@@ -1361,8 +1633,18 @@ export type Database = {
       comment_status: "active" | "removed" | "deleted"
       domain_request_status: "pending" | "approved" | "rejected"
       domain_source: "hipo" | "admin" | "seed"
+      feedback_sentiment: "love" | "good" | "meh" | "bad"
       identity_provider: "google" | "email" | "saml"
       membership_status: "active" | "read_only" | "suspended" | "banned"
+      moderation_kind:
+        | "hide"
+        | "remove"
+        | "warn"
+        | "suspend"
+        | "ban"
+        | "restore"
+        | "dismiss"
+        | "privacy_mode"
       notification_kind:
         | "answer"
         | "comment"
@@ -1390,6 +1672,19 @@ export type Database = {
       reaction_kind: "thanks"
       reaction_target: "post" | "comment"
       relay_state: "open" | "closed" | "completed"
+      report_category:
+        | "harassment"
+        | "stalking"
+        | "scam"
+        | "impersonation"
+        | "hate"
+        | "sexual"
+        | "meal_resale"
+        | "prohibited_item"
+        | "spam"
+        | "other"
+      report_status: "open" | "in_review" | "actioned" | "dismissed"
+      report_target: "post" | "comment" | "thread" | "profile"
       space_kind: "general" | "course" | "residence" | "club" | "interest"
       space_role: "member" | "organizer"
       university_status: "pending" | "active" | "paused"
@@ -1523,6 +1818,7 @@ export const Constants = {
   },
   public: {
     Enums: {
+      appeal_status: ["open", "upheld", "overturned"],
       campus_role: [
         "student",
         "staff",
@@ -1533,8 +1829,19 @@ export const Constants = {
       comment_status: ["active", "removed", "deleted"],
       domain_request_status: ["pending", "approved", "rejected"],
       domain_source: ["hipo", "admin", "seed"],
+      feedback_sentiment: ["love", "good", "meh", "bad"],
       identity_provider: ["google", "email", "saml"],
       membership_status: ["active", "read_only", "suspended", "banned"],
+      moderation_kind: [
+        "hide",
+        "remove",
+        "warn",
+        "suspend",
+        "ban",
+        "restore",
+        "dismiss",
+        "privacy_mode",
+      ],
       notification_kind: [
         "answer",
         "comment",
@@ -1564,6 +1871,20 @@ export const Constants = {
       reaction_kind: ["thanks"],
       reaction_target: ["post", "comment"],
       relay_state: ["open", "closed", "completed"],
+      report_category: [
+        "harassment",
+        "stalking",
+        "scam",
+        "impersonation",
+        "hate",
+        "sexual",
+        "meal_resale",
+        "prohibited_item",
+        "spam",
+        "other",
+      ],
+      report_status: ["open", "in_review", "actioned", "dismissed"],
+      report_target: ["post", "comment", "thread", "profile"],
       space_kind: ["general", "course", "residence", "club", "interest"],
       space_role: ["member", "organizer"],
       university_status: ["pending", "active", "paused"],

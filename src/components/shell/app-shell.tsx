@@ -24,7 +24,7 @@ export async function AppShell({ children, session }: { children: ReactNode; ses
           <Wordmark href="/feed" />
         </div>
         <div className="flex-1 overflow-y-auto px-2 py-4">
-          <SidebarNav unread={unread} flags={campus?.featureFlags} />
+          <SidebarNav unread={unread} flags={campus?.featureFlags} role={session?.membership?.campusRole} />
         </div>
         <div className="stamp border-t border-rule px-4 py-3">
           Press <kbd className="rounded border border-rule bg-muted px-1">?</kbd> for shortcuts
@@ -51,7 +51,17 @@ export async function AppShell({ children, session }: { children: ReactNode; ses
           <div className="mx-auto w-full max-w-3xl">
             {readOnly && (
               <p role="status" className="notice mb-6 px-4 py-3 text-sm" style={{ "--stock": "var(--stock-yellow)" } as React.CSSProperties}>
-                Your account is read-only until you re-verify your campus email for this term. Sign out and back in to do that.
+                {session?.membership?.status === "suspended" ? (
+                  <>
+                    Your account is suspended: you can read but not post or message.{" "}
+                    <Link href="/suspended" className="underline underline-offset-4">
+                      Read the reasons and appeal
+                    </Link>
+                    .
+                  </>
+                ) : (
+                  "Your account is read-only until you re-verify your campus email for this term. Sign out and back in to do that."
+                )}
               </p>
             )}
             {children}

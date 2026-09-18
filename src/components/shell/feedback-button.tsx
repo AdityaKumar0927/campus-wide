@@ -2,7 +2,8 @@
 
 import confetti from "canvas-confetti";
 import { MessageSquareTextIcon } from "lucide-react";
-import { useId, useRef, useState } from "react";
+import { usePathname } from "next/navigation";
+import { useActionState, useEffect, useId, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
@@ -10,6 +11,7 @@ import { ComicText } from "@/components/ui/comic-text";
 import { Textarea } from "@/components/ui/textarea";
 import { bangers } from "@/lib/fonts/bangers";
 import { cn } from "@/lib/utils";
+import { submitFeedback, type FeedbackState } from "./feedback-actions";
 
 const sentiments = [
   { value: "love", emoji: "🤩", label: "Love it" },
@@ -20,22 +22,24 @@ const sentiments = [
 
 type Sentiment = (typeof sentiments)[number]["value"];
 
-/**
- * Vercel-style feedback popover (brief §9). Phase 1 ships the UI and local thank-you state;
- * Phase 5 wires the Server Action that stores it in `feedback` and forwards to GitHub/email.
- */
+/** Vercel-style feedback popover (brief §9): stored in `feedback`, forwarded to GitHub or email when configured. */
 export function FeedbackButton() {
   const [open, setOpen] = useState(false);
-  const [sent, setSent] = useState(false);
   const [message, setMessage] = useState("");
   const [sentiment, setSentiment] = useState<Sentiment | null>(null);
   const [includeContext, setIncludeContext] = useState(true);
+  const [state, formAction, pending] = useActionState<FeedbackState, FormData>(submitFeedback, {});
+  const celebratedRef = useRef<FeedbackState | null>(null);
+  const pathname = usePathname();
   const textId = useId();
   const contextId = useId();
   const formRef = useRef<HTMLFormElement>(null);
+  const sent = Boolean(state.ok);
 
   /** Paper scraps in the board's stock colours; skipped automatically for reduced motion. */
-  function celebrate() {
+  useEffect(() => {
+    if (!state.ok || celebratedRef.current === state) return;
+    celebratedRef.current = state;
     const rect = formRef.current?.getBoundingClientRect();
     confetti({
       particleCount: 36,
@@ -49,20 +53,17 @@ export function FeedbackButton() {
       origin: rect ? { x: (rect.left + rect.width / 2) / window.innerWidth, y: rect.top / window.innerHeight } : undefined,
       disableForReducedMotion: true,
     });
-  }
-
-  function reset() {
-    setSent(false);
-    setMessage("");
-    setSentiment(null);
-  }
+  }, [state]);
 
   return (
     <Popover
       open={open}
       onOpenChange={(next) => {
         setOpen(next);
-        if (!next) window.setTimeout(reset, 200);
+        if (!next) {
+          setMessage("");
+          setSentiment(null);
+        }
       }}
     >
       <PopoverTrigger render={<Button variant="outline" size="sm" />}>
@@ -70,7 +71,7 @@ export function FeedbackButton() {
         <span>Feedback</span>
       </PopoverTrigger>
       <PopoverContent align="end" className="w-80 p-4">
-        {sent ? (
+        {sent && open ? (
           <div className={`space-y-2 text-center ${bangers.variable}`} role="status">
             <ComicText fontSize={2.4} style={{ fontFamily: "var(--font-bangers), Impact, sans-serif" }} className="py-2">
               Thanks!
@@ -81,27 +82,12 @@ export function FeedbackButton() {
             </Button>
           </div>
         ) : (
-          <form
-            ref={formRef}
-            className="space-y-3"
-            onSubmit={(e) => {
-              e.preventDefault();
-              setSent(true);
-              celebrate();
-            }}
-          >
+          <form ref={formRef} action={formAction} className="space-y-3">
+            <input type="hidden" name="pageUrl" value={pathname ?? ""} />
+            <input type="hidden" name="sentiment" value={sentiment ?? ""} />
             <div className="space-y-1.5">
               <Label htmlFor={textId}>What is on your mind?</Label>
-              <Textarea
-                id={textId}
-                required
-                minLength={3}
-                maxLength={2000}
-                rows={4}
-                value={message}
-                onChange={(e) => setMessage(e.target.value)}
-                placeholder="A bug, an idea, or something that felt off."
-              />
+              <Textarea id={textId} name="message" required minLength={3} maxLength={2000} rows={4} value={message} onChange={(e) => setMessage(e.target.value)} placeholder="A bug, an idea, or something that felt off." />
             </div>
             <fieldset>
               <legend className="mb-1.5 text-sm font-medium">How did this page feel?</legend>
@@ -126,20 +112,19 @@ export function FeedbackButton() {
               </div>
             </fieldset>
             <div className="flex items-center gap-2">
-              <input
-                id={contextId}
-                type="checkbox"
-                checked={includeContext}
-                onChange={(e) => setIncludeContext(e.target.checked)}
-                className="size-4 accent-primary"
-              />
+              <input id={contextId} name="consent" type="checkbox" checked={includeContext} onChange={(e) => setIncludeContext(e.target.checked)} className="size-4 accent-primary" />
               <Label htmlFor={contextId} className="text-xs font-normal text-muted-foreground">
                 Include this page&apos;s URL and browser version
               </Label>
             </div>
+            {state.error && (
+              <p role="alert" className="text-sm text-destructive">
+                {state.error}
+              </p>
+            )}
             <div className="flex justify-end">
-              <Button type="submit" size="sm" disabled={message.trim().length < 3}>
-                Send
+              <Button type="submit" size="sm" disabled={pending || message.trim().length < 3 || !sentiment}>
+                {pending ? "Sending…" : "Send"}
               </Button>
             </div>
           </form>

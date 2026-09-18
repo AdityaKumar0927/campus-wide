@@ -121,6 +121,9 @@ export default async function ThreadPage({ params }: { params: Promise<{ id: str
           <div className="flex flex-wrap items-center gap-2 pt-1">
             {open && <ConfirmButton label="Close thread" confirmLabel="Close it" variant="ghost" onConfirm={closeThread.bind(null, thread.id)} />}
             <ConfirmButton label="Block" confirmLabel="Block them" variant="ghost" onConfirm={blockOther.bind(null, thread.id, otherId)} />
+            <Link href={`/report?type=thread&id=${thread.id}`} className={buttonVariants({ variant: "ghost", size: "sm" })}>
+              Report
+            </Link>
             <a href={`/t/${thread.id}/export`} className={buttonVariants({ variant: "ghost", size: "sm" })} download>
               Export for a report
             </a>

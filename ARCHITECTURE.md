@@ -98,7 +98,8 @@ Upgrade path: a true email-in/email-out relay via Resend inbound routing if a ca
 ## 8. Moderation and appeals (DSA baseline)
 - Every post/comment/thread has "Report" with category, free text, and optional evidence → `reports`.
 - Moderators (trusted students or staff) work a queue; each action (`hide`, `remove`, `warn`, `suspend`, `ban`, `dismiss`) writes `moderation_actions.statement_of_reasons` {facts, ground (policy clause), automated: false, redress: appeal link} and notifies the affected user.
-- Appeals: one per action, reviewed by a different moderator or an admin; outcome recorded; everything in `audit_log` (insert-only via trigger).
+- Appeals: one per action within 14 days, reviewed by a different moderator or an admin (`decide_appeal`); an overturn restores the content or the membership; everything in `audit_log` (insert-only via trigger).
+- Built in Phase 5 (2026-09-19): `file_report()` snapshots the evidence at filing time (item, thread export, both handles, block and mute state) so later edits cannot erase it; `moderate()` writes the statement of reasons and applies the effect in one transaction; suspensions carry `memberships.suspended_until` and are lifted by `app.restore_suspensions()`; three blocks from different people in a week alert the moderators; the feedback popover persists to `feedback` and forwards to a GitHub issue or the admin mailbox when configured; `public_campus_stats()` never returns a group under ten.
 - Optional AI triage (Phase 6) only proposes labels and ordering for the queue; it never takes an action.
 
 ## 9. Notifications, digests, and scheduled jobs

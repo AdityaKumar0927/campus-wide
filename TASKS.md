@@ -81,9 +81,12 @@ Live checklist; tick as work lands. Detail is finest for the next two phases and
 - [ ] Owner look review of `docs/screenshots/phase-4/`
 
 ## Phase 5 — Moderation, admin, feedback
-- [ ] Reports (DSA categories), mute, block, queue, actions + statement of reasons, appeals, audit log
-- [ ] Admin portal (settings, domains, flags, policy text, safe-exchange spots, moderators, non-PII analytics, campus verification)
-- [ ] Public campus stats; Feedback popover (4 sentiments, consent, GitHub Issue or admin email)
+- [x] Reports on notices, replies, threads, and profiles with DSA categories and automatic evidence snapshots (`file_report`), case numbers and a status page, urgent contacts shown first; mute, block (silent, total, freezes threads; three blocks in a week alert moderators); moderator queue, decisions through `moderate()` with a statement of reasons (facts, ground, automated: false, redress) delivered to the subject; appeals once within 14 days, decided by a different moderator (`decide_appeal`), overturn restores; suspensions lift on schedule; audit log page (2026-09-19)
+- [x] Admin portal: modules on/off (database-enforced), campus details, policy text, safe-exchange spots, email domains, moderators and admins, member lookup, aggregate numbers, feedback
+- [x] Public campus numbers at `/campus/[slug]` (groups under ten hidden); Feedback popover stores to `feedback` and forwards to a GitHub issue or the admin mailbox when configured
+- [x] RLS suite: 46 tests; E2E: report → decision → appeal → overturn, admin flag toggle, feedback persisted
+- [ ] New-campus self-verification via admin email domain (Phase 9, with the second campus)
+- [ ] Owner look review of `docs/screenshots/phase-5/`
 
 ## Phase 6 — AI
 - [ ] Transformers.js worker (WebGPU/WASM, download gating), `posts.embedding` + `match_questions` RPC, toxicity nudge

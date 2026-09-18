@@ -69,3 +69,15 @@ export async function runExpirePosts(): Promise<number> {
   if (!res.ok) throw new Error(`run_expire_posts: ${res.status} ${await res.text()}`);
   return (await res.json()) as number;
 }
+
+/** Promotes a member the way an admin job would (service role). */
+export async function setRole(uid: string, role: "student" | "moderator" | "university_admin") {
+  const userId = await userIdFor(uid);
+  await rest(`memberships?user_id=eq.${userId}`, { method: "PATCH", body: JSON.stringify({ campus_role: role }) });
+  return userId;
+}
+
+/** Latest feedback rows, for asserting the popover landed in the database. */
+export async function latestFeedback(): Promise<{ sentiment: string; message: string; page_url: string | null }[]> {
+  return (await rest("feedback?select=sentiment,message,page_url&order=created_at.desc&limit=5", { method: "GET" })) as { sentiment: string; message: string; page_url: string | null }[];
+}
