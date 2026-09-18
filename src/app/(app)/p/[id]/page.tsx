@@ -8,9 +8,11 @@ import { AuthorChip } from "@/components/board/author-chip";
 import { CommentList } from "@/components/board/comment-list";
 import { ConfirmButton } from "@/components/board/confirm-button";
 import { ThanksButton } from "@/components/board/thanks-button";
+import { ThreadSummary } from "@/components/board/thread-summary";
 import { TypePanel } from "@/components/board/type-panels";
 import { Kicker } from "@/components/kicker";
 import { Button } from "@/components/ui/button";
+import { serverAiConfigured } from "@/lib/ai/groq";
 import { getCampus } from "@/lib/dal/campus";
 import { getPost, listComments, myThanks } from "@/lib/dal/posts";
 import { getSession } from "@/lib/dal/session";
@@ -19,6 +21,7 @@ import { POST_TYPE_META, type PostType } from "@/lib/posts/types";
 import { formatDateTime, linkify, relativeTime } from "@/lib/text";
 import { postImageUrl } from "@/lib/uploads/urls";
 import { acceptAnswer, addComment, deleteComment, setPostStatus, toggleThanks } from "./actions";
+import { summarizeThread, translateThread } from "./ai-actions";
 
 type Params = { id: string };
 
@@ -41,6 +44,8 @@ export default async function PostPage({ params }: { params: Promise<Params> }) 
   const isQuestion = post.type === "question";
   const images = (post.images as string[]) ?? [];
   const open = post.status === "active" || post.status === "resolved";
+  const serverAi = Boolean(campus?.featureFlags.ai_server) && serverAiConfigured();
+  const threadText = [post.title, post.body, ...comments.map((c) => c.body)].join("\n\n");
   const status =
     post.status === "resolved" ? (isQuestion ? " · answered" : " · resolved") : post.status === "expired" ? " · expired" : post.status === "removed" ? " · removed by a moderator" : "";
 
@@ -104,6 +109,8 @@ export default async function PostPage({ params }: { params: Promise<Params> }) 
           <TypePanel post={post} session={session} campus={campus} />
         </div>
       )}
+
+      {session && comments.length >= 2 && <ThreadSummary text={threadText} serverAi={serverAi} onSummarize={summarizeThread.bind(null, post.id)} onTranslate={translateThread.bind(null, post.id)} />}
 
       <CommentList
         postId={post.id}

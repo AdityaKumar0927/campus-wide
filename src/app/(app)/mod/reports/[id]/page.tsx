@@ -4,7 +4,11 @@ import { notFound } from "next/navigation";
 import { Kicker } from "@/components/kicker";
 import { getReport, listActionsForReport, type StatementOfReasons } from "@/lib/dal/moderation";
 import { formatDateTime } from "@/lib/text";
+import { serverAiConfigured } from "@/lib/ai/groq";
+import { getCampus } from "@/lib/dal/campus";
 import { DecisionForm } from "../../decision-form";
+import { TriageButton } from "../../triage-button";
+import type { Triage } from "../../ai-actions";
 import { requireModerator } from "../../page";
 
 export const metadata: Metadata = { title: "Report" };
@@ -21,7 +25,8 @@ export default async function ReportDetailPage({ params }: { params: Promise<{ i
   await requireModerator(`/mod/reports/${id}`);
   const report = await getReport(id);
   if (!report) notFound();
-  const actions = await listActionsForReport(report.id);
+  const [actions, campus] = await Promise.all([listActionsForReport(report.id), getCampus()]);
+  const serverAi = Boolean(campus?.featureFlags.ai_server) && serverAiConfigured();
   const ev = report.evidence as Record<string, unknown>;
   const reporter = ev.reporter as { display_name?: string; campus_username?: string } | undefined;
   return (
@@ -73,6 +78,7 @@ export default async function ReportDetailPage({ params }: { params: Promise<{ i
           </ul>
         </section>
       )}
+      {serverAi && <TriageButton reportId={report.id} initial={(report.triage as unknown as Triage | null) ?? null} />}
       {report.status === "open" || report.status === "in_review" ? (
         <DecisionForm reportId={report.id} targetType={report.target_type} targetId={report.target_id} subjectId={report.subject_id} />
       ) : (

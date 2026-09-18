@@ -1,5 +1,6 @@
 import type { DiningLocation, SafeSpot } from "@/lib/dal/campus";
 import type { PostType } from "@/lib/posts/types";
+import { EventFromText } from "./event-from-text";
 import { MoreTypeFields, Field, input, label } from "./type-fields-more";
 
 export interface TypeFieldsContext {
@@ -9,6 +10,8 @@ export interface TypeFieldsContext {
   mealsPolicy: string | null;
   mealAttestedThisTerm: boolean;
   term: string;
+  /** Campus opted in to the Groq fallback and a key is configured. */
+  serverAi: boolean;
 }
 
 /** Type-specific inputs. Plain form fields: the server builds the payload (payload-from-form.ts). */
@@ -17,6 +20,7 @@ export function TypeFields({ type, ctx }: { type: PostType; ctx: TypeFieldsConte
     case "event":
       return (
         <div className="grid gap-4 sm:grid-cols-2">
+          {ctx.serverAi && <EventFromText />}
           <Field id="startsAt" text="Starts">
             <input id="startsAt" name="startsAt" type="datetime-local" required className={input} />
           </Field>

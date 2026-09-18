@@ -18,6 +18,8 @@ export interface CspOptions {
 
 const TURNSTILE = "https://challenges.cloudflare.com";
 const MODEL_HOSTS = ["https://huggingface.co", "https://*.huggingface.co", "https://*.hf.co"];
+/** Transformers.js fetches the ONNX runtime for the worker from jsDelivr on first use. */
+const RUNTIME_HOST = "https://cdn.jsdelivr.net";
 
 function origin(url: string | undefined): string | undefined {
   if (!url) return undefined;
@@ -37,13 +39,14 @@ export function buildCsp(o: CspOptions): string {
   if (o.isDev) scriptSrc.push("'unsafe-eval'");
   if (o.turnstileEnabled) scriptSrc.push(TURNSTILE);
   if (umami) scriptSrc.push(umami);
+  if (o.browserAiEnabled) scriptSrc.push(RUNTIME_HOST);
 
   const connectSrc = ["'self'"];
   if (o.isDev) connectSrc.push("ws://localhost:*", "ws://127.0.0.1:*");
   if (supabase) connectSrc.push(supabase, supabaseWs!);
   if (umami) connectSrc.push(umami);
   if (o.turnstileEnabled) connectSrc.push(TURNSTILE);
-  if (o.browserAiEnabled) connectSrc.push(...MODEL_HOSTS);
+  if (o.browserAiEnabled) connectSrc.push(...MODEL_HOSTS, RUNTIME_HOST);
 
   const imgSrc = ["'self'", "blob:", "data:"];
   if (supabase) imgSrc.push(supabase);

@@ -6,6 +6,7 @@ import { AuthError, requireMember } from "@/lib/dal/session";
 import { createClient } from "@/lib/supabase/server";
 import { unblockUser, unmuteUser } from "@/app/(app)/u/[username]/actions";
 import { listBlocked, listMuted } from "@/lib/dal/admin";
+import { BrowserAiToggle } from "@/components/shell/browser-ai-toggle";
 import { revokeSession, setPrivacyMode } from "./actions";
 
 export const metadata: Metadata = { title: "Settings" };
@@ -105,6 +106,11 @@ export default async function SettingsPage() {
             ))}
           </ul>
         )}
+      </section>
+
+      <section className="space-y-3">
+        <h2 className="text-2xl">AI in your browser</h2>
+        <BrowserAiToggle enabled={process.env.NEXT_PUBLIC_BROWSER_AI === "1"} />
       </section>
 
       <section className="space-y-2">

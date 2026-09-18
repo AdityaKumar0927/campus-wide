@@ -89,8 +89,10 @@ Live checklist; tick as work lands. Detail is finest for the next two phases and
 - [ ] Owner look review of `docs/screenshots/phase-5/`
 
 ## Phase 6 — AI
-- [ ] Transformers.js worker (WebGPU/WASM, download gating), `posts.embedding` + `match_questions` RPC, toxicity nudge
-- [ ] Prompt API summarise (Chrome 148+); Groq opt-in (summaries, translation, triage labels, paste-to-event) + PII scrubber + quotas; no-AI path tests
+- [x] Transformers.js 4 in a lazy web worker (WebGPU or WASM), gated on `NEXT_PUBLIC_BROWSER_AI=1`, Save-Data, metered or slow connections, and a per-device switch in Settings; `posts.embedding vector(384)` with an HNSW index, embeddings computed on the device at post time; `match_questions` RPC feeds the "Already asked?" box; toxic-bert nudge before pinning (never blocks) (2026-09-19)
+- [x] Chrome Prompt API summaries when available; Groq fallback behind the campus `ai_server` flag and a key: summaries, translation, mod-queue triage labels (suggestions only, `reports.triage`), paste-to-event; every server call is PII-scrubbed and quota-limited (`take_rate_limit`)
+- [x] Unit tests for the gating and the scrubber; RLS test for cross-campus embedding matches; E2E for the no-AI path
+- [ ] Evaluate a MiniLM-sized toxicity classifier to replace toxic-bert (smaller download)
 
 ## Phase 7 — Legal, compliance, accessibility, PWA
 - [ ] 14 policy MDX docs with placeholders + banner; policy versioning; DSA contact page; Cookie Policy
