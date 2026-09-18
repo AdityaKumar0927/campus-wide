@@ -58,3 +58,8 @@ insert into public.spaces (university_id, slug, name, description, kind, is_defa
   ('11111111-1111-4111-8111-111111111111', 'international', 'International students', 'Visas, arrivals, phone plans, where to find food from home.', 'interest', true),
   ('11111111-1111-4111-8111-111111111111', 'first-years', 'First-years', 'Everything you were too shy to ask at orientation.', 'interest', true)
 on conflict (university_id, slug) do nothing;
+
+-- Meal-sharing terms shown before every meal offer (campus-specific; the text lives in policy_text.meals).
+insert into public.policy_versions (university_id, slug, version, title, summary, content_path, content_hash, required)
+values ('11111111-1111-4111-8111-111111111111', 'meal-sharing', '2026-09-17', 'Meal treats at The Commons', 'Guest meals only, holder present, nothing sold.', 'content/policies/meal-sharing.mdx', 'pending', true)
+on conflict do nothing;

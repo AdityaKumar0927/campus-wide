@@ -7,3 +7,4 @@ export * from "./community";
 export * from "./content";
 export * from "./social";
 export * from "./engagement";
+export * from "./modules";

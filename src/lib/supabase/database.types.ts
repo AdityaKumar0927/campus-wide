@@ -536,9 +536,104 @@ export type Database = {
         }
         Relationships: []
       }
+      poll_votes: {
+        Row: {
+          created_at: string
+          id: string
+          options: number[]
+          post_id: string
+          university_id: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          options: number[]
+          post_id: string
+          university_id: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          options?: number[]
+          post_id?: string
+          university_id?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "poll_votes_post_id_posts_id_fk"
+            columns: ["post_id"]
+            isOneToOne: false
+            referencedRelation: "posts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "poll_votes_university_id_universities_id_fk"
+            columns: ["university_id"]
+            isOneToOne: false
+            referencedRelation: "universities"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      post_participants: {
+        Row: {
+          created_at: string
+          id: string
+          kind: Database["public"]["Enums"]["participant_kind"]
+          post_id: string
+          university_id: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          kind: Database["public"]["Enums"]["participant_kind"]
+          post_id: string
+          university_id: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          kind?: Database["public"]["Enums"]["participant_kind"]
+          post_id?: string
+          university_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "post_participants_post_id_posts_id_fk"
+            columns: ["post_id"]
+            isOneToOne: false
+            referencedRelation: "posts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "post_participants_university_id_universities_id_fk"
+            columns: ["university_id"]
+            isOneToOne: false
+            referencedRelation: "universities"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "post_participants_user_id_profiles_user_id_fk"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["user_id"]
+          },
+        ]
+      }
       posts: {
         Row: {
           accepted_comment_id: string | null
+          audience: Database["public"]["Enums"]["post_audience"]
           author_id: string | null
           body: string
           comment_count: number
@@ -561,6 +656,7 @@ export type Database = {
         }
         Insert: {
           accepted_comment_id?: string | null
+          audience?: Database["public"]["Enums"]["post_audience"]
           author_id?: string | null
           body?: string
           comment_count?: number
@@ -583,6 +679,7 @@ export type Database = {
         }
         Update: {
           accepted_comment_id?: string | null
+          audience?: Database["public"]["Enums"]["post_audience"]
           author_id?: string | null
           body?: string
           comment_count?: number
@@ -757,6 +854,144 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "reactions_university_id_universities_id_fk"
+            columns: ["university_id"]
+            isOneToOne: false
+            referencedRelation: "universities"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      relay_messages: {
+        Row: {
+          body: string
+          created_at: string
+          flagged_words: string[]
+          id: string
+          sender_id: string
+          thread_id: string
+          university_id: string
+        }
+        Insert: {
+          body: string
+          created_at?: string
+          flagged_words?: string[]
+          id?: string
+          sender_id: string
+          thread_id: string
+          university_id: string
+        }
+        Update: {
+          body?: string
+          created_at?: string
+          flagged_words?: string[]
+          id?: string
+          sender_id?: string
+          thread_id?: string
+          university_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "relay_messages_sender_id_profiles_user_id_fk"
+            columns: ["sender_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "relay_messages_thread_id_relay_threads_id_fk"
+            columns: ["thread_id"]
+            isOneToOne: false
+            referencedRelation: "relay_threads"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "relay_messages_university_id_universities_id_fk"
+            columns: ["university_id"]
+            isOneToOne: false
+            referencedRelation: "universities"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      relay_threads: {
+        Row: {
+          created_at: string
+          deleted_at: string | null
+          flagged: boolean
+          id: string
+          initiator_confirmed_at: string | null
+          initiator_id: string
+          initiator_share_email: boolean
+          last_message_at: string | null
+          message_count: number
+          owner_confirmed_at: string | null
+          owner_id: string
+          owner_share_email: boolean
+          post_id: string
+          state: Database["public"]["Enums"]["relay_state"]
+          university_id: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          deleted_at?: string | null
+          flagged?: boolean
+          id?: string
+          initiator_confirmed_at?: string | null
+          initiator_id: string
+          initiator_share_email?: boolean
+          last_message_at?: string | null
+          message_count?: number
+          owner_confirmed_at?: string | null
+          owner_id: string
+          owner_share_email?: boolean
+          post_id: string
+          state?: Database["public"]["Enums"]["relay_state"]
+          university_id: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          deleted_at?: string | null
+          flagged?: boolean
+          id?: string
+          initiator_confirmed_at?: string | null
+          initiator_id?: string
+          initiator_share_email?: boolean
+          last_message_at?: string | null
+          message_count?: number
+          owner_confirmed_at?: string | null
+          owner_id?: string
+          owner_share_email?: boolean
+          post_id?: string
+          state?: Database["public"]["Enums"]["relay_state"]
+          university_id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "relay_threads_initiator_id_profiles_user_id_fk"
+            columns: ["initiator_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "relay_threads_owner_id_profiles_user_id_fk"
+            columns: ["owner_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "relay_threads_post_id_posts_id_fk"
+            columns: ["post_id"]
+            isOneToOne: false
+            referencedRelation: "posts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "relay_threads_university_id_universities_id_fk"
             columns: ["university_id"]
             isOneToOne: false
             referencedRelation: "universities"
@@ -1033,11 +1268,17 @@ export type Database = {
     Functions: {
       accept_answer: { Args: { p_comment_id: string }; Returns: undefined }
       before_user_created_hook: { Args: { event: Json }; Returns: Json }
+      cast_poll_vote: {
+        Args: { p_options: number[]; p_post_id: string }
+        Returns: undefined
+      }
+      current_term: { Args: never; Returns: string }
       custom_access_token_hook: { Args: { event: Json }; Returns: Json }
       declare_name: {
         Args: { age_attested: boolean; family: string; given: string }
         Returns: undefined
       }
+      export_relay_thread: { Args: { p_thread_id: string }; Returns: Json }
       is_allowed_email: { Args: { email: string }; Returns: boolean }
       list_my_sessions: {
         Args: never
@@ -1052,11 +1293,28 @@ export type Database = {
         }[]
       }
       mark_notifications_read: { Args: { p_ids?: string[] }; Returns: number }
+      poll_results: {
+        Args: { p_post_id: string }
+        Returns: {
+          option_index: number
+          votes: number
+        }[]
+      }
+      relay_contact: {
+        Args: { p_thread_id: string }
+        Returns: {
+          campus_username: string
+          display_name: string
+          email: string
+        }[]
+      }
       revoke_my_session: { Args: { session_id: string }; Returns: undefined }
+      run_expire_posts: { Args: never; Returns: number }
       search_posts: {
         Args: { p_limit?: number; q: string }
         Returns: {
           accepted_comment_id: string | null
+          audience: Database["public"]["Enums"]["post_audience"]
           author_id: string | null
           body: string
           comment_count: number
@@ -1114,6 +1372,8 @@ export type Database = {
         | "moderation"
         | "system"
         | "digest"
+      participant_kind: "rsvp" | "seat" | "member"
+      post_audience: "campus" | "meal_holders"
       post_status: "active" | "resolved" | "expired" | "removed" | "deleted"
       post_type:
         | "question"
@@ -1129,6 +1389,7 @@ export type Database = {
         | "poll"
       reaction_kind: "thanks"
       reaction_target: "post" | "comment"
+      relay_state: "open" | "closed" | "completed"
       space_kind: "general" | "course" | "residence" | "club" | "interest"
       space_role: "member" | "organizer"
       university_status: "pending" | "active" | "paused"
@@ -1284,6 +1545,8 @@ export const Constants = {
         "system",
         "digest",
       ],
+      participant_kind: ["rsvp", "seat", "member"],
+      post_audience: ["campus", "meal_holders"],
       post_status: ["active", "resolved", "expired", "removed", "deleted"],
       post_type: [
         "question",
@@ -1300,6 +1563,7 @@ export const Constants = {
       ],
       reaction_kind: ["thanks"],
       reaction_target: ["post", "comment"],
+      relay_state: ["open", "closed", "completed"],
       space_kind: ["general", "course", "residence", "club", "interest"],
       space_role: ["member", "organizer"],
       university_status: ["pending", "active", "paused"],

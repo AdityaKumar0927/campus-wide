@@ -3,7 +3,7 @@ import { boolean, check, customType, index, integer, jsonb, pgPolicy, pgTable, t
 import { authenticatedRole } from "drizzle-orm/supabase";
 import { baseColumns, hasRole, sameTenant } from "./_shared";
 import { spaces } from "./community";
-import { commentStatus, postStatus, postType, reactionKind, reactionTarget } from "./enums";
+import { commentStatus, postAudience, postStatus, postType, reactionKind, reactionTarget } from "./enums";
 import { profiles } from "./identity";
 import { universities } from "./tenancy";
 
@@ -28,6 +28,8 @@ export const posts = pgTable(
     authorId: uuid("author_id").references(() => profiles.userId, { onDelete: "set null" }),
     type: postType("type").notNull(),
     status: postStatus("status").notNull().default("active"),
+    /** Who may see it: the campus, or (meal requests, docs/pilot §3 M-1) attested plan holders only. */
+    audience: postAudience("audience").notNull().default("campus"),
     title: text("title").notNull(),
     body: text("body").notNull().default(""),
     payload: jsonb("payload").notNull().default(sql`'{}'::jsonb`),
@@ -55,7 +57,7 @@ export const posts = pgTable(
     pgPolicy("posts_member_select", {
       for: "select",
       to: authenticatedRole,
-      using: sql`${sameTenant(t.universityId)} and (${t.status} in ('active', 'resolved', 'expired') or ${t.authorId} = auth.uid() or ${hasRole("moderator")}) and not app.is_blocked_either_way(${t.authorId})`,
+      using: sql`${sameTenant(t.universityId)} and (${t.status} in ('active', 'resolved', 'expired') or ${t.authorId} = auth.uid() or ${hasRole("moderator")}) and not app.is_blocked_either_way(${t.authorId}) and app.can_see_audience(${t.audience}, ${t.authorId})`,
     }),
     pgPolicy("posts_member_insert", {
       for: "insert",
