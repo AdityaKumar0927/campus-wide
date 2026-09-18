@@ -65,11 +65,13 @@ Live checklist; tick as work lands. Detail is finest for the next two phases and
 - [ ] Phase 2b: passkeys beta behind a flag
 
 ## Phase 3 — Core content
-- [ ] Posts (type enum + Zod payloads, plain text + links), comments/answers, accepted answer, reactions
-- [ ] Spaces + memberships; feed (chronological, "most helpful", paged); Q&A views; Postgres FTS
-- [ ] Notifications + inbox (Realtime only on inbox, polling fallback); weekly digest cron + send-budget guard
-- [ ] Upload pipeline (client downscale → server re-encode) with avatars; rate limits on every mutation
-- [ ] E2E: ask → answer → accept → thank; RLS suite extended
+- [x] Posts (type enum + Zod payloads, plain text + links), comments/answers, accepted answer, thank-you reactions; counters and identity set by triggers (2026-09-18)
+- [x] Spaces + memberships (seeded defaults, member-created); feed (newest / active / most helpful, page links, never infinite); Questions view (open / all); Postgres FTS via `search_posts`
+- [x] Notifications written only by `app.notify()`; inbox with one Realtime channel while open + 60 s polling fallback; unread badge in the shell; weekly digest (`/api/cron/digest`, Monday 14:00 UTC) behind the `email_sends` daily budget (skipped, never lost, without Resend)
+- [x] Upload pipeline: browser downscale to WebP ≤ 1 MB → `post-images` bucket (RLS on the campus folder, 1 MB cap, image MIME only); no avatars by pilot design (no photos of people). Server re-encode deferred: Next serves the public bucket URL directly
+- [x] Rate limits in Postgres (D-22): posts 10/h (3/h in the first week), comments 30/h (10/h), reactions 60/h
+- [x] RLS suite extended (29 tests); E2E ask → answer → accept → thank and feed paging (`tests/e2e/content.spec.ts`)
+- [ ] Owner look review of `docs/screenshots/phase-3/`
 
 ## Phase 4 — Modules
 - [ ] Events + RSVP + `.ics`; Marketplace + prohibited items + safe-exchange locations + in-app relay (mutual reveal)

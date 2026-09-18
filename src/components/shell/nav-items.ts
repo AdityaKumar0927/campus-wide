@@ -32,6 +32,12 @@ export const primaryNav: NavItem[] = [
   { href: "/more", label: "Menu", icon: MenuIcon, phase: 3 },
 ];
 
+/** Desktop sidebar extras: ways around the board. */
+export const exploreNav: NavItem[] = [
+  { href: "/spaces", label: "Spaces", icon: RoommateIcon, phase: 3 },
+  { href: "/search", label: "Search", icon: LostFoundIcon, phase: 3 },
+];
+
 /** Desktop sidebar: everything, grouped. */
 export const moduleNav: NavItem[] = [
   { href: "/events", label: "Events", icon: EventIcon, phase: 4 },
@@ -45,9 +51,6 @@ export const moduleNav: NavItem[] = [
 ];
 
 export const placeholderSections: Record<string, { label: string; phase: number; blurb: string }> = {
-  questions: { label: "Questions", phase: 3, blurb: "Ask once, get a real answer, mark it accepted so the next person finds it." },
-  post: { label: "Pin a notice", phase: 3, blurb: "Structured post types with expiry: no endless feed of stale notices." },
-  inbox: { label: "Inbox", phase: 3, blurb: "Replies, thank-yous, and relay messages. Digests go out weekly, not hourly." },
   more: { label: "Menu", phase: 3, blurb: "Spaces and your data export live here; account and sessions are already in Settings." },
   events: { label: "Events", phase: 4, blurb: "RSVP and add to your calendar with one tap." },
   market: { label: "Marketplace", phase: 4, blurb: "Buy and sell within campus. No payments here, and your email stays masked." },

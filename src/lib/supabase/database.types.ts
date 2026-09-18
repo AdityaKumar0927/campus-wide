@@ -1,0 +1,1309 @@
+export type Json =
+  | string
+  | number
+  | boolean
+  | null
+  | { [key: string]: Json | undefined }
+  | Json[]
+
+export type Database = {
+  graphql_public: {
+    Tables: {
+      [_ in never]: never
+    }
+    Views: {
+      [_ in never]: never
+    }
+    Functions: {
+      graphql: {
+        Args: {
+          extensions?: Json
+          operationName?: string
+          query?: string
+          variables?: Json
+        }
+        Returns: Json
+      }
+    }
+    Enums: {
+      [_ in never]: never
+    }
+    CompositeTypes: {
+      [_ in never]: never
+    }
+  }
+  public: {
+    Tables: {
+      audit_log: {
+        Row: {
+          action: string
+          actor_id: string | null
+          actor_role: string | null
+          created_at: string
+          details: Json
+          id: string
+          ip: unknown
+          ip_hash: string | null
+          target_id: string | null
+          target_type: string | null
+          university_id: string | null
+        }
+        Insert: {
+          action: string
+          actor_id?: string | null
+          actor_role?: string | null
+          created_at?: string
+          details?: Json
+          id?: string
+          ip?: unknown
+          ip_hash?: string | null
+          target_id?: string | null
+          target_type?: string | null
+          university_id?: string | null
+        }
+        Update: {
+          action?: string
+          actor_id?: string | null
+          actor_role?: string | null
+          created_at?: string
+          details?: Json
+          id?: string
+          ip?: unknown
+          ip_hash?: string | null
+          target_id?: string | null
+          target_type?: string | null
+          university_id?: string | null
+        }
+        Relationships: []
+      }
+      blocks: {
+        Row: {
+          blocked_id: string
+          blocker_id: string
+          created_at: string
+          id: string
+          reason: string | null
+          university_id: string
+        }
+        Insert: {
+          blocked_id: string
+          blocker_id: string
+          created_at?: string
+          id?: string
+          reason?: string | null
+          university_id: string
+        }
+        Update: {
+          blocked_id?: string
+          blocker_id?: string
+          created_at?: string
+          id?: string
+          reason?: string | null
+          university_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "blocks_university_id_universities_id_fk"
+            columns: ["university_id"]
+            isOneToOne: false
+            referencedRelation: "universities"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      comments: {
+        Row: {
+          author_id: string | null
+          body: string
+          created_at: string
+          deleted_at: string | null
+          id: string
+          is_accepted: boolean
+          parent_id: string | null
+          post_id: string
+          status: Database["public"]["Enums"]["comment_status"]
+          thanks_count: number
+          university_id: string
+          updated_at: string
+        }
+        Insert: {
+          author_id?: string | null
+          body: string
+          created_at?: string
+          deleted_at?: string | null
+          id?: string
+          is_accepted?: boolean
+          parent_id?: string | null
+          post_id: string
+          status?: Database["public"]["Enums"]["comment_status"]
+          thanks_count?: number
+          university_id: string
+          updated_at?: string
+        }
+        Update: {
+          author_id?: string | null
+          body?: string
+          created_at?: string
+          deleted_at?: string | null
+          id?: string
+          is_accepted?: boolean
+          parent_id?: string | null
+          post_id?: string
+          status?: Database["public"]["Enums"]["comment_status"]
+          thanks_count?: number
+          university_id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "comments_author_id_profiles_user_id_fk"
+            columns: ["author_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "comments_parent_id_comments_id_fk"
+            columns: ["parent_id"]
+            isOneToOne: false
+            referencedRelation: "comments"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "comments_post_id_posts_id_fk"
+            columns: ["post_id"]
+            isOneToOne: false
+            referencedRelation: "posts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "comments_university_id_universities_id_fk"
+            columns: ["university_id"]
+            isOneToOne: false
+            referencedRelation: "universities"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      consent_records: {
+        Row: {
+          accepted: boolean
+          choice: string
+          context: Json
+          created_at: string
+          deleted_at: string | null
+          id: string
+          ip_hash: string | null
+          policy_version_id: string
+          updated_at: string
+          user_agent: string | null
+          user_id: string
+        }
+        Insert: {
+          accepted: boolean
+          choice: string
+          context?: Json
+          created_at?: string
+          deleted_at?: string | null
+          id?: string
+          ip_hash?: string | null
+          policy_version_id: string
+          updated_at?: string
+          user_agent?: string | null
+          user_id: string
+        }
+        Update: {
+          accepted?: boolean
+          choice?: string
+          context?: Json
+          created_at?: string
+          deleted_at?: string | null
+          id?: string
+          ip_hash?: string | null
+          policy_version_id?: string
+          updated_at?: string
+          user_agent?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "consent_records_policy_version_id_policy_versions_id_fk"
+            columns: ["policy_version_id"]
+            isOneToOne: false
+            referencedRelation: "policy_versions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      digest_runs: {
+        Row: {
+          created_at: string
+          details: Json
+          id: string
+          period_end: string
+          period_start: string
+          recipients: number
+          sent: number
+          skipped: number
+          university_id: string
+        }
+        Insert: {
+          created_at?: string
+          details?: Json
+          id?: string
+          period_end: string
+          period_start: string
+          recipients?: number
+          sent?: number
+          skipped?: number
+          university_id: string
+        }
+        Update: {
+          created_at?: string
+          details?: Json
+          id?: string
+          period_end?: string
+          period_start?: string
+          recipients?: number
+          sent?: number
+          skipped?: number
+          university_id?: string
+        }
+        Relationships: []
+      }
+      domain_requests: {
+        Row: {
+          created_at: string
+          deleted_at: string | null
+          domain: string
+          email_hash: string
+          id: string
+          message: string | null
+          reviewed_at: string | null
+          reviewed_by: string | null
+          status: Database["public"]["Enums"]["domain_request_status"]
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          deleted_at?: string | null
+          domain: string
+          email_hash: string
+          id?: string
+          message?: string | null
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          status?: Database["public"]["Enums"]["domain_request_status"]
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          deleted_at?: string | null
+          domain?: string
+          email_hash?: string
+          id?: string
+          message?: string | null
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          status?: Database["public"]["Enums"]["domain_request_status"]
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      email_sends: {
+        Row: {
+          created_at: string
+          id: string
+          kind: string
+          provider: string
+          recipient_hash: string
+          status: string
+          university_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          kind: string
+          provider?: string
+          recipient_hash: string
+          status?: string
+          university_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          kind?: string
+          provider?: string
+          recipient_hash?: string
+          status?: string
+          university_id?: string | null
+        }
+        Relationships: []
+      }
+      memberships: {
+        Row: {
+          campus_role: Database["public"]["Enums"]["campus_role"]
+          created_at: string
+          deleted_at: string | null
+          id: string
+          last_sign_in_at: string | null
+          sso_provider_id: string | null
+          status: Database["public"]["Enums"]["membership_status"]
+          status_reason: string | null
+          university_id: string
+          updated_at: string
+          user_id: string
+          verified_at: string | null
+          verified_term: string | null
+        }
+        Insert: {
+          campus_role?: Database["public"]["Enums"]["campus_role"]
+          created_at?: string
+          deleted_at?: string | null
+          id?: string
+          last_sign_in_at?: string | null
+          sso_provider_id?: string | null
+          status?: Database["public"]["Enums"]["membership_status"]
+          status_reason?: string | null
+          university_id: string
+          updated_at?: string
+          user_id: string
+          verified_at?: string | null
+          verified_term?: string | null
+        }
+        Update: {
+          campus_role?: Database["public"]["Enums"]["campus_role"]
+          created_at?: string
+          deleted_at?: string | null
+          id?: string
+          last_sign_in_at?: string | null
+          sso_provider_id?: string | null
+          status?: Database["public"]["Enums"]["membership_status"]
+          status_reason?: string | null
+          university_id?: string
+          updated_at?: string
+          user_id?: string
+          verified_at?: string | null
+          verified_term?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "memberships_university_id_universities_id_fk"
+            columns: ["university_id"]
+            isOneToOne: false
+            referencedRelation: "universities"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      mutes: {
+        Row: {
+          created_at: string
+          id: string
+          muted_id: string
+          muter_id: string
+          university_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          muted_id: string
+          muter_id: string
+          university_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          muted_id?: string
+          muter_id?: string
+          university_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "mutes_university_id_universities_id_fk"
+            columns: ["university_id"]
+            isOneToOne: false
+            referencedRelation: "universities"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      notifications: {
+        Row: {
+          actor_id: string | null
+          body: string | null
+          created_at: string
+          href: string | null
+          id: string
+          kind: Database["public"]["Enums"]["notification_kind"]
+          read_at: string | null
+          target_id: string | null
+          target_type: string | null
+          title: string
+          university_id: string
+          user_id: string
+        }
+        Insert: {
+          actor_id?: string | null
+          body?: string | null
+          created_at?: string
+          href?: string | null
+          id?: string
+          kind: Database["public"]["Enums"]["notification_kind"]
+          read_at?: string | null
+          target_id?: string | null
+          target_type?: string | null
+          title: string
+          university_id: string
+          user_id: string
+        }
+        Update: {
+          actor_id?: string | null
+          body?: string | null
+          created_at?: string
+          href?: string | null
+          id?: string
+          kind?: Database["public"]["Enums"]["notification_kind"]
+          read_at?: string | null
+          target_id?: string | null
+          target_type?: string | null
+          title?: string
+          university_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "notifications_actor_id_profiles_user_id_fk"
+            columns: ["actor_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "notifications_university_id_universities_id_fk"
+            columns: ["university_id"]
+            isOneToOne: false
+            referencedRelation: "universities"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      policy_versions: {
+        Row: {
+          content_hash: string
+          content_path: string
+          created_at: string
+          deleted_at: string | null
+          effective_at: string
+          id: string
+          required: boolean
+          slug: string
+          summary: string | null
+          title: string
+          university_id: string | null
+          updated_at: string
+          version: string
+        }
+        Insert: {
+          content_hash: string
+          content_path: string
+          created_at?: string
+          deleted_at?: string | null
+          effective_at?: string
+          id?: string
+          required?: boolean
+          slug: string
+          summary?: string | null
+          title: string
+          university_id?: string | null
+          updated_at?: string
+          version: string
+        }
+        Update: {
+          content_hash?: string
+          content_path?: string
+          created_at?: string
+          deleted_at?: string | null
+          effective_at?: string
+          id?: string
+          required?: boolean
+          slug?: string
+          summary?: string | null
+          title?: string
+          university_id?: string | null
+          updated_at?: string
+          version?: string
+        }
+        Relationships: []
+      }
+      posts: {
+        Row: {
+          accepted_comment_id: string | null
+          author_id: string | null
+          body: string
+          comment_count: number
+          created_at: string
+          deleted_at: string | null
+          expires_at: string | null
+          id: string
+          images: Json
+          last_activity_at: string
+          payload: Json
+          resolved_at: string | null
+          search: unknown
+          space_id: string | null
+          status: Database["public"]["Enums"]["post_status"]
+          thanks_count: number
+          title: string
+          type: Database["public"]["Enums"]["post_type"]
+          university_id: string
+          updated_at: string
+        }
+        Insert: {
+          accepted_comment_id?: string | null
+          author_id?: string | null
+          body?: string
+          comment_count?: number
+          created_at?: string
+          deleted_at?: string | null
+          expires_at?: string | null
+          id?: string
+          images?: Json
+          last_activity_at?: string
+          payload?: Json
+          resolved_at?: string | null
+          search?: unknown
+          space_id?: string | null
+          status?: Database["public"]["Enums"]["post_status"]
+          thanks_count?: number
+          title: string
+          type: Database["public"]["Enums"]["post_type"]
+          university_id: string
+          updated_at?: string
+        }
+        Update: {
+          accepted_comment_id?: string | null
+          author_id?: string | null
+          body?: string
+          comment_count?: number
+          created_at?: string
+          deleted_at?: string | null
+          expires_at?: string | null
+          id?: string
+          images?: Json
+          last_activity_at?: string
+          payload?: Json
+          resolved_at?: string | null
+          search?: unknown
+          space_id?: string | null
+          status?: Database["public"]["Enums"]["post_status"]
+          thanks_count?: number
+          title?: string
+          type?: Database["public"]["Enums"]["post_type"]
+          university_id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "posts_author_id_profiles_user_id_fk"
+            columns: ["author_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "posts_space_id_spaces_id_fk"
+            columns: ["space_id"]
+            isOneToOne: false
+            referencedRelation: "spaces"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "posts_university_id_universities_id_fk"
+            columns: ["university_id"]
+            isOneToOne: false
+            referencedRelation: "universities"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      profiles: {
+        Row: {
+          bio: string | null
+          campus_username: string
+          class_year: number | null
+          created_at: string
+          deleted_at: string | null
+          display_name: string
+          email_digest: boolean
+          helped_count: number
+          id: string
+          initials: string
+          meal_plan_attested_at: string | null
+          meal_plan_attested_term: string | null
+          onboarded_at: string | null
+          privacy_mode: boolean
+          thanks_count: number
+          university_id: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          bio?: string | null
+          campus_username: string
+          class_year?: number | null
+          created_at?: string
+          deleted_at?: string | null
+          display_name: string
+          email_digest?: boolean
+          helped_count?: number
+          id?: string
+          initials: string
+          meal_plan_attested_at?: string | null
+          meal_plan_attested_term?: string | null
+          onboarded_at?: string | null
+          privacy_mode?: boolean
+          thanks_count?: number
+          university_id: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          bio?: string | null
+          campus_username?: string
+          class_year?: number | null
+          created_at?: string
+          deleted_at?: string | null
+          display_name?: string
+          email_digest?: boolean
+          helped_count?: number
+          id?: string
+          initials?: string
+          meal_plan_attested_at?: string | null
+          meal_plan_attested_term?: string | null
+          onboarded_at?: string | null
+          privacy_mode?: boolean
+          thanks_count?: number
+          university_id?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "profiles_university_id_universities_id_fk"
+            columns: ["university_id"]
+            isOneToOne: false
+            referencedRelation: "universities"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "profiles_user_id_users_id_fk"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      rate_limit_events: {
+        Row: {
+          action: string
+          created_at: string
+          id: string
+          user_id: string
+        }
+        Insert: {
+          action: string
+          created_at?: string
+          id?: string
+          user_id: string
+        }
+        Update: {
+          action?: string
+          created_at?: string
+          id?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      reactions: {
+        Row: {
+          created_at: string
+          id: string
+          kind: Database["public"]["Enums"]["reaction_kind"]
+          target_id: string
+          target_type: Database["public"]["Enums"]["reaction_target"]
+          university_id: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          kind?: Database["public"]["Enums"]["reaction_kind"]
+          target_id: string
+          target_type: Database["public"]["Enums"]["reaction_target"]
+          university_id: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          kind?: Database["public"]["Enums"]["reaction_kind"]
+          target_id?: string
+          target_type?: Database["public"]["Enums"]["reaction_target"]
+          university_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "reactions_university_id_universities_id_fk"
+            columns: ["university_id"]
+            isOneToOne: false
+            referencedRelation: "universities"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      space_memberships: {
+        Row: {
+          created_at: string
+          deleted_at: string | null
+          id: string
+          role: Database["public"]["Enums"]["space_role"]
+          space_id: string
+          university_id: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          deleted_at?: string | null
+          id?: string
+          role?: Database["public"]["Enums"]["space_role"]
+          space_id: string
+          university_id: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          deleted_at?: string | null
+          id?: string
+          role?: Database["public"]["Enums"]["space_role"]
+          space_id?: string
+          university_id?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "space_memberships_space_id_spaces_id_fk"
+            columns: ["space_id"]
+            isOneToOne: false
+            referencedRelation: "spaces"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "space_memberships_university_id_universities_id_fk"
+            columns: ["university_id"]
+            isOneToOne: false
+            referencedRelation: "universities"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      spaces: {
+        Row: {
+          created_at: string
+          created_by: string | null
+          deleted_at: string | null
+          description: string | null
+          id: string
+          is_default: boolean
+          kind: Database["public"]["Enums"]["space_kind"]
+          member_count: number
+          name: string
+          slug: string
+          university_id: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          created_by?: string | null
+          deleted_at?: string | null
+          description?: string | null
+          id?: string
+          is_default?: boolean
+          kind?: Database["public"]["Enums"]["space_kind"]
+          member_count?: number
+          name: string
+          slug: string
+          university_id: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          created_by?: string | null
+          deleted_at?: string | null
+          description?: string | null
+          id?: string
+          is_default?: boolean
+          kind?: Database["public"]["Enums"]["space_kind"]
+          member_count?: number
+          name?: string
+          slug?: string
+          university_id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "spaces_university_id_universities_id_fk"
+            columns: ["university_id"]
+            isOneToOne: false
+            referencedRelation: "universities"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      universities: {
+        Row: {
+          accent_hue: string
+          country: string
+          created_at: string
+          deleted_at: string | null
+          dining_locations: Json
+          feature_flags: Json
+          id: string
+          name: string
+          policy_text: Json
+          safe_exchange_locations: Json
+          settings: Json
+          short_name: string | null
+          slug: string
+          status: Database["public"]["Enums"]["university_status"]
+          timezone: string
+          updated_at: string
+        }
+        Insert: {
+          accent_hue?: string
+          country?: string
+          created_at?: string
+          deleted_at?: string | null
+          dining_locations?: Json
+          feature_flags?: Json
+          id?: string
+          name: string
+          policy_text?: Json
+          safe_exchange_locations?: Json
+          settings?: Json
+          short_name?: string | null
+          slug: string
+          status?: Database["public"]["Enums"]["university_status"]
+          timezone?: string
+          updated_at?: string
+        }
+        Update: {
+          accent_hue?: string
+          country?: string
+          created_at?: string
+          deleted_at?: string | null
+          dining_locations?: Json
+          feature_flags?: Json
+          id?: string
+          name?: string
+          policy_text?: Json
+          safe_exchange_locations?: Json
+          settings?: Json
+          short_name?: string | null
+          slug?: string
+          status?: Database["public"]["Enums"]["university_status"]
+          timezone?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      university_domains: {
+        Row: {
+          created_at: string
+          deleted_at: string | null
+          domain: string
+          hosted_domain: string | null
+          id: string
+          role: Database["public"]["Enums"]["campus_role"]
+          source: Database["public"]["Enums"]["domain_source"]
+          university_id: string
+          updated_at: string
+          verified: boolean
+        }
+        Insert: {
+          created_at?: string
+          deleted_at?: string | null
+          domain: string
+          hosted_domain?: string | null
+          id?: string
+          role?: Database["public"]["Enums"]["campus_role"]
+          source?: Database["public"]["Enums"]["domain_source"]
+          university_id: string
+          updated_at?: string
+          verified?: boolean
+        }
+        Update: {
+          created_at?: string
+          deleted_at?: string | null
+          domain?: string
+          hosted_domain?: string | null
+          id?: string
+          role?: Database["public"]["Enums"]["campus_role"]
+          source?: Database["public"]["Enums"]["domain_source"]
+          university_id?: string
+          updated_at?: string
+          verified?: boolean
+        }
+        Relationships: [
+          {
+            foreignKeyName: "university_domains_university_id_universities_id_fk"
+            columns: ["university_id"]
+            isOneToOne: false
+            referencedRelation: "universities"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      users: {
+        Row: {
+          age_attested_at: string | null
+          campus_username: string
+          created_at: string
+          declared_family_name: string | null
+          declared_given_name: string | null
+          deleted_at: string | null
+          email: string
+          email_domain: string
+          id: string
+          identity_provider: Database["public"]["Enums"]["identity_provider"]
+          last_sign_in_at: string | null
+          name_locked_at: string | null
+          name_matches_username: boolean
+          name_pending: boolean
+          name_verified_in_person_at: string | null
+          updated_at: string
+        }
+        Insert: {
+          age_attested_at?: string | null
+          campus_username: string
+          created_at?: string
+          declared_family_name?: string | null
+          declared_given_name?: string | null
+          deleted_at?: string | null
+          email: string
+          email_domain: string
+          id: string
+          identity_provider?: Database["public"]["Enums"]["identity_provider"]
+          last_sign_in_at?: string | null
+          name_locked_at?: string | null
+          name_matches_username?: boolean
+          name_pending?: boolean
+          name_verified_in_person_at?: string | null
+          updated_at?: string
+        }
+        Update: {
+          age_attested_at?: string | null
+          campus_username?: string
+          created_at?: string
+          declared_family_name?: string | null
+          declared_given_name?: string | null
+          deleted_at?: string | null
+          email?: string
+          email_domain?: string
+          id?: string
+          identity_provider?: Database["public"]["Enums"]["identity_provider"]
+          last_sign_in_at?: string | null
+          name_locked_at?: string | null
+          name_matches_username?: boolean
+          name_pending?: boolean
+          name_verified_in_person_at?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+    }
+    Views: {
+      [_ in never]: never
+    }
+    Functions: {
+      accept_answer: { Args: { p_comment_id: string }; Returns: undefined }
+      before_user_created_hook: { Args: { event: Json }; Returns: Json }
+      custom_access_token_hook: { Args: { event: Json }; Returns: Json }
+      declare_name: {
+        Args: { age_attested: boolean; family: string; given: string }
+        Returns: undefined
+      }
+      is_allowed_email: { Args: { email: string }; Returns: boolean }
+      list_my_sessions: {
+        Args: never
+        Returns: {
+          created_at: string
+          id: string
+          ip: string
+          is_current: boolean
+          not_after: string
+          refreshed_at: string
+          user_agent: string
+        }[]
+      }
+      mark_notifications_read: { Args: { p_ids?: string[] }; Returns: number }
+      revoke_my_session: { Args: { session_id: string }; Returns: undefined }
+      search_posts: {
+        Args: { p_limit?: number; q: string }
+        Returns: {
+          accepted_comment_id: string | null
+          author_id: string | null
+          body: string
+          comment_count: number
+          created_at: string
+          deleted_at: string | null
+          expires_at: string | null
+          id: string
+          images: Json
+          last_activity_at: string
+          payload: Json
+          resolved_at: string | null
+          search: unknown
+          space_id: string | null
+          status: Database["public"]["Enums"]["post_status"]
+          thanks_count: number
+          title: string
+          type: Database["public"]["Enums"]["post_type"]
+          university_id: string
+          updated_at: string
+        }[]
+        SetofOptions: {
+          from: "*"
+          to: "posts"
+          isOneToOne: false
+          isSetofReturn: true
+        }
+      }
+      toggle_thanks: {
+        Args: {
+          p_target_id: string
+          p_target_type: Database["public"]["Enums"]["reaction_target"]
+        }
+        Returns: boolean
+      }
+      unread_notification_count: { Args: never; Returns: number }
+    }
+    Enums: {
+      campus_role:
+        | "student"
+        | "staff"
+        | "alumni"
+        | "moderator"
+        | "university_admin"
+      comment_status: "active" | "removed" | "deleted"
+      domain_request_status: "pending" | "approved" | "rejected"
+      domain_source: "hipo" | "admin" | "seed"
+      identity_provider: "google" | "email" | "saml"
+      membership_status: "active" | "read_only" | "suspended" | "banned"
+      notification_kind:
+        | "answer"
+        | "comment"
+        | "accepted"
+        | "thanks"
+        | "relay"
+        | "moderation"
+        | "system"
+        | "digest"
+      post_status: "active" | "resolved" | "expired" | "removed" | "deleted"
+      post_type:
+        | "question"
+        | "notice"
+        | "event"
+        | "listing"
+        | "meal"
+        | "lost"
+        | "found"
+        | "ride"
+        | "study"
+        | "roommate"
+        | "poll"
+      reaction_kind: "thanks"
+      reaction_target: "post" | "comment"
+      space_kind: "general" | "course" | "residence" | "club" | "interest"
+      space_role: "member" | "organizer"
+      university_status: "pending" | "active" | "paused"
+    }
+    CompositeTypes: {
+      [_ in never]: never
+    }
+  }
+}
+
+type DatabaseWithoutInternals = Omit<Database, "__InternalSupabase">
+
+type DefaultSchema = DatabaseWithoutInternals[Extract<keyof Database, "public">]
+
+export type Tables<
+  DefaultSchemaTableNameOrOptions extends
+    | keyof (DefaultSchema["Tables"] & DefaultSchema["Views"])
+    | { schema: keyof DatabaseWithoutInternals },
+  TableName extends (DefaultSchemaTableNameOrOptions extends {
+    schema: keyof DatabaseWithoutInternals
+  }
+    ? keyof (DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"] &
+        DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Views"])
+    : never) = never,
+> = DefaultSchemaTableNameOrOptions extends {
+  schema: keyof DatabaseWithoutInternals
+}
+  ? (DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"] &
+      DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Views"])[TableName] extends {
+      Row: infer R
+    }
+    ? R
+    : never
+  : DefaultSchemaTableNameOrOptions extends keyof (DefaultSchema["Tables"] &
+        DefaultSchema["Views"])
+    ? (DefaultSchema["Tables"] &
+        DefaultSchema["Views"])[DefaultSchemaTableNameOrOptions] extends {
+        Row: infer R
+      }
+      ? R
+      : never
+    : never
+
+export type TablesInsert<
+  DefaultSchemaTableNameOrOptions extends
+    | keyof DefaultSchema["Tables"]
+    | { schema: keyof DatabaseWithoutInternals },
+  TableName extends (DefaultSchemaTableNameOrOptions extends {
+    schema: keyof DatabaseWithoutInternals
+  }
+    ? keyof DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"]
+    : never) = never,
+> = DefaultSchemaTableNameOrOptions extends {
+  schema: keyof DatabaseWithoutInternals
+}
+  ? DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"][TableName] extends {
+      Insert: infer I
+    }
+    ? I
+    : never
+  : DefaultSchemaTableNameOrOptions extends keyof DefaultSchema["Tables"]
+    ? DefaultSchema["Tables"][DefaultSchemaTableNameOrOptions] extends {
+        Insert: infer I
+      }
+      ? I
+      : never
+    : never
+
+export type TablesUpdate<
+  DefaultSchemaTableNameOrOptions extends
+    | keyof DefaultSchema["Tables"]
+    | { schema: keyof DatabaseWithoutInternals },
+  TableName extends (DefaultSchemaTableNameOrOptions extends {
+    schema: keyof DatabaseWithoutInternals
+  }
+    ? keyof DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"]
+    : never) = never,
+> = DefaultSchemaTableNameOrOptions extends {
+  schema: keyof DatabaseWithoutInternals
+}
+  ? DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"][TableName] extends {
+      Update: infer U
+    }
+    ? U
+    : never
+  : DefaultSchemaTableNameOrOptions extends keyof DefaultSchema["Tables"]
+    ? DefaultSchema["Tables"][DefaultSchemaTableNameOrOptions] extends {
+        Update: infer U
+      }
+      ? U
+      : never
+    : never
+
+export type Enums<
+  DefaultSchemaEnumNameOrOptions extends
+    | keyof DefaultSchema["Enums"]
+    | { schema: keyof DatabaseWithoutInternals },
+  EnumName extends (DefaultSchemaEnumNameOrOptions extends {
+    schema: keyof DatabaseWithoutInternals
+  }
+    ? keyof DatabaseWithoutInternals[DefaultSchemaEnumNameOrOptions["schema"]]["Enums"]
+    : never) = never,
+> = DefaultSchemaEnumNameOrOptions extends {
+  schema: keyof DatabaseWithoutInternals
+}
+  ? DatabaseWithoutInternals[DefaultSchemaEnumNameOrOptions["schema"]]["Enums"][EnumName]
+  : DefaultSchemaEnumNameOrOptions extends keyof DefaultSchema["Enums"]
+    ? DefaultSchema["Enums"][DefaultSchemaEnumNameOrOptions]
+    : never
+
+export type CompositeTypes<
+  PublicCompositeTypeNameOrOptions extends
+    | keyof DefaultSchema["CompositeTypes"]
+    | { schema: keyof DatabaseWithoutInternals },
+  CompositeTypeName extends (PublicCompositeTypeNameOrOptions extends {
+    schema: keyof DatabaseWithoutInternals
+  }
+    ? keyof DatabaseWithoutInternals[PublicCompositeTypeNameOrOptions["schema"]]["CompositeTypes"]
+    : never) = never,
+> = PublicCompositeTypeNameOrOptions extends {
+  schema: keyof DatabaseWithoutInternals
+}
+  ? DatabaseWithoutInternals[PublicCompositeTypeNameOrOptions["schema"]]["CompositeTypes"][CompositeTypeName]
+  : PublicCompositeTypeNameOrOptions extends keyof DefaultSchema["CompositeTypes"]
+    ? DefaultSchema["CompositeTypes"][PublicCompositeTypeNameOrOptions]
+    : never
+
+export const Constants = {
+  graphql_public: {
+    Enums: {},
+  },
+  public: {
+    Enums: {
+      campus_role: [
+        "student",
+        "staff",
+        "alumni",
+        "moderator",
+        "university_admin",
+      ],
+      comment_status: ["active", "removed", "deleted"],
+      domain_request_status: ["pending", "approved", "rejected"],
+      domain_source: ["hipo", "admin", "seed"],
+      identity_provider: ["google", "email", "saml"],
+      membership_status: ["active", "read_only", "suspended", "banned"],
+      notification_kind: [
+        "answer",
+        "comment",
+        "accepted",
+        "thanks",
+        "relay",
+        "moderation",
+        "system",
+        "digest",
+      ],
+      post_status: ["active", "resolved", "expired", "removed", "deleted"],
+      post_type: [
+        "question",
+        "notice",
+        "event",
+        "listing",
+        "meal",
+        "lost",
+        "found",
+        "ride",
+        "study",
+        "roommate",
+        "poll",
+      ],
+      reaction_kind: ["thanks"],
+      reaction_target: ["post", "comment"],
+      space_kind: ["general", "course", "residence", "club", "interest"],
+      space_role: ["member", "organizer"],
+      university_status: ["pending", "active", "paused"],
+    },
+  },
+} as const
+

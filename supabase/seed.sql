@@ -49,3 +49,12 @@ on conflict (domain) do update set role = excluded.role, verified = excluded.ver
 insert into public.policy_versions (slug, version, title, summary, content_path, content_hash, required)
 values ('safety-rules', '2026-09-17', 'House rules and safety', 'What you agree to before your first post.', 'content/policies/safety-rules.mdx', 'pending', true)
 on conflict do nothing;
+
+-- Default spaces for the pilot campus (open groups; members follow them to filter the feed).
+insert into public.spaces (university_id, slug, name, description, kind, is_default) values
+  ('11111111-1111-4111-8111-111111111111', 'campus', 'Whole campus', 'Everything that does not belong to a smaller group.', 'general', true),
+  ('11111111-1111-4111-8111-111111111111', 'residence-halls', 'Residence halls', 'Kacek, Carman, Cunningham, Gunsaulus, McCormick Student Village, Rowe Village.', 'residence', true),
+  ('11111111-1111-4111-8111-111111111111', 'commuters', 'Commuters', 'Parking, trains, the 35th Street station, rides.', 'interest', true),
+  ('11111111-1111-4111-8111-111111111111', 'international', 'International students', 'Visas, arrivals, phone plans, where to find food from home.', 'interest', true),
+  ('11111111-1111-4111-8111-111111111111', 'first-years', 'First-years', 'Everything you were too shy to ask at orientation.', 'interest', true)
+on conflict (university_id, slug) do nothing;

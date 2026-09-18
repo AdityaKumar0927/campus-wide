@@ -1,6 +1,7 @@
 import { createServerClient } from "@supabase/ssr";
 import { cookies } from "next/headers";
 import "server-only";
+import type { Database } from "./database.types";
 import { supabaseEnv } from "./env";
 
 export { isSupabaseConfigured } from "./env";
@@ -12,7 +13,7 @@ export { isSupabaseConfigured } from "./env";
  */
 export async function createClient() {
   const cookieStore = await cookies();
-  return createServerClient(supabaseEnv.url!, supabaseEnv.publishableKey!, {
+  return createServerClient<Database>(supabaseEnv.url!, supabaseEnv.publishableKey!, {
     cookies: {
       getAll() {
         return cookieStore.getAll();
