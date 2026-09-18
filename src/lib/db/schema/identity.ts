@@ -59,6 +59,8 @@ export const profiles = pgTable(
     mealPlanAttestedTerm: text("meal_plan_attested_term"),
     mealPlanAttestedAt: timestamp("meal_plan_attested_at", { withTimezone: true }),
     onboardedAt: timestamp("onboarded_at", { withTimezone: true }),
+    /** Weekly digest email opt-in (marketing consent is separate and recorded in consent_records). */
+    emailDigest: boolean("email_digest").notNull().default(true),
   },
   (t) => [
     uniqueIndex("profiles_user_idx").on(t.userId),

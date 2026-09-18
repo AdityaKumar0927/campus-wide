@@ -10,7 +10,7 @@ export interface Session {
   userId: string;
   email: string;
   universityId: string | null;
-  membership: { campusRole: string; status: string; verifiedTerm: string | null } | null;
+  membership: { campusRole: string; status: string; verifiedTerm: string | null; universityId: string } | null;
   profile: { displayName: string; initials: string; campusUsername: string; privacyMode: boolean; onboardedAt: string | null } | null;
   namePending: boolean;
 }
@@ -24,16 +24,18 @@ export const getSession = cache(async (): Promise<Session | null> => {
 
   const [{ data: me }, { data: membership }, { data: profile }] = await Promise.all([
     supabase.from("users").select("name_pending, email").eq("id", claims.sub).maybeSingle(),
-    supabase.from("memberships").select("campus_role, status, verified_term").eq("user_id", claims.sub).maybeSingle(),
+    supabase.from("memberships").select("campus_role, status, verified_term, university_id").eq("user_id", claims.sub).maybeSingle(),
     supabase.from("profiles").select("display_name, initials, campus_username, privacy_mode, onboarded_at").eq("user_id", claims.sub).maybeSingle(),
   ]);
 
   return {
     userId: claims.sub,
     email: me?.email ?? claims.email ?? "",
-    universityId: claims.app_metadata?.university_id ?? null,
+    // The JWT claim comes from the custom access token hook; the membership row is the fallback when
+    // the hook is not enabled on the Auth project (the RLS helper falls back the same way).
+    universityId: claims.app_metadata?.university_id ?? membership?.university_id ?? null,
     membership: membership
-      ? { campusRole: membership.campus_role, status: membership.status, verifiedTerm: membership.verified_term }
+      ? { campusRole: membership.campus_role, status: membership.status, verifiedTerm: membership.verified_term, universityId: membership.university_id }
       : null,
     profile: profile
       ? {

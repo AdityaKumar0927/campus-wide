@@ -3,3 +3,7 @@ export * from "./tenancy";
 export * from "./identity";
 export * from "./consent";
 export * from "./audit";
+export * from "./community";
+export * from "./content";
+export * from "./social";
+export * from "./engagement";
