@@ -16,3 +16,6 @@ export const reactionKind = pgEnum("reaction_kind", ["thanks"]);
 export const spaceKind = pgEnum("space_kind", ["general", "course", "residence", "club", "interest"]);
 export const spaceRole = pgEnum("space_role", ["member", "organizer"]);
 export const notificationKind = pgEnum("notification_kind", ["answer", "comment", "accepted", "thanks", "relay", "moderation", "system", "digest"]);
+export const postAudience = pgEnum("post_audience", ["campus", "meal_holders"]);
+export const participantKind = pgEnum("participant_kind", ["rsvp", "seat", "member"]);
+export const relayState = pgEnum("relay_state", ["open", "closed", "completed"]);

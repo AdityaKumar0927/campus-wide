@@ -15,6 +15,13 @@
       "when": 1789763357272,
       "tag": "20260918202051_phase3_content",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1789765031590,
+      "tag": "20260918230001_phase4_modules",
+      "breakpoints": true
     }
   ]
 }

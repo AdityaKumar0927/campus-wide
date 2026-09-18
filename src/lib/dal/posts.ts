@@ -27,6 +27,8 @@ export const PAGE_SIZE = 20;
 export interface FeedQuery {
   sort?: "new" | "helpful" | "active";
   type?: PostType | "all";
+  /** Several types at once (lost and found share a board). Overrides type. */
+  types?: PostType[];
   spaceId?: string;
   authorId?: string;
   unansweredOnly?: boolean;
@@ -52,7 +54,8 @@ export async function listPosts(q: FeedQuery = {}): Promise<Page<PostWithAuthor>
     .in("status", ["active", "resolved", "expired"])
     .range(from, from + limit); // one extra row tells us whether a next page exists
 
-  if (q.type && q.type !== "all") query = query.eq("type", q.type);
+  if (q.types && q.types.length > 0) query = query.in("type", q.types);
+  else if (q.type && q.type !== "all") query = query.eq("type", q.type);
   if (q.spaceId) query = query.eq("space_id", q.spaceId);
   if (q.authorId) query = query.eq("author_id", q.authorId);
   if (q.unansweredOnly) query = query.eq("comment_count", 0).eq("status", "active");
@@ -121,5 +124,12 @@ export function explainDbError(message: string): string {
   if (/row-level security|permission|not allowed|42501/.test(message)) return "You cannot do that on this board.";
   if (/expiry must be in the future/.test(message)) return "Pick an expiry in the future.";
   if (/not open for replies/.test(message)) return "This notice is no longer open for replies.";
+  if (/full: no places left/.test(message)) return "No places left.";
+  if (/you are the host/.test(message)) return "You are hosting this one.";
+  if (/no contact tabs|own notice/.test(message)) return "This notice has no contact tabs.";
+  if (/wait_for_reply/.test(message)) return "One message until they answer. Give them a moment.";
+  if (/thread is closed|not open/.test(message)) return "This thread is closed.";
+  if (/switched off/.test(message)) return "That module is switched off on this campus.";
+  if (/pick one|out of range|poll is closed/.test(message)) return "That vote could not be counted.";
   return "Something went wrong. Try again.";
 }

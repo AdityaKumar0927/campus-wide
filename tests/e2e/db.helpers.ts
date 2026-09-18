@@ -49,3 +49,23 @@ export async function seedNotices(authorId: string, count: number, prefix: strin
   }));
   await rest("posts", { method: "POST", body: JSON.stringify(rows) });
 }
+
+/** A notice that expires two seconds from now, so the sweeper has something to take down. */
+export async function seedExpiredNotice(authorId: string, title: string): Promise<string> {
+  const rows = (await rest("posts", {
+    method: "POST",
+    body: JSON.stringify([{ university_id: IIT_ID, author_id: authorId, type: "notice", title, body: "Expired on purpose.", expires_at: new Date(Date.now() + 2_000).toISOString() }]),
+  })) as { id: string }[];
+  return rows[0].id;
+}
+
+/** Runs the expiry sweeper the way the cron does. */
+export async function runExpirePosts(): Promise<number> {
+  const res = await fetch(`${supabaseUrl}/rest/v1/rpc/run_expire_posts`, {
+    method: "POST",
+    headers: { apikey: secretKey, Authorization: `Bearer ${secretKey}`, "Content-Type": "application/json" },
+    body: "{}",
+  });
+  if (!res.ok) throw new Error(`run_expire_posts: ${res.status} ${await res.text()}`);
+  return (await res.json()) as number;
+}
