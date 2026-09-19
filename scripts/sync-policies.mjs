@@ -18,7 +18,17 @@ function meta(slug) {
   return m ? { title: m[1], summary: m[2], required: m[3] === "true" } : null;
 }
 
-const sql = postgres(url, { ssl: url.includes("supabase.co") || url.includes("pooler.supabase.com") ? "require" : false, max: 1 });
+/** TLS everywhere except a loopback database, decided on the parsed host rather than a substring. */
+function needsTls(connectionString) {
+  try {
+    const { hostname } = new URL(connectionString);
+    return hostname !== "localhost" && hostname !== "127.0.0.1" && hostname !== "::1";
+  } catch {
+    return true;
+  }
+}
+
+const sql = postgres(url, { ssl: needsTls(url) ? "require" : false, max: 1 });
 try {
   let changed = 0;
   for (const file of readdirSync(dir).filter((f) => f.endsWith(".mdx")).sort()) {
