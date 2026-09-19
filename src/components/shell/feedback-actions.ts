@@ -4,6 +4,7 @@ import { randomUUID } from "node:crypto";
 import { headers } from "next/headers";
 import { z } from "zod";
 import { getSession } from "@/lib/dal/session";
+import { gpcRequested } from "@/lib/privacy/gpc";
 import { sendMail } from "@/lib/email/send";
 import { createClient } from "@/lib/supabase/server";
 
@@ -25,7 +26,9 @@ export async function submitFeedback(_prev: FeedbackState, formData: FormData): 
     consent: formData.get("consent") === "on",
   });
   if (!parsed.success) return { error: parsed.error.issues[0]?.message ?? "Check the form." };
-  const { sentiment, message, pageUrl, consent } = parsed.data;
+  const { sentiment, message, pageUrl } = parsed.data;
+  // Global Privacy Control overrides the checkbox: no optional context is stored.
+  const consent = parsed.data.consent && !(await gpcRequested());
   const session = await getSession();
   const h = await headers();
   const userAgent = consent ? (h.get("user-agent") ?? "").slice(0, 300) : null;

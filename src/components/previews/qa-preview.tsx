@@ -31,7 +31,7 @@ export function QaPreview() {
                 active={!!thanked[a.id]}
                 pressed={!!thanked[a.id]}
                 onClick={() => setThanked((t) => ({ ...t, [a.id]: !t[a.id] }))}
-                ariaLabel={`Thank ${a.who.name}`}
+                ariaLabel={`Thank you to ${a.who.name}`}
               >
                 <ThanksIcon className="size-3.5" aria-hidden /> Thank you · {a.thanks + (thanked[a.id] ? 1 : 0)}
               </Chip>

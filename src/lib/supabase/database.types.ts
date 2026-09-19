@@ -289,6 +289,33 @@ export type Database = {
           },
         ]
       }
+      deletion_requests: {
+        Row: {
+          cancelled_at: string | null
+          id: string
+          purged_at: string | null
+          requested_at: string
+          scheduled_for: string
+          user_id: string
+        }
+        Insert: {
+          cancelled_at?: string | null
+          id?: string
+          purged_at?: string | null
+          requested_at?: string
+          scheduled_for: string
+          user_id: string
+        }
+        Update: {
+          cancelled_at?: string | null
+          id?: string
+          purged_at?: string | null
+          requested_at?: string
+          scheduled_for?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       digest_runs: {
         Row: {
           created_at: string
@@ -654,6 +681,24 @@ export type Database = {
           },
         ]
       }
+      platform_settings: {
+        Row: {
+          key: string
+          updated_at: string
+          value: string
+        }
+        Insert: {
+          key: string
+          updated_at?: string
+          value: string
+        }
+        Update: {
+          key?: string
+          updated_at?: string
+          value?: string
+        }
+        Relationships: []
+      }
       policy_versions: {
         Row: {
           content_hash: string
@@ -970,6 +1015,42 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      push_subscriptions: {
+        Row: {
+          auth: string
+          created_at: string
+          endpoint: string
+          failed_at: string | null
+          id: string
+          last_used_at: string | null
+          p256dh: string
+          user_agent: string | null
+          user_id: string
+        }
+        Insert: {
+          auth: string
+          created_at?: string
+          endpoint: string
+          failed_at?: string | null
+          id?: string
+          last_used_at?: string | null
+          p256dh: string
+          user_agent?: string | null
+          user_id: string
+        }
+        Update: {
+          auth?: string
+          created_at?: string
+          endpoint?: string
+          failed_at?: string | null
+          id?: string
+          last_used_at?: string | null
+          p256dh?: string
+          user_agent?: string | null
+          user_id?: string
+        }
+        Relationships: []
       }
       rate_limit_events: {
         Row: {
@@ -1511,6 +1592,7 @@ export type Database = {
       admin_campus_stats: { Args: never; Returns: Json }
       appeal: { Args: { p_action_id: string; p_text: string }; Returns: string }
       before_user_created_hook: { Args: { event: Json }; Returns: Json }
+      cancel_account_deletion: { Args: never; Returns: undefined }
       cast_poll_vote: {
         Args: { p_options: number[]; p_post_id: string }
         Returns: undefined
@@ -1579,6 +1661,16 @@ export type Database = {
         }
         Returns: string
       }
+      pending_consents: {
+        Args: never
+        Returns: {
+          id: string
+          slug: string
+          summary: string
+          title: string
+          version: string
+        }[]
+      }
       poll_results: {
         Args: { p_post_id: string }
         Returns: {
@@ -1595,6 +1687,7 @@ export type Database = {
           email: string
         }[]
       }
+      request_account_deletion: { Args: never; Returns: string }
       revoke_my_session: { Args: { session_id: string }; Returns: undefined }
       run_expire_posts: { Args: never; Returns: number }
       run_maintenance: { Args: never; Returns: Json }

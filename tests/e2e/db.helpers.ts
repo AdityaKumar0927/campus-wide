@@ -81,3 +81,21 @@ export async function setRole(uid: string, role: "student" | "moderator" | "univ
 export async function latestFeedback(): Promise<{ sentiment: string; message: string; page_url: string | null }[]> {
   return (await rest("feedback?select=sentiment,message,page_url&order=created_at.desc&limit=5", { method: "GET" })) as { sentiment: string; message: string; page_url: string | null }[];
 }
+
+/** Publishes a new required version of a policy, so the re-consent gate has something to ask for. */
+export async function bumpPolicy(slug: string, title: string): Promise<string> {
+  const version = `e2e-${Date.now()}`;
+  await rest("policy_versions", {
+    method: "POST",
+    body: JSON.stringify([{ slug, version, title, summary: "Changed during a test.", content_path: `content/policies/${slug}.mdx`, content_hash: version, required: true }]),
+  });
+  return version;
+}
+
+/** Removes a test-published policy version again, so later tests are not gated by it. */
+export async function dropPolicyVersion(version: string) {
+  await fetch(`${supabaseUrl}/rest/v1/policy_versions?version=eq.${encodeURIComponent(version)}`, {
+    method: "DELETE",
+    headers: { apikey: secretKey, Authorization: `Bearer ${secretKey}` },
+  });
+}

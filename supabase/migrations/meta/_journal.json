@@ -36,6 +36,13 @@
       "when": 1789768936931,
       "tag": "20260919010001_phase6_columns",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1789769804703,
+      "tag": "20260919020001_phase7_compliance",
+      "breakpoints": true
     }
   ]
 }

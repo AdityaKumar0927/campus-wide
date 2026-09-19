@@ -30,9 +30,18 @@ export default defineConfig({
       name: "mobile",
       // Chromium everywhere (CI installs only Chromium); iPhone metrics keep touch + DPR realistic.
       use: { ...devices["iPhone 14"], browserName: "chromium", viewport: { width: 390, height: 844 }, isMobile: true },
+      testIgnore: /consent\.spec\.ts/,
     },
     {
       name: "desktop",
+      use: { ...devices["Desktop Chrome"], viewport: { width: 1440, height: 900 } },
+      testIgnore: /consent\.spec\.ts/,
+    },
+    {
+      // Publishing a required policy version gates every member, so this runs alone, last.
+      name: "consent",
+      testMatch: /consent\.spec\.ts/,
+      dependencies: ["mobile", "desktop"],
       use: { ...devices["Desktop Chrome"], viewport: { width: 1440, height: 900 } },
     },
   ],

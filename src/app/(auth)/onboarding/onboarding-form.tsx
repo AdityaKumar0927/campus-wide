@@ -4,6 +4,7 @@ import { useActionState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import Link from "next/link";
 import { SAFETY_RULES } from "@/lib/safety-rules";
 import { completeOnboarding, type OnboardingState } from "./actions";
 
@@ -46,6 +47,24 @@ export function OnboardingForm({ campusUsername, namePending }: { campusUsername
             </li>
           ))}
         </ul>
+        <label className="flex items-start gap-2 rounded-md border border-rule bg-card px-3 py-2 text-sm">
+          <input type="checkbox" name="policies" className="mt-1 size-4 shrink-0 accent-primary" required />
+          <span>
+            I accept the{" "}
+            <Link href="/policies/terms" target="_blank" rel="noopener" className="underline underline-offset-4">
+              Terms of Service
+            </Link>
+            , the{" "}
+            <Link href="/policies/privacy" target="_blank" rel="noopener" className="underline underline-offset-4">
+              Privacy Notice
+            </Link>
+            , and the{" "}
+            <Link href="/policies/community-guidelines" target="_blank" rel="noopener" className="underline underline-offset-4">
+              Community Guidelines
+            </Link>
+            .
+          </span>
+        </label>
         <label className="flex items-start gap-2 text-sm text-muted-foreground">
           <input type="checkbox" name="marketing" className="mt-1 size-4 accent-primary" />
           <span>Optional: email me a weekly digest of what is on the board.</span>

@@ -80,7 +80,7 @@ export default async function PostPage({ params }: { params: Promise<Params> }) 
           <AuthorChip author={post.author} when={formatDateTime(post.created_at)} />
           <div className="flex flex-wrap items-center gap-2">
             {session && open && !isOwner && (
-              <ThanksButton count={post.thanks_count} pressed={thanked.has(post.id)} label="Thank the author" onToggle={toggleThanks.bind(null, post.id, "post", post.id)} />
+              <ThanksButton count={post.thanks_count} pressed={thanked.has(post.id)} label="Thank you to the author" onToggle={toggleThanks.bind(null, post.id, "post", post.id)} />
             )}
             {isOwner && !isQuestion && post.status === "active" && (
               <form action={setPostStatus.bind(null, post.id, "resolved")}>

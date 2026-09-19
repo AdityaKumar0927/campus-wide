@@ -6,17 +6,17 @@ depend on the owner. Status legend: ✅ done · 🔄 in progress · ⏳ blocked 
 
 | Milestone | Phase | Outcome the owner can see | Effort | Status |
 |---|---|---|---|---|
-| M0 Plan approved | 0 | Plan, architecture, task list, verified versions, audit; public repo with Dependabot + ruleset | 1 | ⏳ owner approval of the plan |
-| M1 Skeleton live in CI | 1 | Green CI, themed empty app at 390/1440 px, Lighthouse ≥ 95, owner look review; Vercel previews (recommended STOP) | 2 | ⬜ |
-| M2 Sign in to your campus | 2 | Magic link/OTP sign-up with a seeded domain, hardened auth, consent ledger, RLS isolation suite, keep-alive + encrypted backups | 3 | ⏳ Supabase project (region) + Resend; email domain or test mode |
-| M2b Passkeys beta | 2b | Optional passkey sign-in behind a flag | 1 | ⬜ |
-| M3 Ask and answer | 3 | Feed, Q&A with accepted answers, reactions, spaces, search, inbox, weekly digest, uploads + rate limits | 3 | ⬜ |
-| M4 Campus modules | 4 | Events + .ics, marketplace + in-app relay + safe-exchange spots, meal gifting (off), lost & found, rides, study groups, roommates, polls | 4 | ⬜ |
-| M5 Safe community | 5 | Reports, moderation with statements of reasons, appeals, admin portal, campus stats, feedback widget | 3 | ⬜ |
-| M6 Helpful AI | 6 | Duplicate-question hints and toxicity nudge in-browser; opt-in summaries | 2 | ⬜ |
-| M7 Compliant and installable | 7 | 14 policy docs, export/deletion, GPC, WCAG 2.2 AA pass, PWA + push | 3 | ⬜ |
-| M8 Verified hardening | 8 | Security checklist with evidence, Lighthouse ≥ 95 everywhere, HECVAT readiness docs | 2 | ⬜ |
-| M9 Launched | 9 | Production on Vercel with required Upstash + Turnstile keys, launch checklist, screenshots | 1 | ⏳ Vercel env vars |
+| M0 Plan approved | 0 | Plan, architecture, task list, verified versions, audit; public repo with Dependabot + ruleset | 1 | ✅ 2026-09-16 |
+| M1 Skeleton live in CI | 1 | Green CI, themed empty app at 390/1440 px, Lighthouse ≥ 95, owner look review; Vercel previews (recommended STOP) | 2 | ✅ 2026-09-16, design revised through 2026-09-18 |
+| M2 Sign in to your campus | 2 | Magic link/OTP sign-up with a seeded domain, hardened auth, consent ledger, RLS isolation suite, keep-alive + encrypted backups | 3 | ✅ 2026-09-17 (Turnstile and Resend deferred by the owner) |
+| M2b Passkeys beta | 2b | Optional passkey sign-in behind a flag | 1 | ⬜ optional, after launch |
+| M3 Ask and answer | 3 | Feed, Q&A with accepted answers, reactions, spaces, search, inbox, weekly digest, uploads + rate limits | 3 | ✅ 2026-09-18 |
+| M4 Campus modules | 4 | Events + .ics, marketplace + in-app relay + safe-exchange spots, meal gifting (off), lost & found, rides, study groups, roommates, polls | 4 | ✅ 2026-09-18 (meal gifting off until Residence Life confirms) |
+| M5 Safe community | 5 | Reports, moderation with statements of reasons, appeals, admin portal, campus stats, feedback widget | 3 | ✅ 2026-09-19 |
+| M6 Helpful AI | 6 | Duplicate-question hints and toxicity nudge in-browser; opt-in summaries | 2 | ✅ 2026-09-19 (off until a deployment enables it) |
+| M7 Compliant and installable | 7 | 14 policy docs, export/deletion, GPC, WCAG 2.2 AA pass, PWA + push | 3 | ✅ 2026-09-19 (16 policy documents, not 14) |
+| M8 Verified hardening | 8 | Security checklist with evidence, Lighthouse ≥ 95 everywhere, HECVAT readiness docs | 2 | ✅ 2026-09-19 |
+| M9 Launched | 9 | Production on Vercel with required Upstash + Turnstile keys, launch checklist, screenshots | 1 | ⏳ owner: auth hooks, email template, sending domain, push keys — see docs/LAUNCH.md |
 
 ## Pilot definition
 "Pilot-ready" = **M1–M5, M7, M8, and M9** on one seeded campus, with the meal board off, moderation

@@ -1,8 +1,10 @@
+import createMDX from "@next/mdx";
 import type { NextConfig } from "next";
 import { securityHeaders } from "./src/lib/security/headers";
 
 const nextConfig: NextConfig = {
   reactCompiler: true,
+  pageExtensions: ["ts", "tsx", "mdx"],
   poweredByHeader: false,
   reactStrictMode: true,
   images: {
@@ -23,4 +25,7 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default nextConfig;
+/** Policy documents are MDX (docs/BRIEF.md §7); the loader runs under Turbopack with no remark plugins. */
+const withMDX = createMDX({});
+
+export default withMDX(nextConfig);

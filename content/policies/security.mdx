@@ -1,0 +1,23 @@
+# Security Policy
+
+<Banner />
+
+## Reporting a vulnerability
+
+Write to [SECURITY CONTACT EMAIL] (details also in `/.well-known/security.txt`). Tell us what you found, how to reproduce it, and how to reach you. We acknowledge within three working days and keep you informed until it is fixed. We do not take legal action against good-faith research that respects other members: no data exfiltration beyond what proves the issue, no denial of service, no social engineering.
+
+## What protects the service
+
+- Every table is protected by row-level security inside the database, and every request is also authorised by the application. The two are independent.
+- Sign-in is a one-time code sent to your campus mailbox. We never see a campus password and never connect to campus single sign-on.
+- Sessions are time-boxed; you can see every device signed in and sign any of them out.
+- The browser receives a strict Content Security Policy with nonces, and the usual hardening headers.
+- Rate limits live in the database, so they hold for anyone calling the API directly.
+- Dependencies are pinned, audited on every build, and updated weekly; secrets live only in the hosting provider.
+- Every moderation step, appeal, name declaration, and session revocation is written to an append-only audit log.
+
+## What we ask of you
+
+Keep your campus mailbox secure; it is your key. Sign out of shared devices. Never lend your account.
+
+_Effective: [EFFECTIVE DATE]._
