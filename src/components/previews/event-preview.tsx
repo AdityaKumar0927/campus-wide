@@ -37,7 +37,7 @@ export function EventPreview() {
         <Chip active={going} pressed={going} onClick={() => setGoing((g) => !g)}>
           {going ? <TickIcon className="size-3.5" aria-hidden /> : null} {going ? "Going" : "RSVP"} · {41 + (going ? 1 : 0)}
         </Chip>
-        <Chip onClick={downloadIcs} ariaLabel="Add Jazz night to your calendar">
+        <Chip onClick={downloadIcs}>
           <EventIcon className="size-3.5" aria-hidden /> Add to calendar (.ics)
         </Chip>
       </div>

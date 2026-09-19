@@ -95,15 +95,31 @@ Live checklist; tick as work lands. Detail is finest for the next two phases and
 - [ ] Evaluate a MiniLM-sized toxicity classifier to replace toxic-bert (smaller download)
 
 ## Phase 7 — Legal, compliance, accessibility, PWA
-- [ ] 14 policy MDX docs with placeholders + banner; policy versioning; DSA contact page; Cookie Policy
-- [ ] GPC handling; export (JSON zip); deletion (anonymise content, purge identity, 30-day purge); WCAG 2.2 AA pass
-- [ ] PWA: manifest, icons, Serwist SW via esbuild (small precache), offline page, install prompt, Web Push + email fallback
+- [x] All 16 policy documents as MDX in `content/policies/` with [PLACEHOLDER]s and the not-legal-advice banner, rendered at `/policies` and `/policies/[slug]`; `pnpm policies:sync` records each document's hash as a `policy_versions` row, so a changed document becomes a new version (2026-09-19)
+- [x] Consent ledger extended: onboarding records every required policy version (not just the house rules) with the version, time, IP hash, and user agent; `pending_consents()` asks again when the newest required version is unaccepted, gated at `/consent` before the board opens
+- [x] Global Privacy Control honoured (`Sec-GPC: 1` suppresses optional feedback context and analytics) with `/.well-known/gpc.json`; Cookie Policy page
+- [x] Self-service export at `/settings/export` (zip of JSON: account, notices, replies, reactions, participation, threads, spaces, inbox, reports, consents, sessions) and deletion with a 30-day grace (`request_account_deletion`, `cancel_account_deletion`, `app.purge_deleted_accounts` anonymises content and purges identity, reported threads kept pseudonymously)
+- [x] PWA: `manifest.webmanifest` with generated icons (`/icons/*.png` drawn from the pin mark), Serwist service worker built by esbuild (`pnpm build:sw`, small explicit precache, offline fallback, push and notificationclick handlers), install invitation shown before any permission prompt
+- [x] Web Push: VAPID keys (`pnpm push:keys`), `push_subscriptions` under RLS, per-device toggle in Settings, dispatch webhook called by the database through pg_net, email digest as the fallback
+- [x] RLS suite: 52 tests; E2E: policies, manifest and icons, export download, deletion, re-consent gate
+- [ ] Full WCAG 2.2 AA sweep of the new routes at both viewports (Phase 8 verification)
 
 ## Phase 8 — Hardening verification + HECVAT
-- [ ] Verify headers + full CSP on a preview; SSRF and rate-limit coverage audits; Lighthouse ≥ 95 all routes
-- [ ] Desktop performance ≥ 95: JS diet for public pages (drop Sonner/Base UI menus from the public layout) and evaluate static rendering of public pages with a hash-based CSP once Next SRI leaves experimental
-- [ ] `docs/compliance/HECVAT.md`, data map, subprocessors, incident response; `ADMIN_GUIDE.md`, `UNIVERSITY_ONBOARDING.md`
+- [x] Security verification written up with evidence: `docs/compliance/security-verification.md` (headers and CSP observed on production, the two authorization layers, the per-action rate-limit table, the SSRF audit, uploads, secrets, supply chain, audit trail, and three stated deviations) (2026-09-19)
+- [x] Accessibility: axe at 390 px and 1440 px on every route in the end-to-end suite; Lighthouse accessibility 100 on every public route after fixing the auth-page `main` landmark and the accessible-name mismatches
+- [x] Lighthouse sweep widened in CI to every public route (`LH_ROUTES`); best practices 100 and SEO 100 everywhere; performance stays report-only on localhost, where the simulator understates text-LCP pages
+- [x] `docs/compliance/`: HECVAT Full 4.1.5 responses, data map, incident response outline, and a README that points an office at the right file
+- [x] `ADMIN_GUIDE.md` and `UNIVERSITY_ONBOARDING.md`
+- [x] `ARCHITECTURE.md` §10 corrected to match what was built (rate limiting in Postgres, no server-side re-encode, the SSRF position, Turnstile deferred)
+- [ ] Desktop performance ≥ 95 against the Vercel preview rather than localhost (the simulator artifact is documented in `scripts/lighthouse.mjs`)
+- [ ] Optional: commission a penetration test (noted as a gap in the HECVAT)
 
 ## Phase 9 — Deploy
-- [ ] STOP: Vercel env vars (Upstash + Turnstile required), cron (weekly digest, daily ping), Supabase redirect URLs, Resend domain, analytics
-- [ ] Launch checklist (`docs/BRIEF.md §16`); production Playwright run + screenshots
+- [x] Production database carries every migration through Phase 7, and the 16 policy documents are recorded as `policy_versions` (2026-09-19)
+- [x] `CRON_SECRET` set on Vercel; `vercel.json` registers the weekly digest (Mondays 14:00 UTC) and daily maintenance (06:30 UTC: expiries, served suspensions, deletions past their grace)
+- [x] Launch checklist written: [docs/LAUNCH.md](docs/LAUNCH.md)
+- [ ] **STOP (owner):** Supabase auth hooks enabled, the OTP email template pasted, site URL and redirect set
+- [ ] **STOP (owner):** a sending domain verified in Resend, `RESEND_API_KEY` and `EMAIL_FROM` set (without them the digest is recorded as skipped)
+- [ ] **STOP (owner):** `pnpm push:keys`, then the VAPID values and `PUSH_DISPATCH_SECRET` in Vercel, and the matching `platform_settings` rows
+- [ ] Optional: Turnstile keys, `GROQ_API_KEY` plus the `ai_server` flag, Umami analytics
+- [ ] Final Playwright run against the production URL with screenshots attached

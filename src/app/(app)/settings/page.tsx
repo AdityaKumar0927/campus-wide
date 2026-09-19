@@ -1,12 +1,17 @@
 import type { Metadata } from "next";
 import { redirect } from "next/navigation";
 import { signOut } from "@/app/(auth)/actions";
-import { Button } from "@/components/ui/button";
+import Link from "next/link";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { AuthError, requireMember } from "@/lib/dal/session";
 import { createClient } from "@/lib/supabase/server";
 import { unblockUser, unmuteUser } from "@/app/(app)/u/[username]/actions";
 import { listBlocked, listMuted } from "@/lib/dal/admin";
 import { BrowserAiToggle } from "@/components/shell/browser-ai-toggle";
+import { PushToggle } from "@/components/shell/push-toggle";
+import { getDeletionRequest } from "@/lib/dal/compliance";
+import { cancelDeletion } from "./danger-actions";
+import { DeleteAccount } from "./delete-account";
 import { revokeSession, setPrivacyMode } from "./actions";
 
 export const metadata: Metadata = { title: "Settings" };
@@ -30,7 +35,7 @@ export default async function SettingsPage() {
   const supabase = await createClient();
   const { data: sessions } = await supabase.rpc("list_my_sessions");
   const rows = (sessions ?? []) as SessionRow[];
-  const [blocked, muted] = await Promise.all([listBlocked(), listMuted()]);
+  const [blocked, muted, deletion] = await Promise.all([listBlocked(), listMuted(), getDeletionRequest()]);
 
   return (
     <div className="space-y-10">
@@ -113,9 +118,36 @@ export default async function SettingsPage() {
         <BrowserAiToggle enabled={process.env.NEXT_PUBLIC_BROWSER_AI === "1"} />
       </section>
 
-      <section className="space-y-2">
+      <section className="space-y-3">
+        <h2 className="text-2xl">Notifications</h2>
+        <PushToggle publicKey={process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY ?? ""} />
+      </section>
+
+      <section className="space-y-3">
         <h2 className="text-2xl">Your data</h2>
-        <p className="text-sm text-muted-foreground">Export (a signed bundle of everything about you) and deletion (content anonymised, identity purged, reported threads kept for one year) arrive in Phase 7.</p>
+        <p className="text-sm text-muted-foreground">
+          Take everything with you, or go. The export is a zip of JSON files: your account, everything you pinned, your replies, your threads, your consents, and where you are signed in.
+        </p>
+        <div className="flex flex-wrap items-center gap-2">
+          <a href="/settings/export" className={buttonVariants({ variant: "outline", size: "sm" })} download>
+            Download my data
+          </a>
+          <Link href="/policies/privacy" className="text-sm underline underline-offset-4">
+            What we keep and why
+          </Link>
+        </div>
+        {deletion ? (
+          <div className="rounded-md border border-destructive/40 p-3 text-sm">
+            <p>
+              Your account is scheduled for deletion on <span className="font-medium">{new Date(deletion.scheduled_for).toLocaleDateString("en-US", { dateStyle: "long", timeZone: "America/Chicago" })}</span>. Until then it is read-only, and cancelling restores everything.
+            </p>
+            <form action={cancelDeletion} className="mt-2">
+              <Button type="submit" size="sm" variant="outline">Cancel the deletion</Button>
+            </form>
+          </div>
+        ) : (
+          <DeleteAccount />
+        )}
       </section>
     </div>
   );

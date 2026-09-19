@@ -5,6 +5,7 @@ import { unreadCount } from "@/lib/dal/notifications";
 import type { Session } from "@/lib/dal/session";
 import { BottomNav } from "./bottom-nav";
 import { FeedbackButton } from "./feedback-button";
+import { InstallPrompt } from "./install-prompt";
 import { KeyboardShortcuts } from "./keyboard-shortcuts";
 import { SidebarNav } from "./sidebar-nav";
 import { ThemeToggle } from "./theme-toggle";
@@ -18,7 +19,8 @@ export async function AppShell({ children, session }: { children: ReactNode; ses
   const [unread, campus] = session ? await Promise.all([unreadCount(), getCampus()]) : [0, null];
   const readOnly = session?.membership?.status && session.membership.status !== "active";
   return (
-    <div className="flex min-h-dvh flex-col md:flex-row">
+    // The campus accent hue (D-18: one per-tenant knob) tints every token derived from --accent-hue.
+    <div className="flex min-h-dvh flex-col md:flex-row" style={campus ? ({ "--accent-hue": campus.accentHue } as React.CSSProperties) : undefined}>
       <aside className="hidden w-60 shrink-0 border-r border-rule bg-sidebar md:flex md:flex-col">
         <div className="flex h-14 items-center border-b border-rule px-4">
           <Wordmark href="/feed" />
@@ -49,6 +51,7 @@ export async function AppShell({ children, session }: { children: ReactNode; ses
         </header>
         <main id="main" tabIndex={-1} className="flex-1 px-4 pt-6 pb-24 outline-none md:px-8 md:pb-10">
           <div className="mx-auto w-full max-w-3xl">
+            <InstallPrompt />
             {readOnly && (
               <p role="status" className="notice mb-6 px-4 py-3 text-sm" style={{ "--stock": "var(--stock-yellow)" } as React.CSSProperties}>
                 {session?.membership?.status === "suspended" ? (

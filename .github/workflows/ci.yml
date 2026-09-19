@@ -70,6 +70,10 @@ jobs:
             echo "MAILPIT_URL=$MAILPIT_URL"
           } >> "$GITHUB_ENV"
 
+      # Policy documents become policy_versions rows, so the consent and re-consent paths are real in CI.
+      - name: Sync policy versions
+        run: pnpm policies:sync
+
       - name: Database integration tests (auth hooks, triggers, RLS isolation)
         run: pnpm test:rls
 
@@ -116,6 +120,8 @@ jobs:
         run: pnpm lighthouse:server
         env:
           CHROME_PATH: /usr/bin/google-chrome
+          # Every public route plus the signed-out shape of the app routes (Phase 8 sweep).
+          LH_ROUTES: root,offline,policies,policies/privacy,campus/illinois-tech,sign-in,feed
 
       - name: Upload Lighthouse reports
         if: always()

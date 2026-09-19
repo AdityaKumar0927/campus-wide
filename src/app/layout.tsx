@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Bricolage_Grotesque, Manrope } from "next/font/google";
 import { headers } from "next/headers";
 import { ThemeProvider } from "@/components/theme-provider";
+import { ServiceWorker } from "@/components/shell/service-worker";
 import { SkipLink } from "@/components/shell/skip-link";
 import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -37,6 +38,9 @@ export const metadata: Metadata = {
     title: "Campus Wide",
     description: "Your campus, helping itself. A notice board for the whole campus.",
   },
+  manifest: "/manifest.webmanifest",
+  appleWebApp: { capable: true, title: "Campus Wide", statusBarStyle: "default" },
+  icons: { apple: "/icons/apple-icon.png" },
   twitter: { card: "summary_large_image" },
   robots: { index: true, follow: true },
 };
@@ -60,6 +64,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
     <html lang="en" suppressHydrationWarning className={`${sans.variable} ${display.variable} h-full antialiased`}>
       <body className="flex min-h-full flex-col">
         <SkipLink />
+        <ServiceWorker />
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange nonce={nonce}>
           <TooltipProvider>{children}</TooltipProvider>
           <Toaster position="top-center" />

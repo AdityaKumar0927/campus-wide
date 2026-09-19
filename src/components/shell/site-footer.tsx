@@ -13,10 +13,20 @@ const columns = [
     ],
   },
   {
+    heading: "Policies",
+    links: [
+      { label: "All policies", href: "/policies" },
+      { label: "Privacy notice", href: "/policies/privacy" },
+      { label: "Terms of service", href: "/policies/terms" },
+      { label: "House rules and safety", href: "/policies/safety-rules" },
+    ],
+  },
+  {
     heading: "Trust",
     links: [
-      { label: "Security policy", href: `${repo}/blob/main/SECURITY.md` },
-      { label: "Code of conduct", href: `${repo}/blob/main/CODE_OF_CONDUCT.md` },
+      { label: "Report something", href: "/policies/dsa-contact" },
+      { label: "Accessibility", href: "/policies/accessibility" },
+      { label: "Security", href: "/policies/security" },
       { label: "security.txt", href: "/.well-known/security.txt" },
     ],
   },
@@ -33,7 +43,7 @@ const columns = [
 export function SiteFooter() {
   return (
     <footer className="masthead-rule mt-24 bg-background">
-      <div className="mx-auto grid max-w-6xl gap-10 px-4 py-12 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="mx-auto grid max-w-6xl gap-10 px-4 py-12 sm:grid-cols-2 lg:grid-cols-5">
         <div className="space-y-3">
           <p className="font-heading text-2xl font-medium tracking-[-0.045em]">
             Campus<span className="text-primary">Wide</span>
@@ -44,7 +54,7 @@ export function SiteFooter() {
         </div>
         {columns.map((col) => (
           <nav key={col.heading} aria-label={col.heading}>
-            <p className="mb-3 text-xs font-semibold tracking-wider text-muted-foreground uppercase">{col.heading}</p>
+            <p className="stamp mb-3">{col.heading}</p>
             <ul className="space-y-2 text-sm">
               {col.links.map((l) => {
                 const cls =
@@ -72,7 +82,7 @@ export function SiteFooter() {
       </div>
       <div className="border-t border-rule">
         <p className="mx-auto max-w-6xl px-4 py-4 text-xs text-muted-foreground">
-          Open source under the MIT licence. Policies and a lawyer-reviewed privacy notice arrive in Phase 7.
+          Open source under the MIT licence. Student-run and not affiliated with any university. The policies are drafts until a lawyer has reviewed them.
         </p>
       </div>
     </footer>

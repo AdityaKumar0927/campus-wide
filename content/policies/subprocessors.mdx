@@ -1,0 +1,18 @@
+# Subprocessor List
+
+<Banner />
+
+The services that handle member data on our behalf. Every entry is bound by its own data processing terms; we give 30 days notice before adding one.
+
+| Subprocessor | Purpose | Data | Location |
+|---|---|---|---|
+| Supabase, Inc. | Database, authentication, file storage, realtime | All account and content data; sign-in codes sent by email | [HOSTING REGION] (AWS) |
+| Vercel, Inc. | Web hosting, edge network, scheduled jobs | Request logs (IP, user agent, URL) for a short period; rendered pages | Global edge, functions in [FUNCTIONS REGION] |
+| Resend, Inc. (when configured) | Transactional email and the weekly digest | Email address, message content | United States |
+| GitHub, Inc. (when configured) | Feedback forwarded as issues | Feedback text, page URL, browser version if consented | United States |
+| Groq, Inc. (only when a campus switches server AI on) | Summaries, translation, triage labels, event extraction | Thread or report text with emails, phones, handles, links, and long numbers removed first | United States |
+| Hugging Face (browser models only) | Serves model files that run inside your browser | Nothing about you; your browser downloads a file | Global CDN |
+
+Nothing on this list receives data for advertising, and none of them may use member data to train models.
+
+_Last updated: [UPDATE DATE]._

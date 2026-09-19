@@ -42,7 +42,7 @@ test.describe("core content", () => {
     await a.reload();
     await a.getByRole("button", { name: "Accept this answer" }).click();
     await expect(a.getByText("Accepted answer")).toBeVisible();
-    const thank = a.getByRole("button", { name: "Thank Hank H. for this answer" });
+    const thank = a.getByRole("button", { name: "Thank you to Hank H. for this answer" });
     await thank.click();
     await expect(thank).toHaveAttribute("aria-pressed", "true");
     await expect(thank).toContainText("Thank you · 1");

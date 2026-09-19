@@ -7,8 +7,11 @@ found, rides, study groups, roommates, and polls, with human-first moderation an
 privacy and compliance functionality. Each university is an isolated tenant enforced by
 Postgres Row-Level Security.
 
-**Status:** Phase 2 (sign-in, tenancy, RLS) for the Illinois Tech pilot — see [ROADMAP.md](ROADMAP.md) and [docs/pilot/illinois-tech.md](docs/pilot/illinois-tech.md). Preview: https://campus-wide.vercel.app Sign-in and
-content arrive in Phases 2 and 3; today the app is a themed shell with working navigation.
+**Status:** Phases 0 to 8 built for the Illinois Tech pilot: sign-in and tenancy, the board and its
+modules, the masked relay, moderation with statements of reasons and appeals, the admin portal,
+progressive AI, the policy set with versioned consent, data export and deletion, and the installable
+PWA. What remains is the launch checklist in [ROADMAP.md](ROADMAP.md) and the owner steps in
+[PLAN.md](PLAN.md). Live: https://campus-wide.vercel.app · Pilot design: [docs/pilot/illinois-tech.md](docs/pilot/illinois-tech.md)
 
 ## Quick start
 
@@ -33,6 +36,9 @@ pnpm dev                     # http://localhost:3000 — sign-in codes land in M
 | `pnpm db:generate` / `pnpm db:reset` | Generate a Drizzle migration from `src/lib/db/schema`; reapply all migrations and the seed |
 | `pnpm build` then `pnpm test:e2e` | Playwright at 390 px and 1440 px with axe accessibility checks; visual baselines are Linux-only and produced by CI |
 | `pnpm build` then `pnpm lighthouse:server` | Lighthouse budget at mobile and desktop (starts and stops the server for you) |
+| `pnpm policies:sync` | Hashes `content/policies/*.mdx` into `policy_versions`, so a changed document asks members to accept the new version |
+| `pnpm build:sw` | Compiles the service worker (`src/sw.ts` to `public/sw.js`); `pnpm build` runs it first |
+| `pnpm push:keys` | Prints a fresh VAPID key pair for Web Push |
 
 ## How the repository is organised
 
@@ -53,6 +59,16 @@ src/lib/security   CSP builder, static headers (rate limiting and uploads arrive
 src/components     shadcn/ui (Base UI) primitives, shell, empty states
 tests/unit · tests/e2e   Vitest · Playwright (+ axe, screenshots)
 ```
+
+## Documents
+
+| For | Read |
+|---|---|
+| A campus admin running the board | [ADMIN_GUIDE.md](ADMIN_GUIDE.md) |
+| A university deciding whether to adopt it | [UNIVERSITY_ONBOARDING.md](UNIVERSITY_ONBOARDING.md) |
+| A security or privacy office | [docs/compliance/](docs/compliance/) (HECVAT, data map, security verification, incident response) |
+| A member | The 16 published policies at `/policies`, written in `content/policies/` |
+| A contributor | [AGENTS.md](AGENTS.md), [ARCHITECTURE.md](ARCHITECTURE.md), [PLAN.md](PLAN.md), [TASKS.md](TASKS.md) |
 
 ## Stack
 

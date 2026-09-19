@@ -35,7 +35,7 @@ export async function signInNewStudent(page: Page, opts: { given?: string; famil
   await page.getByLabel("First name").fill(opts.given ?? "Jane");
   await page.getByLabel("Family name").fill(opts.family ?? "Doe");
   await page.getByLabel("I am 17 or older.").check();
-  for (const box of await page.getByRole("checkbox", { name: /I will|I know|I understand|Nothing is bought|A meal treat/ }).all()) await box.check();
+  for (const box of await page.getByRole("checkbox", { name: /I will|I know|I understand|I accept|Nothing is bought|A meal treat/ }).all()) await box.check();
   await page.getByRole("button", { name: /Finish and open the board/ }).click();
   await expect(page).toHaveURL(/\/feed/);
   return { email, uid: email.split("@")[0] };

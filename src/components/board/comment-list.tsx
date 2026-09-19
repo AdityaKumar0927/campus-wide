@@ -45,7 +45,7 @@ export function CommentList({ postId, comments, isQuestion, open, viewerId, isOw
             <p className="mt-2 whitespace-pre-wrap text-[15px] leading-relaxed">{linkify(c.body)}</p>
             <div className="mt-3 flex flex-wrap items-center gap-2">
               {viewerId && (
-                <ThanksButton count={c.thanks_count} pressed={thanked.has(c.id)} label={`Thank ${c.author?.display_name ?? "this member"} for this ${noun}`} onToggle={onThanks.bind(null, postId, "comment", c.id)} />
+                <ThanksButton count={c.thanks_count} pressed={thanked.has(c.id)} label={`Thank you to ${c.author?.display_name ?? "this member"} for this ${noun}`} onToggle={onThanks.bind(null, postId, "comment", c.id)} />
               )}
               {isOwner && isQuestion && !c.is_accepted && open && (
                 <form action={onAccept.bind(null, postId, c.id)}>
