@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { redirect } from "next/navigation";
 import { Kicker } from "@/components/kicker";
+import { serverAiConfigured } from "@/lib/ai/groq";
 import { getCampus } from "@/lib/dal/campus";
 import { currentTerm } from "@/lib/dal/modules";
 import { getProfileByUserId } from "@/lib/dal/profiles";
@@ -38,6 +39,7 @@ export default async function PostPage({ searchParams }: { searchParams: Promise
           mealsPolicy: campus?.policyText.meals ?? null,
           mealAttestedThisTerm: profile?.meal_plan_attested_term === term,
           term,
+          serverAi: Boolean(campus?.featureFlags.ai_server) && serverAiConfigured(),
         }}
       />
     </div>

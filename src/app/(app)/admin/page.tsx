@@ -22,6 +22,7 @@ const FLAG_LABEL: Record<string, string> = {
   study: "Study groups",
   roommates: "Roommates",
   polls: "Polls",
+  ai_server: "Server AI fallback (Groq): summaries, translation, triage labels, paste-to-event; input scrubbed of emails, phones, handles",
 };
 
 export default async function AdminPage({ searchParams }: { searchParams: Promise<{ member?: string }> }) {

@@ -66,6 +66,18 @@ export async function createPost(_prev: ComposerState, formData: FormData): Prom
     if (policy) await supabase.from("consent_records").insert({ user_id: session.userId, policy_version_id: policy.id, choice: "meal_sharing", accepted: true, context: { term } });
   }
 
+  // Embedding computed on the device (Phase 6): 384 finite numbers or nothing.
+  let embedding: string | null = null;
+  const rawEmbedding = formData.get("embedding");
+  if (typeof rawEmbedding === "string" && rawEmbedding.length > 0) {
+    try {
+      const v = JSON.parse(rawEmbedding) as unknown;
+      if (Array.isArray(v) && v.length === 384 && v.every((n) => typeof n === "number" && Number.isFinite(n))) embedding = JSON.stringify(v);
+    } catch {
+      embedding = null;
+    }
+  }
+
   const days = input.expiresInDays ?? meta.defaultExpiryDays;
   const expiresAt = days ? new Date(Date.now() + days * 86_400_000).toISOString() : null;
 
@@ -82,6 +94,7 @@ export async function createPost(_prev: ComposerState, formData: FormData): Prom
       payload: built.payload as Json,
       images: input.images,
       expires_at: expiresAt,
+      embedding,
     })
     .select("id")
     .single();

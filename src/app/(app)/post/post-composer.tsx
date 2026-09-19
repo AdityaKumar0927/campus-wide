@@ -1,7 +1,9 @@
 "use client";
 
 import { useActionState, useState, type CSSProperties } from "react";
+import { DuplicateSuggestions } from "@/components/board/duplicate-suggestions";
 import { ImagePicker } from "@/components/board/image-picker";
+import { ToxicityNudge } from "@/components/board/toxicity-nudge";
 import { Button } from "@/components/ui/button";
 import { POST_TYPE_META, type PostType } from "@/lib/posts/types";
 import { cn } from "@/lib/utils";
@@ -31,6 +33,8 @@ export function PostComposer({
 }) {
   const [type, setType] = useState<PostType>(initialType && openTypes.includes(initialType) ? initialType : openTypes[0]);
   const [state, formAction, pending] = useActionState<ComposerState, FormData>(createPost, {});
+  const [title, setTitle] = useState("");
+  const [body, setBody] = useState("");
   const meta = POST_TYPE_META[type];
   const paper = { "--stock": `var(--stock-${meta.stock})`, "--pin-hue": meta.pinHue } as CSSProperties;
 
@@ -66,15 +70,18 @@ export function PostComposer({
             <label htmlFor="title" className="block text-sm font-medium">
               {meta.titleLabel}
             </label>
-            <input id="title" name="title" required minLength={3} maxLength={200} autoComplete="off" className="mt-1 w-full border-0 border-b border-rule bg-transparent px-0 py-2 font-heading text-2xl outline-none focus-visible:border-primary" />
+            <input id="title" name="title" required minLength={3} maxLength={200} autoComplete="off" value={title} onChange={(e) => setTitle(e.target.value)} className="mt-1 w-full border-0 border-b border-rule bg-transparent px-0 py-2 font-heading text-2xl outline-none focus-visible:border-primary" />
           </div>
+          {type === "question" && <DuplicateSuggestions title={title} />}
           <TypeFields key={type} type={type} ctx={ctx} />
           <div>
             <label htmlFor="body" className="block text-sm font-medium">
               {meta.bodyLabel}
             </label>
-            <textarea id="body" name="body" rows={5} maxLength={10000} className="mt-1 w-full rounded-md border border-input bg-card/60 px-3 py-2 text-sm outline-none focus-visible:ring-3 focus-visible:ring-ring/50" />
+            <textarea id="body" name="body" rows={5} maxLength={10000} value={body} onChange={(e) => setBody(e.target.value)} className="mt-1 w-full rounded-md border border-input bg-card/60 px-3 py-2 text-sm outline-none focus-visible:ring-3 focus-visible:ring-ring/50" />
           </div>
+          <ToxicityNudge text={`${title}
+${body}`} />
           <div className="grid gap-4 sm:grid-cols-2">
             <div>
               <label htmlFor="spaceId" className="block text-sm font-medium">

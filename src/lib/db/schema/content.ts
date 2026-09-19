@@ -1,5 +1,5 @@
 import { sql } from "drizzle-orm";
-import { boolean, check, customType, index, integer, jsonb, pgPolicy, pgTable, text, timestamp, uniqueIndex, uuid, type AnyPgColumn } from "drizzle-orm/pg-core";
+import { boolean, check, customType, index, integer, jsonb, pgPolicy, pgTable, text, timestamp, uniqueIndex, uuid, vector, type AnyPgColumn } from "drizzle-orm/pg-core";
 import { authenticatedRole } from "drizzle-orm/supabase";
 import { baseColumns, hasRole, sameTenant } from "./_shared";
 import { spaces } from "./community";
@@ -41,6 +41,8 @@ export const posts = pgTable(
     commentCount: integer("comment_count").notNull().default(0),
     thanksCount: integer("thanks_count").notNull().default(0),
     lastActivityAt: timestamp("last_activity_at", { withTimezone: true }).notNull().defaultNow(),
+    /** Sentence embedding (all-MiniLM-L6-v2, 384 dims) computed in the browser at post time; null when the device could not run the model. */
+    embedding: vector("embedding", { dimensions: 384 }),
     search: tsvector("search").generatedAlwaysAs(
       sql`setweight(to_tsvector('english', coalesce(title, '')), 'A') || setweight(to_tsvector('english', coalesce(body, '')), 'B')`,
     ),
@@ -52,6 +54,7 @@ export const posts = pgTable(
     index("posts_author_idx").on(t.authorId),
     index("posts_expiry_idx").on(t.expiresAt),
     index("posts_search_idx").using("gin", t.search),
+    index("posts_embedding_idx").using("hnsw", t.embedding.op("vector_cosine_ops")),
     check("posts_title_length", sql`char_length(title) between 1 and 200`),
     check("posts_body_length", sql`char_length(body) <= 10000`),
     pgPolicy("posts_member_select", {

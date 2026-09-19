@@ -12,4 +12,4 @@ export const REPORT_CATEGORIES = [
   ["other", "Something else"],
 ] as const;
 
-export const FLAG_KEYS = ["questions", "events", "market", "meals", "lost_found", "rides", "study", "roommates", "polls"] as const;
+export const FLAG_KEYS = ["questions", "events", "market", "meals", "lost_found", "rides", "study", "roommates", "polls", "ai_server"] as const;
